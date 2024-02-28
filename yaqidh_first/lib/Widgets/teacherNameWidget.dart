@@ -8,18 +8,23 @@ class TeacherNameListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.sizeOf(context).height;
+    double screenWidth = MediaQuery.sizeOf(context).width;
+
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 36.0),
+      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.043),
       child: GridView.count(
         childAspectRatio: MediaQuery.of(context).size.width /
-            (MediaQuery.of(context).size.height / 11),
+            (MediaQuery.of(context).size.height / 11.3),
         physics: NeverScrollableScrollPhysics(),
         crossAxisCount: 1,
         shrinkWrap: true,
         children: List.generate(
           3,
           (index) => Container(
-            padding: EdgeInsets.symmetric(vertical: 18, horizontal: 15),
+            padding: EdgeInsets.symmetric(
+                vertical: screenHeight * 0.010,
+                horizontal: screenWidth * 0.015),
             margin: EdgeInsets.only(top: 15),
             decoration: BoxDecoration(
               color: Colors.white,
@@ -45,7 +50,7 @@ class TeacherNameListWidget extends StatelessWidget {
                       Text(
                         "رقم المعلم",
                         style: TextStyle(
-                          fontSize: 13,
+                          fontSize: screenHeight * 0.012,
                           color: Color(0xFF999999),
                         ),
                         textDirection: TextDirection.rtl,
@@ -53,7 +58,7 @@ class TeacherNameListWidget extends StatelessWidget {
                       Text(
                         "إسم المعلم",
                         style: TextStyle(
-                          fontSize: 15,
+                          fontSize: screenHeight * 0.013,
                           fontWeight: FontWeight.bold,
                         ),
                         textDirection: TextDirection.rtl,

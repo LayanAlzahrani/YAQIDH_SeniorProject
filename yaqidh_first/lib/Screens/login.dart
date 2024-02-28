@@ -2,7 +2,6 @@
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:yaqidh_first/Screens/homepage.dart';
@@ -134,7 +133,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           SizedBox(
                               height:
-                                  MediaQuery.of(context).size.height * 0.01),
+                                  MediaQuery.of(context).size.height * 0.016),
                           LoginFields(
                             obscureText: _obscureText,
                             textController: _passwordController,
@@ -197,7 +196,7 @@ class _LoginPageState extends State<LoginPage> {
                 } else {
                   return Container(
                     padding: EdgeInsets.all(
-                        MediaQuery.of(context).size.height * 0.005),
+                        MediaQuery.of(context).size.height * 0.0001),
                     //width: double.infinity,
                     margin: EdgeInsets.symmetric(
                         horizontal: MediaQuery.sizeOf(context).width * 0.05),

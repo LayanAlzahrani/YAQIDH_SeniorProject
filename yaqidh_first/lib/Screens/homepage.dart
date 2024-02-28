@@ -48,6 +48,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.sizeOf(context).height;
+    double screenWidth = MediaQuery.sizeOf(context).width;
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -63,44 +66,46 @@ class _HomePageState extends State<HomePage> {
         child: Center(
           child: SingleChildScrollView(
             child: Column(children: [
-              SizedBox(height: 15),
+              SizedBox(height: screenHeight * 0.02),
               ListWidget(),
               SizedBox(
-                height: 25,
+                height: screenHeight * 0.022,
               ),
               Padding(
-                padding: const EdgeInsets.only(right: 35.0),
+                padding: EdgeInsets.only(right: screenWidth * 0.045),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(
                       ":الطلاب المُضافين مؤخرًا",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: screenHeight * 0.017,
+                          fontWeight: FontWeight.bold),
                     )
                   ],
                 ),
               ),
               NameListWidget(),
               SizedBox(
-                height: 25,
+                height: screenHeight * 0.02,
               ),
               Padding(
-                padding: const EdgeInsets.only(right: 35.0),
+                padding: EdgeInsets.only(right: screenWidth * 0.045),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(
                       ":المعلمين المُضافين مؤخرًا",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: screenHeight * 0.017,
+                          fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
               ),
               TeacherNameListWidget(),
               SizedBox(
-                height: 20,
+                height: screenHeight * 0.02,
               )
             ]),
           ),

@@ -12,10 +12,13 @@ class SettingsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.sizeOf(context).height;
+    double screenWidth = MediaQuery.sizeOf(context).width;
+
     return Padding(
-      padding: const EdgeInsets.only(left: 30.0, right: 30.0),
+      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.035),
       child: GridView.count(
-        childAspectRatio: 11,
+        childAspectRatio: 14,
         //physics: NeverScrollableScrollPhysics(),
         crossAxisCount: 1,
         shrinkWrap: true,
@@ -27,14 +30,18 @@ class SettingsWidget extends StatelessWidget {
               );
             },
             child: Container(
-              padding: EdgeInsets.only(top: 6, bottom: 4, right: 10, left: 10),
-              margin: EdgeInsets.only(top: 5, left: 15, right: 15),
+              padding: EdgeInsets.symmetric(
+                  vertical: screenHeight * 0.005,
+                  horizontal: screenWidth * 0.012),
+              margin: EdgeInsets.only(
+                  top: screenHeight * 0.006,
+                  left: screenWidth * 0.019,
+                  right: screenWidth * 0.019),
               decoration: BoxDecoration(
                 color: Color(0xFFF8F8F8),
-                /*Colors.white,*/
-                //borderRadius: BorderRadius.circular(15),
                 border: Border(
-                    bottom: BorderSide(width: 1, color: Color(0xFFD9D9D9))),
+                    bottom: BorderSide(
+                        width: screenWidth * 0.0016, color: Color(0xFFD9D9D9))),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -42,18 +49,19 @@ class SettingsWidget extends StatelessWidget {
                   Icon(
                     FontAwesomeIcons.chevronLeft,
                     color: Color(0xFFB3B3B3),
-                    size: 20,
+                    size: screenHeight * 0.017,
                   ),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(top: 10),
+                          padding: EdgeInsets.only(top: screenHeight * 0.008),
                           child: Text(
                             "الإعدادات",
                             style: TextStyle(
-                                fontSize: 17, fontWeight: FontWeight.normal),
+                                fontSize: screenHeight * 0.014,
+                                fontWeight: FontWeight.normal),
                           ),
                         ),
                       ],
@@ -68,14 +76,20 @@ class SettingsWidget extends StatelessWidget {
               signUserOut(context);
             },
             child: Container(
-              padding: EdgeInsets.only(top: 6, bottom: 4, right: 10, left: 10),
-              margin: EdgeInsets.only(top: 5, left: 15, right: 15),
+              padding: EdgeInsets.symmetric(
+                  vertical: screenHeight * 0.005,
+                  horizontal: screenWidth * 0.012),
+              margin: EdgeInsets.only(
+                  top: screenHeight * 0.006,
+                  left: screenWidth * 0.019,
+                  right: screenWidth * 0.019),
               decoration: BoxDecoration(
                 color: Color(0xFFF8F8F8),
                 /*Colors.white,*/
                 //borderRadius: BorderRadius.circular(15),
                 border: Border(
-                    bottom: BorderSide(width: 1, color: Color(0xFFD9D9D9))),
+                    bottom: BorderSide(
+                        width: screenWidth * 0.0016, color: Color(0xFFD9D9D9))),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -83,18 +97,19 @@ class SettingsWidget extends StatelessWidget {
                   Icon(
                     FontAwesomeIcons.chevronLeft,
                     color: Color(0xFFB3B3B3),
-                    size: 20,
+                    size: screenHeight * 0.017,
                   ),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(top: 10),
+                          padding: EdgeInsets.only(top: screenHeight * 0.008),
                           child: Text(
                             "تسجيل الخروج",
                             style: TextStyle(
-                                fontSize: 17, fontWeight: FontWeight.normal),
+                                fontSize: screenHeight * 0.014,
+                                fontWeight: FontWeight.normal),
                           ),
                         ),
                       ],
