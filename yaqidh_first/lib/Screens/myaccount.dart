@@ -46,13 +46,14 @@ class _MyAccountState extends State<MyAccount> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        //elevation: 0.0,
         automaticallyImplyLeading: false,
         title: const Text(
           'حسابي',
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
-        backgroundColor: Color(0xFF365486),
+        backgroundColor: const Color(0xFF365486),
       ),
       body: Container(
         color: const Color(0xFFF8F8F8),
