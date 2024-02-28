@@ -152,7 +152,7 @@ class _LoginPageState extends State<LoginPage> {
                           Padding(
                             padding: EdgeInsets.only(
                                 right:
-                                    MediaQuery.of(context).size.width * 0.045),
+                                    MediaQuery.of(context).size.width * 0.065),
                             child: Text(
                               'نسيت كلمة المرور؟',
                               style: TextStyle(
@@ -176,7 +176,7 @@ class _LoginPageState extends State<LoginPage> {
                         buttonName: 'تسجيل',
                       ),
                     ),
-                    SizedBox(height: MediaQuery.of(context).size.width * 0.04),
+                    SizedBox(height: MediaQuery.of(context).size.width * 0.05),
                   ],
                 ),
               ),

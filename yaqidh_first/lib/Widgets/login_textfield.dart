@@ -25,7 +25,7 @@ class LoginFields extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Padding(
-              padding: EdgeInsets.only(right: screenSize.width * 0.045),
+              padding: EdgeInsets.only(right: screenSize.width * 0.065),
               child: LayoutBuilder(
                 builder: (context, constraints) {
                   return Text(
@@ -42,7 +42,7 @@ class LoginFields extends StatelessWidget {
         Center(
           child: Container(
             height: screenSize.height * 0.04,
-            margin: EdgeInsets.symmetric(horizontal: screenSize.width * 0.037),
+            margin: EdgeInsets.symmetric(horizontal: screenSize.width * 0.06),
             decoration: BoxDecoration(
               color: Color(0xFFF9F9F9),
               borderRadius: BorderRadius.circular(13.0),
