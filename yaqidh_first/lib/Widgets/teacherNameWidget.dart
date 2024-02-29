@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:yaqidh_first/Screens/teacher_profile.dart';
 
 class TeacherNameListWidget extends StatelessWidget {
   const TeacherNameListWidget({super.key});
@@ -22,7 +23,11 @@ class TeacherNameListWidget extends StatelessWidget {
         children: List.generate(
           3,
           (index) => InkWell(
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => TeacherProfile()),
+              );
+            },
             child: Container(
               padding: EdgeInsets.symmetric(
                   vertical: screenHeight * 0.010,

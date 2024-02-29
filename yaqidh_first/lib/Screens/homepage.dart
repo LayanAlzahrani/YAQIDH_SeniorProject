@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:yaqidh_first/Screens/myaccount.dart';
 import 'package:yaqidh_first/Widgets/customBottomNavigationBar.dart';
 import 'package:yaqidh_first/Widgets/listWidget.dart';
-import 'package:yaqidh_first/Widgets/nameListWidget.dart';
+import 'package:yaqidh_first/Widgets/studentNameListWidget.dart';
 import 'package:yaqidh_first/Widgets/teacherNameWidget.dart';
 import 'package:yaqidh_first/firebase_options.dart';
 
