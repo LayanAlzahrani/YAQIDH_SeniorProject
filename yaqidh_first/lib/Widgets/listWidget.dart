@@ -3,80 +3,45 @@
 import 'package:flutter/material.dart';
 
 class ListWidget extends StatelessWidget {
-  const ListWidget({super.key});
+  final String imgUrl;
+  final String fieldName;
+  final Function()? ontap;
+  const ListWidget(
+      {super.key,
+      required this.imgUrl,
+      required this.fieldName,
+      required this.ontap});
 
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.sizeOf(context).height;
     double screenWidth = MediaQuery.sizeOf(context).width;
 
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.043),
-      child: GridView.count(
-          childAspectRatio: MediaQuery.of(context).size.width /
-              (MediaQuery.of(context).size.height / 3),
-          physics: NeverScrollableScrollPhysics(),
-          crossAxisSpacing: 20,
-          crossAxisCount: 2,
-          shrinkWrap: true,
+    return InkWell(
+      onTap: ontap,
+      child: Container(
+        width: screenWidth * 0.44,
+        padding: EdgeInsets.symmetric(
+            vertical: screenHeight * 0.018, horizontal: screenWidth * 0.07),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Column(
           children: [
-            InkWell(
-              onTap: () {},
-              child: Container(
-                padding: EdgeInsets.symmetric(vertical: screenHeight * 0.018),
-                margin: EdgeInsets.symmetric(
-                    horizontal: screenWidth * 0.001,
-                    vertical: screenHeight * 0.001),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Column(
-                  children: [
-                    Image.network(
-                      "https://drive.google.com/uc?export=view&id=1VS5pzOzvOPWrLOR3JNkEp9MC9nplBHPW",
-                      height: screenHeight * 0.074,
-                    ),
-                    SizedBox(height: screenHeight * 0.009),
-                    Text(
-                      "قائمة المعلمين",
-                      style: TextStyle(
-                          fontSize: screenHeight * 0.016,
-                          fontWeight: FontWeight.w600),
-                    )
-                  ],
-                ),
-              ),
+            Image.network(
+              imgUrl,
+              height: screenHeight * 0.074,
             ),
-            InkWell(
-              onTap: () {},
-              child: Container(
-                padding: EdgeInsets.symmetric(vertical: screenHeight * 0.018),
-                margin: EdgeInsets.symmetric(
-                    horizontal: screenWidth * 0.001,
-                    vertical: screenHeight * 0.001),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Column(
-                  children: [
-                    Image.network(
-                      "https://drive.google.com/uc?export=view&id=1rfPcVZwuBt0pHf9vfvM4OkE4ZJvCqDVQ",
-                      height: screenHeight * 0.074,
-                    ),
-                    SizedBox(height: screenHeight * 0.009),
-                    Text(
-                      "قائمة الطلاب",
-                      style: TextStyle(
-                          fontSize: screenHeight * 0.016,
-                          fontWeight: FontWeight.w600),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ]),
+            SizedBox(height: screenHeight * 0.009),
+            Text(
+              fieldName,
+              style: TextStyle(
+                  fontSize: screenHeight * 0.016, fontWeight: FontWeight.w600),
+            )
+          ],
+        ),
+      ),
     );
   }
 }

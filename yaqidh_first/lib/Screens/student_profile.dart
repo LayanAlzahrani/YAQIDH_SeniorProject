@@ -3,8 +3,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:yaqidh_first/Screens/myaccount.dart';
+import 'package:yaqidh_first/Screens/homepage.dart';
+import 'package:yaqidh_first/Screens/report.dart';
 import 'package:yaqidh_first/Widgets/profile_info.dart';
+import 'package:yaqidh_first/Widgets/settingsWidget.dart';
 import 'package:yaqidh_first/firebase_options.dart';
 
 void main() async {
@@ -23,22 +25,23 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Tajawal', useMaterial3: true),
-      home: const AdminProfile(),
+      home: const StudentProfile(),
     );
   }
 }
 
-class AdminProfile extends StatefulWidget {
-  const AdminProfile({Key? key}) : super(key: key);
+class StudentProfile extends StatefulWidget {
+  const StudentProfile({Key? key}) : super(key: key);
 
   @override
-  State<AdminProfile> createState() => _AdminProfileState();
+  State<StudentProfile> createState() => _StudentProfileState();
 }
 
-class _AdminProfileState extends State<AdminProfile> {
+class _StudentProfileState extends State<StudentProfile> {
   final double coverHeight = 95;
   final double profileHeight = 115;
 
+  //function to edit fields
   Future<void> editField(String field) async {}
 
   @override
@@ -51,7 +54,7 @@ class _AdminProfileState extends State<AdminProfile> {
           icon: Icon(FontAwesomeIcons.chevronLeft, color: Colors.white),
           onPressed: () {
             Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => MyAccount()),
+              MaterialPageRoute(builder: (context) => HomePage()),
             );
           },
         ),
@@ -69,7 +72,7 @@ class _AdminProfileState extends State<AdminProfile> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "إسم الإداري",
+                    "إسم الطالب",
                     style: TextStyle(
                         fontSize: screenHeight * 0.02,
                         fontWeight: FontWeight.bold),
@@ -77,16 +80,39 @@ class _AdminProfileState extends State<AdminProfile> {
                   SizedBox(height: screenHeight * 0.01),
                   ProfileInfo(
                     sectionName: 'رقم التعريف',
-                    info: '000000',
+                    info: '200000',
                   ),
                   ProfileInfo(
-                    sectionName: 'البريد الإلكتروني',
-                    info: 'Admin@gmail.com',
+                    sectionName: 'تاريخ الميلاد',
+                    info: '12-3-2018',
                   ),
                   ProfileInfo(
-                    sectionName: 'رقم الهاتف',
-                    info: '0531324894',
+                    sectionName: 'رقم هاتف ولي الأمر',
+                    info: '0543278484',
                   ),
+                  ProfileInfo(
+                    sectionName: 'البريد الإلكتروني لـ ولي الأمر',
+                    info: 'Parent@gmail.com',
+                  ),
+                  ProfileInfo(
+                    sectionName: 'تاريخ التشخيص',
+                    info: '22-6-2023',
+                  ),
+                  ProfileInfo(
+                    sectionName: 'نتيجة التشخيص',
+                    info: 'مشخص بنسبة 70 بالمئة',
+                  ),
+                  ProfileInfo(
+                    sectionName: 'المسؤول عن التشخيص',
+                    info: 'أ. ريم احمد',
+                  ),
+                  SettingsWidget(
+                      name: 'التقرير',
+                      ontap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => Report()),
+                        );
+                      })
                 ],
               ),
             ),
@@ -96,7 +122,7 @@ class _AdminProfileState extends State<AdminProfile> {
       floatingActionButton: FloatingActionButton(
         shape: CircleBorder(),
         onPressed: () {},
-        tooltip: 'تعديل',
+        tooltip: 'edit',
         backgroundColor: Color(0xFF7FC7D9),
         foregroundColor: Colors.white,
         elevation: screenHeight * 0.002,
@@ -108,25 +134,6 @@ class _AdminProfileState extends State<AdminProfile> {
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
-
-  // Widget buildContent() {
-  //   return Container(
-  //     padding: EdgeInsets.symmetric(horizontal: 25),
-  //     child: Column(
-  //       crossAxisAlignment: CrossAxisAlignment.center,
-  //       children: [
-  //         Text(
-  //           "إسم الإداري",
-  //           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-  //         ),
-  //         SizedBox(
-  //           height: 14,
-  //         ),
-  //         ProfileInfo(),
-  //       ],
-  //     ),
-  //   );
-  // }
 
   Widget buildTop() {
     final bottom = profileHeight / 2 + 18;

@@ -1,6 +1,11 @@
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:yaqidh_first/Screens/admin_profile.dart';
 import 'package:yaqidh_first/Screens/homepage.dart';
+import 'package:yaqidh_first/Screens/login.dart';
 import 'package:yaqidh_first/Widgets/customBottomNavigationBar.dart';
 import 'package:yaqidh_first/Widgets/myaccWidget.dart';
 import 'package:yaqidh_first/Widgets/settingsWidget.dart';
@@ -44,6 +49,7 @@ class _MyAccountState extends State<MyAccount> {
   // }
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.sizeOf(context).height;
     return Scaffold(
       appBar: AppBar(
         //elevation: 0.0,
@@ -56,12 +62,26 @@ class _MyAccountState extends State<MyAccount> {
         backgroundColor: const Color(0xFF365486),
       ),
       body: Container(
+        padding: EdgeInsets.symmetric(horizontal: screenHeight * 0.03),
         color: const Color(0xFFF8F8F8),
-        child: const Center(
+        child: Center(
           child: Column(
             children: [
               MyAccWidget(),
-              SettingsWidget(),
+              SettingsWidget(
+                name: 'الإعدادات',
+                ontap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => AdminProfile()),
+                  );
+                },
+              ),
+              SettingsWidget(
+                name: 'تسجيل الخروج',
+                ontap: () {
+                  signUserOut(context);
+                },
+              ),
             ],
           ),
         ),
@@ -77,6 +97,15 @@ class _MyAccountState extends State<MyAccount> {
           }
         },
       ),
+    );
+  }
+
+  void signUserOut(BuildContext context) async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => LoginPage()),
+      (route) => false,
     );
   }
 }
