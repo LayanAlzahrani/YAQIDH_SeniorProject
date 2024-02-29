@@ -21,12 +21,12 @@ class MyAccWidget extends StatelessWidget {
         children: [
           Container(
             padding: EdgeInsets.symmetric(
-                vertical: screenHeight * 0.006,
-                horizontal: screenWidth / screenHeight * 30 - 4),
+              vertical: screenHeight * 0.006,
+            ),
             margin: EdgeInsets.only(
                 top: screenHeight * 0.02,
                 left: screenWidth * 0.015,
-                right: screenWidth * 0.015),
+                right: screenWidth * 0.0001),
             decoration: BoxDecoration(
               color: Color(0xFFF8F8F8),
               /*Colors.white,*/
@@ -42,14 +42,14 @@ class MyAccWidget extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.only(top: screenHeight * 0.015),
                         child: Text(
-                          "إسم المعلم",
+                          "إسم الإداري",
                           style: TextStyle(
                               fontSize: screenHeight * 0.015,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
                       Text(
-                        "رقم المعلم",
+                        "رقم الإداري",
                         style: TextStyle(
                             fontSize: screenHeight * 0.014,
                             color: Color(0xFF999999)),

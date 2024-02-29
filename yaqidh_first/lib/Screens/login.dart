@@ -68,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     var mediaQueryData = MediaQuery.of(context);
     double screenHeight = MediaQuery.sizeOf(context).height;
-    double screenWidth = MediaQuery.sizeOf(context).width;
+    //double screenWidth = MediaQuery.sizeOf(context).width;
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -85,197 +85,9 @@ class _LoginPageState extends State<LoginPage> {
               builder: (context, constraints) {
                 var deviceType = getDeviceType(mediaQueryData);
                 if (deviceType == DeviceType.tablet) {
-                  return Container(
-                    padding: EdgeInsets.all(screenHeight * 0.001),
-                    //width: double.infinity,
-                    margin:
-                        EdgeInsets.symmetric(horizontal: screenWidth * 0.12),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: screenHeight * 0.01,
-                          offset: Offset(0, 1),
-                        ),
-                      ],
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.all(screenHeight * 0.018),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(height: screenHeight * 0.01),
-                          Text(
-                            'تسجيل الدخول',
-                            style: TextStyle(
-                              fontSize: screenHeight * 0.026,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(height: screenHeight * 0.035),
-                          LoginFields(
-                            obscureText: false,
-                            textController: _emailController,
-                            icon: Icon(
-                              FontAwesomeIcons.solidEnvelope,
-                              color: Colors.grey,
-                              size: screenHeight * 0.014,
-                            ),
-                            textFieldName: 'البريد الالكتروني',
-                          ),
-                          SizedBox(height: screenHeight * 0.016),
-                          LoginFields(
-                            obscureText: _obscureText,
-                            textController: _passwordController,
-                            icon: IconButton(
-                              icon: Icon(
-                                _obscureText
-                                    ? FontAwesomeIcons.solidEyeSlash
-                                    : FontAwesomeIcons.solidEye,
-                                color: Colors.grey,
-                                size: screenHeight * 0.014,
-                              ),
-                              onPressed: _togglePasswordVisibility,
-                            ),
-                            textFieldName: 'كلمة المرور',
-                          ),
-                          SizedBox(height: screenHeight * 0.009),
-                          GestureDetector(
-                            onTap: () {
-                              // ddd
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      right: screenWidth * 0.065),
-                                  child: Text(
-                                    'نسيت كلمة المرور؟',
-                                    style: TextStyle(
-                                      fontSize: screenHeight * 0.013,
-                                      color: Color(0xFF365486),
-                                      decoration: TextDecoration.underline,
-                                    ),
-                                    textAlign: TextAlign.right,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: screenHeight * 0.032),
-                          Center(
-                            child: MyButton(
-                              onTap: () {
-                                _signIn();
-                              },
-                              buttonName: 'تسجيل',
-                            ),
-                          ),
-                          SizedBox(height: screenHeight * 0.03),
-                        ],
-                      ),
-                    ),
-                  );
+                  return loginContainer(context, 0.12);
                 } else {
-                  return Container(
-                    padding: EdgeInsets.all(screenHeight * 0.0001),
-                    //width: double.infinity,
-                    margin:
-                        EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: screenHeight * 0.01,
-                          offset: Offset(0, 1),
-                        ),
-                      ],
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.all(screenHeight * 0.018),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(height: screenHeight * 0.01),
-                          Text(
-                            'تسجيل الدخول',
-                            style: TextStyle(
-                              fontSize: screenHeight * 0.026,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(height: screenHeight * 0.035),
-                          LoginFields(
-                            obscureText: false,
-                            textController: _emailController,
-                            icon: Icon(
-                              FontAwesomeIcons.solidEnvelope,
-                              color: Colors.grey,
-                              size: screenHeight * 0.014,
-                            ),
-                            textFieldName: 'البريد الالكتروني',
-                          ),
-                          SizedBox(height: screenHeight * 0.01),
-                          LoginFields(
-                            obscureText: _obscureText,
-                            textController: _passwordController,
-                            icon: IconButton(
-                              icon: Icon(
-                                _obscureText
-                                    ? FontAwesomeIcons.solidEyeSlash
-                                    : FontAwesomeIcons.solidEye,
-                                color: Colors.grey,
-                                size: screenHeight * 0.014,
-                              ),
-                              onPressed: _togglePasswordVisibility,
-                            ),
-                            textFieldName: 'كلمة المرور',
-                          ),
-                          SizedBox(height: screenHeight * 0.009),
-                          GestureDetector(
-                            onTap: () {
-                              // ddd
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      right: screenWidth * 0.065),
-                                  child: Text(
-                                    'نسيت كلمة المرور؟',
-                                    style: TextStyle(
-                                      fontSize: screenHeight * 0.013,
-                                      color: Color(0xFF365486),
-                                      decoration: TextDecoration.underline,
-                                    ),
-                                    textAlign: TextAlign.right,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                              height:
-                                  MediaQuery.of(context).size.height * 0.032),
-                          Center(
-                            child: MyButton(
-                              onTap: () {
-                                _signIn();
-                              },
-                              buttonName: 'تسجيل',
-                            ),
-                          ),
-                          SizedBox(height: screenHeight * 0.03),
-                        ],
-                      ),
-                    ),
-                  );
+                  return loginContainer(context, 0.05);
                 }
               },
             ),
@@ -283,6 +95,10 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  _close() {
+    Navigator.pop(context);
   }
 
   void _signIn() async {
@@ -313,28 +129,31 @@ class _LoginPageState extends State<LoginPage> {
           context,
           MaterialPageRoute(builder: (context) => HomePage()),
         );
-      } else {}
+      } else {
+        Navigator.pop(context);
+      }
     } else {
       showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: Text(
-                'فشل تسجيل الدخول',
-                textAlign: TextAlign.right,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(
+              'فشل تسجيل الدخول',
+              textAlign: TextAlign.right,
+            ),
+            content: Text(
+              'الرجاء تعبئة البيانات',
+              textAlign: TextAlign.right,
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => _close(),
+                child: const Text('حسنًا'),
               ),
-              content: Text(
-                'الرجاء تعبئة البيانات',
-                textAlign: TextAlign.right,
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: const Text('حسنًا'),
-                ),
-              ],
-            );
-          });
+            ],
+          );
+        },
+      );
     }
   }
 
@@ -354,6 +173,103 @@ class _LoginPageState extends State<LoginPage> {
     } else {
       return DeviceType.mobile;
     }
+  }
+
+  Widget loginContainer(BuildContext context, double num) {
+    double screenHeight = MediaQuery.sizeOf(context).height;
+    double screenWidth = MediaQuery.sizeOf(context).width;
+
+    return Container(
+      padding: EdgeInsets.all(screenHeight * 0.001),
+      margin: EdgeInsets.symmetric(horizontal: screenWidth * num),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: screenHeight * 0.01,
+            offset: Offset(0, 1),
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(screenHeight * 0.018),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(height: screenHeight * 0.01),
+            Text(
+              'تسجيل الدخول',
+              style: TextStyle(
+                fontSize: screenHeight * 0.026,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: screenHeight * 0.035),
+            LoginFields(
+              obscureText: false,
+              textController: _emailController,
+              icon: Icon(
+                FontAwesomeIcons.solidEnvelope,
+                color: Colors.grey,
+                size: screenHeight * 0.014,
+              ),
+              textFieldName: 'البريد الالكتروني',
+            ),
+            SizedBox(height: screenHeight * 0.01),
+            LoginFields(
+              obscureText: _obscureText,
+              textController: _passwordController,
+              icon: IconButton(
+                icon: Icon(
+                  _obscureText
+                      ? FontAwesomeIcons.solidEyeSlash
+                      : FontAwesomeIcons.solidEye,
+                  color: Colors.grey,
+                  size: screenHeight * 0.014,
+                ),
+                onPressed: _togglePasswordVisibility,
+              ),
+              textFieldName: 'كلمة المرور',
+            ),
+            SizedBox(height: screenHeight * 0.009),
+            GestureDetector(
+              onTap: () {
+                // ddd
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(right: screenWidth * 0.065),
+                    child: Text(
+                      'نسيت كلمة المرور؟',
+                      style: TextStyle(
+                        fontSize: screenHeight * 0.013,
+                        color: Color(0xFF365486),
+                        decoration: TextDecoration.underline,
+                      ),
+                      textAlign: TextAlign.right,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.032),
+            Center(
+              child: MyButton(
+                onTap: () {
+                  _signIn();
+                },
+                buttonName: 'تسجيل',
+              ),
+            ),
+            SizedBox(height: screenHeight * 0.03),
+          ],
+        ),
+      ),
+    );
   }
 }
 

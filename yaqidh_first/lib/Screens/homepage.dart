@@ -62,53 +62,72 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Color(0xFF365486),
       ),
       body: Container(
+        height: double.infinity,
         color: Color(0xFFF8F8F8),
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(children: [
-              SizedBox(height: screenHeight * 0.02),
-              ListWidget(),
-              SizedBox(
-                height: screenHeight * 0.022,
+        child: SingleChildScrollView(
+          child: Column(children: [
+            SizedBox(height: screenHeight * 0.02),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ListWidget(
+                    imgUrl:
+                        'https://drive.google.com/uc?export=view&id=1VS5pzOzvOPWrLOR3JNkEp9MC9nplBHPW',
+                    fieldName: 'قائمة المعلمين',
+                    ontap: () {},
+                  ),
+                  SizedBox(width: screenWidth * 0.035),
+                  ListWidget(
+                    imgUrl:
+                        'https://drive.google.com/uc?export=view&id=1rfPcVZwuBt0pHf9vfvM4OkE4ZJvCqDVQ',
+                    fieldName: 'قائمة الطلاب',
+                    ontap: () {},
+                  )
+                ],
               ),
-              Padding(
-                padding: EdgeInsets.only(right: screenWidth * 0.045),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      ":الطلاب المُضافين مؤخرًا",
-                      style: TextStyle(
-                          fontSize: screenHeight * 0.017,
-                          fontWeight: FontWeight.bold),
-                    )
-                  ],
-                ),
+            ),
+            SizedBox(
+              height: screenHeight * 0.022,
+            ),
+            Padding(
+              padding: EdgeInsets.only(right: screenWidth * 0.045),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    ":الطلاب المُضافين مؤخرًا",
+                    style: TextStyle(
+                        fontSize: screenHeight * 0.017,
+                        fontWeight: FontWeight.bold),
+                  )
+                ],
               ),
-              NameListWidget(),
-              SizedBox(
-                height: screenHeight * 0.02,
+            ),
+            NameListWidget(),
+            SizedBox(
+              height: screenHeight * 0.02,
+            ),
+            Padding(
+              padding: EdgeInsets.only(right: screenWidth * 0.045),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    ":المعلمين المُضافين مؤخرًا",
+                    style: TextStyle(
+                        fontSize: screenHeight * 0.017,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
               ),
-              Padding(
-                padding: EdgeInsets.only(right: screenWidth * 0.045),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      ":المعلمين المُضافين مؤخرًا",
-                      style: TextStyle(
-                          fontSize: screenHeight * 0.017,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-              ),
-              TeacherNameListWidget(),
-              SizedBox(
-                height: screenHeight * 0.02,
-              )
-            ]),
-          ),
+            ),
+            TeacherNameListWidget(),
+            SizedBox(
+              height: screenHeight * 0.02,
+            )
+          ]),
         ),
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
