@@ -12,22 +12,31 @@ class ProfileInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.sizeOf(context).height;
+    double screenWidth = MediaQuery.sizeOf(context).width;
+
     return GridView.count(
-      childAspectRatio: 8,
-      //physics: NeverScrollableScrollPhysics(),
+      childAspectRatio: screenWidth / screenHeight * 13,
+      physics: NeverScrollableScrollPhysics(),
       crossAxisCount: 1,
       shrinkWrap: true,
       children: [
         for (int i = 0; i < 3; i++)
           Container(
-            padding: EdgeInsets.only(top: 6, bottom: 4, right: 10, left: 10),
-            margin: EdgeInsets.only(top: 15, left: 15, right: 15),
+            padding: EdgeInsets.only(
+                top: screenHeight * 0.007,
+                bottom: screenHeight * 0.003,
+                right: screenWidth * 0.007,
+                left: screenWidth * 0.007),
+            margin: EdgeInsets.only(
+                top: screenHeight * 0.012,
+                left: screenWidth * 0.012,
+                right: screenWidth * 0.012),
             decoration: BoxDecoration(
               color: Color(0xFFF8F8F8),
-              /*Colors.white,*/
-              //borderRadius: BorderRadius.circular(15),
               border: Border(
-                  bottom: BorderSide(width: 1, color: Color(0xFFD9D9D9))),
+                  bottom: BorderSide(
+                      width: screenWidth * 0.0016, color: Color(0xFFD9D9D9))),
             ),
             child: Column(
               children: [
@@ -37,7 +46,7 @@ class ProfileInfo extends StatelessWidget {
                     Text(
                       "اسم الحقل",
                       style: TextStyle(
-                          fontSize: 15,
+                          fontSize: screenHeight * 0.013,
                           fontWeight: FontWeight.normal,
                           color: Color(0xFF999999)),
                     ),
@@ -48,8 +57,9 @@ class ProfileInfo extends StatelessWidget {
                   children: [
                     Text(
                       "المعلومات",
-                      style:
-                          TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: screenHeight * 0.015,
+                          fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),

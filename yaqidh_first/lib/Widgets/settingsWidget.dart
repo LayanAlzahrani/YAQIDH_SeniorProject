@@ -18,7 +18,7 @@ class SettingsWidget extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.035),
       child: GridView.count(
-        childAspectRatio: 14,
+        childAspectRatio: screenWidth / screenHeight * 20,
         //physics: NeverScrollableScrollPhysics(),
         crossAxisCount: 1,
         shrinkWrap: true,

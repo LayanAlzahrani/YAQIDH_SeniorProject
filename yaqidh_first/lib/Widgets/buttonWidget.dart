@@ -10,12 +10,15 @@ class MyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.sizeOf(context).height;
+    double screenWidth = MediaQuery.sizeOf(context).width;
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.012),
-        margin: EdgeInsets.symmetric(
-            horizontal: MediaQuery.of(context).size.width * 0.06),
+        padding: EdgeInsets.symmetric(
+            horizontal: screenWidth * 0.012, vertical: screenHeight * 0.009),
+        margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.06),
         decoration: BoxDecoration(
             color: Color(0xFF365486), borderRadius: BorderRadius.circular(13)),
         child: Center(child: LayoutBuilder(
@@ -24,7 +27,7 @@ class MyButton extends StatelessWidget {
               buttonName,
               style: TextStyle(
                   color: Colors.white,
-                  fontSize: 18,
+                  fontSize: screenHeight * 0.015,
                   fontWeight: FontWeight.bold),
             );
           },

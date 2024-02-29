@@ -41,6 +41,8 @@ class _AdminProfileState extends State<AdminProfile> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.sizeOf(context).height;
+    //double screenWidth = MediaQuery.sizeOf(context).width;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -61,16 +63,46 @@ class _AdminProfileState extends State<AdminProfile> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             buildTop(),
-            buildContent(),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: screenHeight * 0.03),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "إسم الإداري",
+                    style: TextStyle(
+                        fontSize: screenHeight * 0.02,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    height: screenHeight * 0.01,
+                  ),
+                  ProfileInfo(),
+                ],
+              ),
+            ),
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        shape: CircleBorder(),
+        onPressed: () {},
+        tooltip: 'Increment',
+        backgroundColor: Color(0xFF7FC7D9),
+        foregroundColor: Colors.white,
+        elevation: screenHeight * 0.002,
+        child: Icon(
+          FontAwesomeIcons.pen,
+          size: screenHeight * 0.025,
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 
   Widget buildContent() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 48),
+      padding: EdgeInsets.symmetric(horizontal: 25),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -112,7 +144,7 @@ class _AdminProfileState extends State<AdminProfile> {
           shape: BoxShape.circle,
           border: Border.all(
             color: Color(0xFFF8F8F8), // Set border color
-            width: 5, // Set border width
+            width: profileHeight / 19, // Set border width
           ),
         ),
         child: CircleAvatar(

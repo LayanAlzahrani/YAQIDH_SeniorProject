@@ -67,6 +67,9 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     var mediaQueryData = MediaQuery.of(context);
+    double screenHeight = MediaQuery.sizeOf(context).height;
+    double screenWidth = MediaQuery.sizeOf(context).width;
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -75,65 +78,54 @@ class _LoginPageState extends State<LoginPage> {
             Image.network(
               'https://drive.google.com/uc?export=view&id=1RYgADNjK6VMqOAIxB9pjMbfcKCsxZ-SU',
               //width: MediaQuery.of(context).size.width * 0.4,
-              height: MediaQuery.of(context).size.height * 0.25,
+              height: screenHeight * 0.25,
             ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+            SizedBox(height: screenHeight * 0.05),
             LayoutBuilder(
               builder: (context, constraints) {
                 var deviceType = getDeviceType(mediaQueryData);
                 if (deviceType == DeviceType.tablet) {
                   return Container(
-                    padding: EdgeInsets.all(
-                        MediaQuery.of(context).size.height * 0.001),
+                    padding: EdgeInsets.all(screenHeight * 0.001),
                     //width: double.infinity,
-                    margin: EdgeInsets.symmetric(
-                        horizontal: MediaQuery.sizeOf(context).width * 0.12),
+                    margin:
+                        EdgeInsets.symmetric(horizontal: screenWidth * 0.12),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20.0),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.1),
-                          blurRadius: 10,
-                          offset: Offset(0, 2),
+                          blurRadius: screenHeight * 0.01,
+                          offset: Offset(0, 1),
                         ),
                       ],
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(20.0),
+                      padding: EdgeInsets.all(screenHeight * 0.018),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SizedBox(
-                              height:
-                                  MediaQuery.of(context).size.height * 0.01),
-                          LayoutBuilder(
-                            builder: (context, constraints) {
-                              return Text(
-                                'تسجيل الدخول',
-                                style: TextStyle(
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              );
-                            },
+                          SizedBox(height: screenHeight * 0.01),
+                          Text(
+                            'تسجيل الدخول',
+                            style: TextStyle(
+                              fontSize: screenHeight * 0.026,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                          SizedBox(
-                              height:
-                                  MediaQuery.of(context).size.height * 0.035),
+                          SizedBox(height: screenHeight * 0.035),
                           LoginFields(
                             obscureText: false,
                             textController: _emailController,
                             icon: Icon(
                               FontAwesomeIcons.solidEnvelope,
                               color: Colors.grey,
-                              size: 16,
+                              size: screenHeight * 0.014,
                             ),
                             textFieldName: 'البريد الالكتروني',
                           ),
-                          SizedBox(
-                              height:
-                                  MediaQuery.of(context).size.height * 0.016),
+                          SizedBox(height: screenHeight * 0.016),
                           LoginFields(
                             obscureText: _obscureText,
                             textController: _passwordController,
@@ -143,15 +135,13 @@ class _LoginPageState extends State<LoginPage> {
                                     ? FontAwesomeIcons.solidEyeSlash
                                     : FontAwesomeIcons.solidEye,
                                 color: Colors.grey,
-                                size: 16,
+                                size: screenHeight * 0.014,
                               ),
                               onPressed: _togglePasswordVisibility,
                             ),
                             textFieldName: 'كلمة المرور',
                           ),
-                          SizedBox(
-                              height:
-                                  MediaQuery.of(context).size.height * 0.009),
+                          SizedBox(height: screenHeight * 0.009),
                           GestureDetector(
                             onTap: () {
                               // ddd
@@ -161,12 +151,11 @@ class _LoginPageState extends State<LoginPage> {
                               children: [
                                 Padding(
                                   padding: EdgeInsets.only(
-                                      right: MediaQuery.of(context).size.width *
-                                          0.065),
+                                      right: screenWidth * 0.065),
                                   child: Text(
                                     'نسيت كلمة المرور؟',
                                     style: TextStyle(
-                                      fontSize: 14,
+                                      fontSize: screenHeight * 0.013,
                                       color: Color(0xFF365486),
                                       decoration: TextDecoration.underline,
                                     ),
@@ -176,9 +165,7 @@ class _LoginPageState extends State<LoginPage> {
                               ],
                             ),
                           ),
-                          SizedBox(
-                              height:
-                                  MediaQuery.of(context).size.height * 0.032),
+                          SizedBox(height: screenHeight * 0.032),
                           Center(
                             child: MyButton(
                               onTap: () {
@@ -187,65 +174,53 @@ class _LoginPageState extends State<LoginPage> {
                               buttonName: 'تسجيل',
                             ),
                           ),
-                          SizedBox(
-                              height: MediaQuery.of(context).size.width * 0.05),
+                          SizedBox(height: screenHeight * 0.03),
                         ],
                       ),
                     ),
                   );
                 } else {
                   return Container(
-                    padding: EdgeInsets.all(
-                        MediaQuery.of(context).size.height * 0.0001),
+                    padding: EdgeInsets.all(screenHeight * 0.0001),
                     //width: double.infinity,
-                    margin: EdgeInsets.symmetric(
-                        horizontal: MediaQuery.sizeOf(context).width * 0.05),
+                    margin:
+                        EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20.0),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.1),
-                          blurRadius: 10,
-                          offset: Offset(0, 2),
+                          blurRadius: screenHeight * 0.01,
+                          offset: Offset(0, 1),
                         ),
                       ],
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(20.0),
+                      padding: EdgeInsets.all(screenHeight * 0.018),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SizedBox(
-                              height:
-                                  MediaQuery.of(context).size.height * 0.01),
-                          LayoutBuilder(
-                            builder: (context, constraints) {
-                              return Text(
-                                'تسجيل الدخول',
-                                style: TextStyle(
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              );
-                            },
+                          SizedBox(height: screenHeight * 0.01),
+                          Text(
+                            'تسجيل الدخول',
+                            style: TextStyle(
+                              fontSize: screenHeight * 0.026,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                          SizedBox(
-                              height:
-                                  MediaQuery.of(context).size.height * 0.035),
+                          SizedBox(height: screenHeight * 0.035),
                           LoginFields(
                             obscureText: false,
                             textController: _emailController,
                             icon: Icon(
                               FontAwesomeIcons.solidEnvelope,
                               color: Colors.grey,
-                              size: 16,
+                              size: screenHeight * 0.014,
                             ),
                             textFieldName: 'البريد الالكتروني',
                           ),
-                          SizedBox(
-                              height:
-                                  MediaQuery.of(context).size.height * 0.01),
+                          SizedBox(height: screenHeight * 0.01),
                           LoginFields(
                             obscureText: _obscureText,
                             textController: _passwordController,
@@ -255,15 +230,13 @@ class _LoginPageState extends State<LoginPage> {
                                     ? FontAwesomeIcons.solidEyeSlash
                                     : FontAwesomeIcons.solidEye,
                                 color: Colors.grey,
-                                size: 16,
+                                size: screenHeight * 0.014,
                               ),
                               onPressed: _togglePasswordVisibility,
                             ),
                             textFieldName: 'كلمة المرور',
                           ),
-                          SizedBox(
-                              height:
-                                  MediaQuery.of(context).size.height * 0.009),
+                          SizedBox(height: screenHeight * 0.009),
                           GestureDetector(
                             onTap: () {
                               // ddd
@@ -273,12 +246,11 @@ class _LoginPageState extends State<LoginPage> {
                               children: [
                                 Padding(
                                   padding: EdgeInsets.only(
-                                      right: MediaQuery.of(context).size.width *
-                                          0.065),
+                                      right: screenWidth * 0.065),
                                   child: Text(
                                     'نسيت كلمة المرور؟',
                                     style: TextStyle(
-                                      fontSize: 14,
+                                      fontSize: screenHeight * 0.013,
                                       color: Color(0xFF365486),
                                       decoration: TextDecoration.underline,
                                     ),
@@ -299,8 +271,7 @@ class _LoginPageState extends State<LoginPage> {
                               buttonName: 'تسجيل',
                             ),
                           ),
-                          SizedBox(
-                              height: MediaQuery.of(context).size.width * 0.05),
+                          SizedBox(height: screenHeight * 0.03),
                         ],
                       ),
                     ),
