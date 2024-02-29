@@ -36,8 +36,9 @@ class TeacherNameListWidget extends StatelessWidget {
                 IconButton(
                   onPressed: () {},
                   icon: Icon(
-                    FontAwesomeIcons.ellipsisVertical,
+                    FontAwesomeIcons.chevronLeft,
                     color: Colors.grey[500],
+                    size: screenHeight * 0.02,
                   ),
                 ),
                 Expanded(

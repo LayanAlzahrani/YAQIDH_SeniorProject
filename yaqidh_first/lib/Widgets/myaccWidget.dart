@@ -8,56 +8,60 @@ class MyAccWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.sizeOf(context).height;
+    double screenWidth = MediaQuery.sizeOf(context).width;
+
     return Padding(
-      padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.022),
       child: GridView.count(
-        childAspectRatio: 5.4,
+        childAspectRatio: screenWidth / screenHeight * 9,
         //physics: NeverScrollableScrollPhysics(),
         crossAxisCount: 1,
         shrinkWrap: true,
         children: [
           Container(
-            padding: EdgeInsets.only(top: 18, bottom: 18, right: 15, left: 15),
-            margin: EdgeInsets.only(top: 15, left: 15, right: 15),
+            padding: EdgeInsets.symmetric(
+                vertical: screenHeight * 0.006,
+                horizontal: screenWidth / screenHeight * 30 - 4),
+            margin: EdgeInsets.only(
+                top: screenHeight * 0.02,
+                left: screenWidth * 0.015,
+                right: screenWidth * 0.015),
             decoration: BoxDecoration(
               color: Color(0xFFF8F8F8),
               /*Colors.white,*/
               borderRadius: BorderRadius.circular(15),
             ),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
                   child: Column(
-                    crossAxisAlignment:
-                        CrossAxisAlignment.end, // Align text to the right
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(
-                            top: 10), // Add padding above and below
+                        padding: EdgeInsets.only(top: screenHeight * 0.015),
                         child: Text(
                           "إسم المعلم",
                           style: TextStyle(
-                              fontSize: 17, fontWeight: FontWeight.bold),
+                              fontSize: screenHeight * 0.015,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            bottom: 10), // Add padding above and below
-                        child: Text(
-                          "رقم المعلم",
-                          style:
-                              TextStyle(fontSize: 15, color: Color(0xFF999999)),
-                        ),
+                      Text(
+                        "رقم المعلم",
+                        style: TextStyle(
+                            fontSize: screenHeight * 0.014,
+                            color: Color(0xFF999999)),
                       ),
                     ],
                   ),
                 ),
                 SizedBox(
-                  width: 20,
+                  width: screenWidth * 0.03,
                 ),
                 CircleAvatar(
-                  radius: 35,
+                  radius: screenHeight * 0.034,
                   backgroundImage: NetworkImage(
                     "https://drive.google.com/uc?export=view&id=1sE88XrMfk_xWqdSES3k3NVeEnpU70n1t",
                   ),
