@@ -4,7 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:yaqidh_first/Screens/homepage.dart';
-import 'package:yaqidh_first/Screens/report.dart';
+import 'package:yaqidh_first/Widgets/pdf_widget.dart';
 import 'package:yaqidh_first/Widgets/profile_info.dart';
 import 'package:yaqidh_first/Widgets/settingsWidget.dart';
 import 'package:yaqidh_first/firebase_options.dart';
@@ -38,6 +38,7 @@ class StudentProfile extends StatefulWidget {
 }
 
 class _StudentProfileState extends State<StudentProfile> {
+  final pdfw = PdfWidget();
   final double coverHeight = 95;
   final double profileHeight = 115;
 
@@ -108,10 +109,9 @@ class _StudentProfileState extends State<StudentProfile> {
                   ),
                   SettingsWidget(
                       name: 'التقرير',
-                      ontap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => Report()),
-                        );
+                      ontap: () async {
+                        final data = await pdfw.generatePDF();
+                        await pdfw.savePdfFile("ADHD_Report", data);
                       })
                 ],
               ),

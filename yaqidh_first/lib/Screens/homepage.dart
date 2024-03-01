@@ -3,6 +3,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:yaqidh_first/Screens/myaccount.dart';
+import 'package:yaqidh_first/Screens/studentss_list.dart';
 import 'package:yaqidh_first/Widgets/customBottomNavigationBar.dart';
 import 'package:yaqidh_first/Widgets/listWidget.dart';
 import 'package:yaqidh_first/Widgets/studentNameListWidget.dart';
@@ -38,14 +39,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // int _selectedIndex = 0;
-
-  // void _onItemTapped(int index) {
-  //   setState(() {
-  //     _selectedIndex = index;
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.sizeOf(context).height;
@@ -83,7 +76,13 @@ class _HomePageState extends State<HomePage> {
                     imgUrl:
                         'https://drive.google.com/uc?export=view&id=1rfPcVZwuBt0pHf9vfvM4OkE4ZJvCqDVQ',
                     fieldName: 'قائمة الطلاب',
-                    ontap: () {},
+                    ontap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => StudentListPage()),
+                      );
+                    },
                   )
                 ],
               ),

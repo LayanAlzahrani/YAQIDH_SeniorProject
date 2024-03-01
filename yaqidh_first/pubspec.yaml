@@ -39,6 +39,11 @@ dependencies:
   device_preview: ^1.1.0
   firebase_core: ^2.15.1
   firebase_auth: ^4.9.0
+  pdf: ^3.10.8
+  open_file: ^3.3.2
+  path_provider: ^2.1.2
+  printing: ^3.6.0
+
   
 
 dev_dependencies:

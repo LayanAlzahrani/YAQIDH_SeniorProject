@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -5,6 +7,8 @@ void main() {
 }
 
 class MyApp1 extends StatelessWidget {
+  const MyApp1({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -30,6 +34,8 @@ class MyApp1 extends StatelessWidget {
 }
 
 class StudentListPage extends StatelessWidget {
+  const StudentListPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -77,7 +83,8 @@ class StudentList extends StatelessWidget {
       itemCount: 10, // Number of students
       itemBuilder: (BuildContext context, int index) {
         return Container(
-          color: index.isEven ? Colors.white : Color.fromARGB(255, 249, 249, 249),
+          color:
+              index.isEven ? Colors.white : Color.fromARGB(255, 249, 249, 249),
           padding: EdgeInsets.all(8.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -87,11 +94,13 @@ class StudentList extends StatelessWidget {
                 itemBuilder: (context) => [
                   PopupMenuItem(
                     value: 0,
-                    child: Text('حساب الطالب', style: TextStyle(fontFamily: 'Tajawal')),
+                    child: Text('حساب الطالب',
+                        style: TextStyle(fontFamily: 'Tajawal')),
                   ),
                   PopupMenuItem(
                     value: 1,
-                    child: Text('إضافة الى معلم', style: TextStyle(fontFamily: 'Tajawal')),
+                    child: Text('إضافة الى معلم',
+                        style: TextStyle(fontFamily: 'Tajawal')),
                   ),
                   PopupMenuItem(
                     value: 2,
@@ -120,7 +129,9 @@ class StudentList extends StatelessWidget {
                 height: 40, // Adjusted height
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  color: index.isEven ? Color.fromARGB(255, 176, 249, 178) : Color.fromARGB(255, 244, 182, 178),
+                  color: index.isEven
+                      ? Color.fromARGB(255, 176, 249, 178)
+                      : Color.fromARGB(255, 244, 182, 178),
                 ),
                 padding: EdgeInsets.all(8.0),
                 alignment: Alignment.center,
@@ -139,7 +150,7 @@ class StudentList extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                                        Text(
+                    Text(
                       'رقم الطالب',
                       style: TextStyle(
                         color: Colors.grey[600],
@@ -165,7 +176,6 @@ class StudentList extends StatelessWidget {
                       ),
                       textAlign: TextAlign.right,
                     ),
-
                   ],
                 ),
               ),
