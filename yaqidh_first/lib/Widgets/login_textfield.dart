@@ -48,9 +48,11 @@ class LoginFields extends StatelessWidget {
               borderRadius: BorderRadius.circular(13.0),
             ),
             child: TextField(
+              style: TextStyle(fontSize: screenHeight * 0.016),
               controller: textController,
               obscureText: obscureText,
               textAlign: TextAlign.right,
+              cursorHeight: screenHeight * 0.018,
               decoration: InputDecoration(
                 enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
@@ -62,8 +64,8 @@ class LoginFields extends StatelessWidget {
                     borderRadius: BorderRadius.circular(13)),
                 prefixIcon: icon,
                 contentPadding: EdgeInsets.symmetric(
-                    horizontal: screenWidth * 0.03,
-                    vertical: screenHeight * 0.017),
+                    horizontal: screenWidth * 0.02,
+                    vertical: screenHeight * 0.018),
               ),
             ),
           ),

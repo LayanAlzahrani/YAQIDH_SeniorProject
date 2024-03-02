@@ -42,7 +42,7 @@ dependencies:
   pdf: ^3.10.8
   open_file: ^3.3.2
   path_provider: ^2.1.2
-  printing: ^3.6.0
+  printing: ^5.12.0
 
   
 
@@ -88,6 +88,9 @@ flutter:
   - family: Tajawal
     fonts:
       - asset: fonts/Tajawal/Tajawal-Medium.ttf
+  - family: TajawalBold
+    fonts:
+      - asset: fonts/Tajawal/Tajawal-Bold.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

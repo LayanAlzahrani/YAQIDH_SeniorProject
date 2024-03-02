@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_key_in_widget_constructors
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:yaqidh_first/Screens/student_profile.dart';
+import 'package:yaqidh_first/Screens/Admin/student_profile.dart';
 
 class NameListWidget extends StatelessWidget {
   const NameListWidget({Key? key});

@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:yaqidh_first/Screens/teacher_profile.dart';
+import 'package:yaqidh_first/Screens/Admin/teacher_profile.dart';
 
 class TeacherNameListWidget extends StatelessWidget {
   const TeacherNameListWidget({super.key});

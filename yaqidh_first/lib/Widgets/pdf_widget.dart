@@ -1,19 +1,20 @@
 // ignore_for_file: prefer_const_constructors, prefer_adjacent_string_concatenation
 import 'dart:io';
-import 'dart:math';
 import 'dart:typed_data';
-import 'dart:ui';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:path_provider/path_provider.dart';
 import 'package:open_file/open_file.dart';
+import 'package:yaqidh_first/Widgets/pdf_txts.dart';
 
 class PdfWidget {
   Future<Uint8List> generatePDF() async {
     final font = await rootBundle.load("fonts/Tajawal/Tajawal-Medium.ttf");
     final ttf = pw.Font.ttf(font);
+
+    final font2 = await rootBundle.load("fonts/Tajawal/Tajawal-Bold.ttf");
+    final ttfbold = pw.Font.ttf(font2);
 
     final pdf = pw.Document();
 
@@ -22,8 +23,7 @@ class PdfWidget {
       child: pw.Text(
         "تقرير فرط الحركة ونقص الإنتباه",
         textDirection: pw.TextDirection.rtl,
-        style: pw.TextStyle(
-            font: ttf, fontSize: 20, fontWeight: pw.FontWeight.bold),
+        style: pw.TextStyle(font: ttfbold, fontSize: 20),
       ),
     );
 
@@ -38,31 +38,44 @@ class PdfWidget {
     final textFieldRow = pw.Row(
       mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
       children: [
-        pw.Text("المسؤول عن التشخيص: " + "أ. ريم احمد",
-            textDirection: pw.TextDirection.rtl,
-            style: pw.TextStyle(
+        pw.Row(children: [
+          PdfTxts(
+              text: 'أ. ريم احمد',
               font: ttf,
-            )),
-        pw.Text("إسم الطالب: " + "ندى فيصل",
-            textDirection: pw.TextDirection.rtl,
-            style: pw.TextStyle(
-              font: ttf,
-            )),
+              textDirection: pw.TextDirection.rtl),
+          PdfTxts(
+              text: 'المسؤول عن التشخيص: ',
+              font: ttfbold,
+              textDirection: pw.TextDirection.rtl),
+        ]),
+        pw.Row(children: [
+          PdfTxts(
+              text: 'ندى فيصل', font: ttf, textDirection: pw.TextDirection.rtl),
+          PdfTxts(
+              text: 'إسم الطالب: ',
+              font: ttfbold,
+              textDirection: pw.TextDirection.rtl),
+        ]),
       ],
     );
 
     //space
-    final gap00 = pw.SizedBox(height: 6);
+    final gap00 = pw.SizedBox(height: 10);
 
     //Text fields -sec row-
     final infoFieldRow = pw.Row(
       mainAxisAlignment: pw.MainAxisAlignment.end,
       children: [
-        pw.Text("التاريخ: " + "27 يونيو 2023",
-            textDirection: pw.TextDirection.rtl,
-            style: pw.TextStyle(
+        pw.Row(children: [
+          PdfTxts(
+              text: '27 يونيو 2023',
               font: ttf,
-            )),
+              textDirection: pw.TextDirection.rtl),
+          PdfTxts(
+              text: 'التاريخ: ',
+              font: ttfbold,
+              textDirection: pw.TextDirection.rtl),
+        ]),
       ],
     );
 
@@ -80,10 +93,10 @@ class PdfWidget {
     final resultText = pw.Row(
       mainAxisAlignment: pw.MainAxisAlignment.end,
       children: [
-        pw.Text("نتائج اللعبة:",
-            textDirection: pw.TextDirection.rtl,
-            style: pw.TextStyle(
-                font: ttf, fontSize: 14, fontWeight: pw.FontWeight.bold)),
+        PdfTxts(
+            text: 'نتائج اللعبة:',
+            font: ttfbold,
+            textDirection: pw.TextDirection.rtl),
       ],
     );
 
@@ -109,52 +122,49 @@ class PdfWidget {
       cellHeight: 30,
       data: [
         [
-          pw.Text('الدرجة',
-              textDirection: pw.TextDirection.rtl,
-              style: pw.TextStyle(font: ttf, fontWeight: pw.FontWeight.bold)),
-          pw.Text('اسم اللعبة',
-              textDirection: pw.TextDirection.rtl,
-              style: pw.TextStyle(font: ttf, fontWeight: pw.FontWeight.bold)),
+          PdfTxts(
+              text: 'الدرجة',
+              font: ttfbold,
+              textDirection: pw.TextDirection.rtl),
+          PdfTxts(
+              text: 'اسم اللعبة',
+              font: ttfbold,
+              textDirection: pw.TextDirection.rtl)
         ],
         [
-          pw.Text('',
-              textDirection: pw.TextDirection.rtl,
-              style: pw.TextStyle(font: ttf)),
-          pw.Text('اللعبة الأولى',
-              textDirection: pw.TextDirection.rtl,
-              style: pw.TextStyle(font: ttf)),
+          PdfTxts(text: '', font: ttf, textDirection: pw.TextDirection.rtl),
+          PdfTxts(
+              text: 'اللعبة الأولى',
+              font: ttf,
+              textDirection: pw.TextDirection.rtl)
         ],
         [
-          pw.Text('',
-              textDirection: pw.TextDirection.rtl,
-              style: pw.TextStyle(font: ttf)),
-          pw.Text('اللعبة الثانية',
-              textDirection: pw.TextDirection.rtl,
-              style: pw.TextStyle(font: ttf)),
+          PdfTxts(text: '', font: ttf, textDirection: pw.TextDirection.rtl),
+          PdfTxts(
+              text: 'اللعبة الثانية',
+              font: ttf,
+              textDirection: pw.TextDirection.rtl)
         ],
         [
-          pw.Text('',
-              textDirection: pw.TextDirection.rtl,
-              style: pw.TextStyle(font: ttf)),
-          pw.Text('اللعبة الثالثة',
-              textDirection: pw.TextDirection.rtl,
-              style: pw.TextStyle(font: ttf)),
+          PdfTxts(text: '', font: ttf, textDirection: pw.TextDirection.rtl),
+          PdfTxts(
+              text: 'اللعبة الثالثة',
+              font: ttf,
+              textDirection: pw.TextDirection.rtl)
         ],
         [
-          pw.Text('',
-              textDirection: pw.TextDirection.rtl,
-              style: pw.TextStyle(font: ttf)),
-          pw.Text('اللعبة الرابعة',
-              textDirection: pw.TextDirection.rtl,
-              style: pw.TextStyle(font: ttf)),
+          PdfTxts(text: '', font: ttf, textDirection: pw.TextDirection.rtl),
+          PdfTxts(
+              text: 'اللعبة الرابعة',
+              font: ttf,
+              textDirection: pw.TextDirection.rtl)
         ],
         [
-          pw.Text('',
-              textDirection: pw.TextDirection.rtl,
-              style: pw.TextStyle(font: ttf, fontWeight: pw.FontWeight.bold)),
-          pw.Text('المجموع:',
-              textDirection: pw.TextDirection.rtl,
-              style: pw.TextStyle(font: ttf, fontWeight: pw.FontWeight.bold)),
+          PdfTxts(text: '', font: ttfbold, textDirection: pw.TextDirection.rtl),
+          PdfTxts(
+              text: 'المجموع',
+              font: ttfbold,
+              textDirection: pw.TextDirection.rtl)
         ],
       ],
     );
@@ -166,7 +176,7 @@ class PdfWidget {
     final table1 = pw.Column(
       children: [
         pw.Container(
-          padding: pw.EdgeInsets.only(left: 10),
+          padding: pw.EdgeInsets.only(right: 10),
           decoration: pw.BoxDecoration(
             color: PdfColors.grey300,
             border: pw.Border(
@@ -179,9 +189,10 @@ class PdfWidget {
           ),
           height: 30,
           alignment: pw.Alignment.centerRight,
-          child: pw.Text('ملخص:',
-              textDirection: pw.TextDirection.rtl,
-              style: pw.TextStyle(font: ttf, fontWeight: pw.FontWeight.bold)),
+          child: PdfTxts(
+              text: 'ملخص:',
+              font: ttfbold,
+              textDirection: pw.TextDirection.rtl),
         ),
         pw.Container(
           padding: pw.EdgeInsets.all(10),
@@ -228,12 +239,10 @@ class PdfWidget {
               pw.Spacer(),
               pw.Align(
                 alignment: pw.Alignment.bottomCenter,
-                child: pw.Text(
-                  'YAQIDH | يَقِظ',
-                  textDirection: pw.TextDirection.rtl,
-                  style:
-                      pw.TextStyle(font: ttf, fontWeight: pw.FontWeight.bold),
-                ),
+                child: PdfTxts(
+                    text: 'YAQIDH | يَقِظ',
+                    font: ttfbold,
+                    textDirection: pw.TextDirection.rtl),
               ),
             ],
           );

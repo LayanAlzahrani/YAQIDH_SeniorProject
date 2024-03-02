@@ -3,7 +3,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:yaqidh_first/Screens/homepage.dart';
+import 'package:yaqidh_first/Screens/Admin/homepage.dart';
+import 'package:yaqidh_first/Widgets/pdf_widget.dart';
 import 'package:yaqidh_first/Widgets/profile_info.dart';
 import 'package:yaqidh_first/Widgets/settingsWidget.dart';
 import 'package:yaqidh_first/firebase_options.dart';
@@ -24,22 +25,24 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Tajawal', useMaterial3: true),
-      home: const TeacherProfile(),
+      home: const StudentProfile(),
     );
   }
 }
 
-class TeacherProfile extends StatefulWidget {
-  const TeacherProfile({Key? key}) : super(key: key);
+class StudentProfile extends StatefulWidget {
+  const StudentProfile({Key? key}) : super(key: key);
 
   @override
-  State<TeacherProfile> createState() => _TeacherProfileState();
+  State<StudentProfile> createState() => _StudentProfileState();
 }
 
-class _TeacherProfileState extends State<TeacherProfile> {
-  final double coverHeight = 95;
-  final double profileHeight = 115;
+class _StudentProfileState extends State<StudentProfile> {
+  final pdfw = PdfWidget();
+  final double coverHeight = 85;
+  final double profileHeight = 98;
 
+  //function to edit fields
   Future<void> editField(String field) async {}
 
   @override
@@ -70,7 +73,7 @@ class _TeacherProfileState extends State<TeacherProfile> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "إسم المعلم",
+                    "إسم الطالب",
                     style: TextStyle(
                         fontSize: screenHeight * 0.02,
                         fontWeight: FontWeight.bold),
@@ -78,20 +81,38 @@ class _TeacherProfileState extends State<TeacherProfile> {
                   SizedBox(height: screenHeight * 0.01),
                   ProfileInfo(
                     sectionName: 'رقم التعريف',
-                    info: '100000',
+                    info: '200000',
                   ),
                   ProfileInfo(
-                    sectionName: 'البريد الإلكتروني',
-                    info: 'Teacher@gmail.com',
+                    sectionName: 'تاريخ الميلاد',
+                    info: '12-3-2018',
                   ),
                   ProfileInfo(
-                    sectionName: 'رقم الهاتف',
-                    info: '0531327573',
+                    sectionName: 'رقم هاتف ولي الأمر',
+                    info: '0543278484',
+                  ),
+                  ProfileInfo(
+                    sectionName: 'البريد الإلكتروني لـ ولي الأمر',
+                    info: 'Parent@gmail.com',
+                  ),
+                  ProfileInfo(
+                    sectionName: 'تاريخ التشخيص',
+                    info: '22-6-2023',
+                  ),
+                  ProfileInfo(
+                    sectionName: 'نتيجة التشخيص',
+                    info: 'مشخص بنسبة 70 بالمئة',
+                  ),
+                  ProfileInfo(
+                    sectionName: 'المسؤول عن التشخيص',
+                    info: 'أ. ريم احمد',
                   ),
                   SettingsWidget(
-                    name: 'قائمة الطلاب المسؤول عنهم',
-                    ontap: () {},
-                  ),
+                      name: 'التقرير',
+                      ontap: () async {
+                        final data = await pdfw.generatePDF();
+                        await pdfw.savePdfFile("ADHD_Report", data);
+                      })
                 ],
               ),
             ),
@@ -101,7 +122,7 @@ class _TeacherProfileState extends State<TeacherProfile> {
       floatingActionButton: FloatingActionButton(
         shape: CircleBorder(),
         onPressed: () {},
-        tooltip: 'تعديل',
+        tooltip: 'edit',
         backgroundColor: Color(0xFF7FC7D9),
         foregroundColor: Colors.white,
         elevation: screenHeight * 0.002,
@@ -114,28 +135,9 @@ class _TeacherProfileState extends State<TeacherProfile> {
     );
   }
 
-  // Widget buildContent() {
-  //   return Container(
-  //     padding: EdgeInsets.symmetric(horizontal: 25),
-  //     child: Column(
-  //       crossAxisAlignment: CrossAxisAlignment.center,
-  //       children: [
-  //         Text(
-  //           "إسم الإداري",
-  //           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-  //         ),
-  //         SizedBox(
-  //           height: 14,
-  //         ),
-  //         ProfileInfo(),
-  //       ],
-  //     ),
-  //   );
-  // }
-
   Widget buildTop() {
     final bottom = profileHeight / 2 + 18;
-    final top = coverHeight - profileHeight / 2;
+    final top = coverHeight - profileHeight / 2 - 10;
     return Stack(
       clipBehavior: Clip.none,
       alignment: Alignment.center,
@@ -150,7 +152,7 @@ class _TeacherProfileState extends State<TeacherProfile> {
   Widget buildCoverImage() => Container(
         color: Color(0xFF365486), // Set the color here
         width: double.infinity,
-        height: coverHeight,
+        height: coverHeight - 10,
       );
 
   Widget buildPFP() => Container(

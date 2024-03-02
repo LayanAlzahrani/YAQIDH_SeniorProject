@@ -3,9 +3,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:yaqidh_first/Screens/admin_profile.dart';
-import 'package:yaqidh_first/Screens/homepage.dart';
-import 'package:yaqidh_first/Screens/login.dart';
+import 'package:yaqidh_first/Screens/Admin/admin_profile.dart';
+import 'package:yaqidh_first/Screens/Admin/homepage.dart';
+import 'package:yaqidh_first/Screens/Admin/login.dart';
 import 'package:yaqidh_first/Widgets/customBottomNavigationBar.dart';
 import 'package:yaqidh_first/Widgets/myaccWidget.dart';
 import 'package:yaqidh_first/Widgets/settingsWidget.dart';

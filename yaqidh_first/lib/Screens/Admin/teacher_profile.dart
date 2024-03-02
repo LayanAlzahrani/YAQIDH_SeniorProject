@@ -3,8 +3,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:yaqidh_first/Screens/myaccount.dart';
+import 'package:yaqidh_first/Screens/Admin/homepage.dart';
 import 'package:yaqidh_first/Widgets/profile_info.dart';
+import 'package:yaqidh_first/Widgets/settingsWidget.dart';
 import 'package:yaqidh_first/firebase_options.dart';
 
 void main() async {
@@ -23,21 +24,21 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Tajawal', useMaterial3: true),
-      home: const AdminProfile(),
+      home: const TeacherProfile(),
     );
   }
 }
 
-class AdminProfile extends StatefulWidget {
-  const AdminProfile({Key? key}) : super(key: key);
+class TeacherProfile extends StatefulWidget {
+  const TeacherProfile({Key? key}) : super(key: key);
 
   @override
-  State<AdminProfile> createState() => _AdminProfileState();
+  State<TeacherProfile> createState() => _TeacherProfileState();
 }
 
-class _AdminProfileState extends State<AdminProfile> {
-  final double coverHeight = 95;
-  final double profileHeight = 115;
+class _TeacherProfileState extends State<TeacherProfile> {
+  final double coverHeight = 85;
+  final double profileHeight = 98;
 
   Future<void> editField(String field) async {}
 
@@ -51,7 +52,7 @@ class _AdminProfileState extends State<AdminProfile> {
           icon: Icon(FontAwesomeIcons.chevronLeft, color: Colors.white),
           onPressed: () {
             Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => MyAccount()),
+              MaterialPageRoute(builder: (context) => HomePage()),
             );
           },
         ),
@@ -69,7 +70,7 @@ class _AdminProfileState extends State<AdminProfile> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "إسم الإداري",
+                    "إسم المعلم",
                     style: TextStyle(
                         fontSize: screenHeight * 0.02,
                         fontWeight: FontWeight.bold),
@@ -77,15 +78,19 @@ class _AdminProfileState extends State<AdminProfile> {
                   SizedBox(height: screenHeight * 0.01),
                   ProfileInfo(
                     sectionName: 'رقم التعريف',
-                    info: '000000',
+                    info: '100000',
                   ),
                   ProfileInfo(
                     sectionName: 'البريد الإلكتروني',
-                    info: 'Admin@gmail.com',
+                    info: 'Teacher@gmail.com',
                   ),
                   ProfileInfo(
                     sectionName: 'رقم الهاتف',
-                    info: '0531324894',
+                    info: '0531327573',
+                  ),
+                  SettingsWidget(
+                    name: 'قائمة الطلاب المسؤول عنهم',
+                    ontap: () {},
                   ),
                 ],
               ),
@@ -130,7 +135,7 @@ class _AdminProfileState extends State<AdminProfile> {
 
   Widget buildTop() {
     final bottom = profileHeight / 2 + 18;
-    final top = coverHeight - profileHeight / 2;
+    final top = coverHeight - profileHeight / 2 - 10;
     return Stack(
       clipBehavior: Clip.none,
       alignment: Alignment.center,
@@ -145,7 +150,7 @@ class _AdminProfileState extends State<AdminProfile> {
   Widget buildCoverImage() => Container(
         color: Color(0xFF365486), // Set the color here
         width: double.infinity,
-        height: coverHeight,
+        height: coverHeight - 10,
       );
 
   Widget buildPFP() => Container(
