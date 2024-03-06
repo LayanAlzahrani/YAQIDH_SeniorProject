@@ -32,49 +32,52 @@ class MyApp1 extends StatelessWidget {
     );
   }
 }
-
 class StudentListPage extends StatelessWidget {
-  const StudentListPage({super.key});
+  const StudentListPage({Key? key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: const Color.fromARGB(255, 247, 243, 243),
-      child: Column(
-        children: [
-          Container(
-            color: Colors.white,
-            padding: EdgeInsets.all(33.0),
-            child: Row(
-              children: [
-                Container(
-                  padding: EdgeInsets.only(right: 8.0),
-                  child: Icon(Icons.search),
-                ),
-                Expanded(
-                  child: TextField(
-                    textAlign: TextAlign.right,
-                    decoration: InputDecoration(
-                      hintText: '..ابحث',
-                      border: OutlineInputBorder(),
-                    ),
+    return Material(
+      child: Container(
+        color: const Color.fromARGB(255, 247, 243, 243),
+        child: Column(
+          children: [
+            Container(
+              color: Colors.white,
+              padding: EdgeInsets.all(33.0),
+              child: Row(
+                children: [
+                  Container(
+                    padding: EdgeInsets.only(right: 8.0),
                   ),
-                ),
-              ],
+                  Expanded(
+                    child: TextField(
+                      textAlign: TextAlign.right,
+                      decoration: InputDecoration(
+                        hintText: '..ابحث',
+                        border: OutlineInputBorder(),
+                        prefixIcon: Icon(Icons.search),
+                      ),
+                    ),
+                    
+                  ),
+                ],
+              ),
             ),
-          ),
-          Expanded(
-            child: Container(
-              color: Color.fromARGB(255, 255, 253, 253),
-              padding: EdgeInsets.symmetric(horizontal: 8.0),
-              child: StudentList(),
+            Expanded(
+              child: Container(
+                color: Color.fromARGB(255, 255, 253, 253),
+                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                child: StudentList(),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 }
+
 
 class StudentList extends StatelessWidget {
   @override
@@ -138,7 +141,7 @@ class StudentList extends StatelessWidget {
                 child: Text(
                   index.isEven ? 'تم الاختبار' : 'لم يتم الإختبار',
                   style: TextStyle(
-                    color: Colors.red, // Changed color to red
+                    color: index.isEven ? Colors.green : Colors.red,
                     fontFamily: 'Tajawal',
                     fontSize: 16.0, // Adjusted font size
                   ),
