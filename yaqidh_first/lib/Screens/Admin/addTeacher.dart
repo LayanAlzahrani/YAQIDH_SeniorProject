@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp1());
+  runApp(const MyApp1());
 }
 
 class MyApp1 extends StatelessWidget {
@@ -17,17 +17,17 @@ class MyApp1 extends StatelessWidget {
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             'إنشاء حساب معلم ',
             style: TextStyle(color: Colors.white, fontFamily: 'Tajawal'),
           ),
           centerTitle: true,
-          backgroundColor: Color(0xFF365486),
-          leading: Container(
+          backgroundColor: const Color(0xFF365486),
+          leading: const SizedBox(
             height: double.infinity, // Adjust the height as needed
             child: Center(
               child: Padding(
-                padding: const EdgeInsets.only(left: 18.0),
+                padding: EdgeInsets.only(left: 18.0),
                 child: Text(
                   'تراجع',
                   style: TextStyle(color: Colors.white, fontFamily: 'Tajawal', fontSize: 14),
@@ -36,12 +36,12 @@ class MyApp1 extends StatelessWidget {
             ),
           ),
         ),
-        body: Column(
+        body: const Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             SizedBox(height: 40), // Added SizedBox for equal space
             Padding(
-              padding: const EdgeInsets.only(right: 16.0, left: 16.0),
+              padding: EdgeInsets.only(right: 16.0, left: 16.0),
               child: Text(
                 ': الرجاء تعبئة البيانات التالية ',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, fontFamily: 'Tajawal'),
@@ -61,6 +61,8 @@ class MyApp1 extends StatelessWidget {
 // Importing material.dart for Flutter widgets
 
 class AccountActivationForm extends StatefulWidget {
+  const AccountActivationForm({super.key});
+
   @override
   _AccountActivationFormState createState() => _AccountActivationFormState();
 }
@@ -77,13 +79,13 @@ Widget build(BuildContext context) {
   // Building the UI for account activation form
   return Column(
     children: [
-      SizedBox(height: 20), // Added SizedBox for equal space
+      const SizedBox(height: 20), // Added SizedBox for equal space
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Text(
+            const Text(
               'إسم المعلم',
               style: TextStyle(
                 fontSize: 16, // Custom font size
@@ -95,13 +97,13 @@ Widget build(BuildContext context) {
           ],
         ),
       ),
-      SizedBox(height: 20), // Added SizedBox for equal space
+      const SizedBox(height: 20), // Added SizedBox for equal space
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Text(
+            const Text(
               ' البريد الالكتروني',
               style: TextStyle(
                 fontSize: 16, // Custom font size
@@ -113,13 +115,13 @@ Widget build(BuildContext context) {
           ],
         ),
       ),
-      SizedBox(height: 25), // Added SizedBox for equal space
+      const SizedBox(height: 25), // Added SizedBox for equal space
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Text(
+            const Text(
               'رقم الهاتف    ',
               style: TextStyle(
                 fontSize: 16, // Custom font size
@@ -131,8 +133,8 @@ Widget build(BuildContext context) {
           ],
         ),
       ),
-      SizedBox(height: 40), // Added SizedBox for equal space
-Container(
+      const SizedBox(height: 40), // Added SizedBox for equal space
+SizedBox(
   width: 290, // Set the desired width for the ElevatedButton
   height: 60, // Set the desired height for the ElevatedButton
   child: ElevatedButton(
@@ -144,15 +146,15 @@ Container(
       print('Phone Number: ${phoneController.text}');
     },
     style: ElevatedButton.styleFrom(
-      backgroundColor:  Color.fromRGBO(127, 199, 217, 1.0), // Background color
-      foregroundColor: Color.fromARGB(255, 255, 255, 255), // Text color
-      textStyle: TextStyle(
+      backgroundColor:  const Color.fromRGBO(127, 199, 217, 1.0), // Background color
+      foregroundColor: const Color.fromARGB(255, 255, 255, 255), // Text color
+      textStyle: const TextStyle(
         fontSize: 19,
         fontWeight:FontWeight.bold, // Custom font size
         fontFamily: 'Tajawal', // Custom font family
       ),
     ),
-    child: Text(
+    child: const Text(
       'تفعيل حساب المعلم',
     ),
   ),
@@ -174,7 +176,7 @@ Container(
         child: TextField(
           controller: controller,
           textAlign: TextAlign.right, // Right-align text
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             border: InputBorder.none, // No border inside the container
             fillColor: Colors.white, // White fill color
             filled: true,

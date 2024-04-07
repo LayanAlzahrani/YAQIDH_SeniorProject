@@ -42,14 +42,14 @@ class MyAccWidget extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.only(top: screenHeight * 0.015),
                         child: Text(
-                          "إسم الإداري",
+                          "الإسم",
                           style: TextStyle(
                               fontSize: screenHeight * 0.015,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
                       Text(
-                        "رقم الإداري",
+                        "رقم التعريف",
                         style: TextStyle(
                             fontSize: screenHeight * 0.014,
                             color: Color(0xFF999999)),

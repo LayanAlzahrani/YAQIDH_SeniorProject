@@ -2,8 +2,9 @@
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:yaqidh_first/Screens/Admin/student_profile.dart';
+import 'package:yaqidh_first/Screens/Teacher/homepage_T.dart';
+import 'package:yaqidh_first/Screens/Teacher/my_account_T.dart';
+import 'package:yaqidh_first/Widgets/teacher_navigation_bar.dart';
 import 'package:yaqidh_first/firebase_options.dart';
 
 Future<void> main() async {
@@ -22,53 +23,52 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Tajawal', useMaterial3: true),
-      home: Report(),
+      home: Game(),
     );
   }
 }
 
-class Report extends StatefulWidget {
-  const Report({Key? key}) : super(key: key);
+class Game extends StatefulWidget {
+  const Game({Key? key}) : super(key: key);
 
   @override
-  State<Report> createState() => _ReportState();
+  State<Game> createState() => _GameState();
 }
 
-class _ReportState extends State<Report> {
+class _GameState extends State<Game> {
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.sizeOf(context).height;
+    //double screenHeight = MediaQuery.sizeOf(context).height;
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(FontAwesomeIcons.chevronLeft,
-              color: Colors.white), // Set icon color to white
-          onPressed: () {
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                  builder: (context) =>
-                      StudentProfile()), // Navigate to MyAccount()
-            );
-          },
-        ),
-
         //elevation: 0.0,
         automaticallyImplyLeading: false,
         title: const Text(
-          'التقرير',
+          'اللعبة',
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
         backgroundColor: const Color(0xFF365486),
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: screenHeight * 0.03),
-        color: const Color(0xFFF8F8F8),
-        child: Center(
-          child: Column(
-            children: const [],
-          ),
-        ),
+        height: double.infinity,
+        color: Color(0xFFF8F8F8),
+      ),
+      bottomNavigationBar: TeacherNavigationBar(
+        currentIndex: 1,
+        onTap: (index) {
+          if (index == 2) {
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => const MyAccountTeacher()),
+              (route) => false,
+            );
+          } else if (index == 0) {
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => const HomePageTeacher()),
+              (route) => false,
+            );
+          }
+        },
       ),
     );
   }

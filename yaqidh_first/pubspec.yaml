@@ -43,6 +43,7 @@ dependencies:
   open_file: ^3.3.2
   path_provider: ^2.1.2
   printing: ^5.12.0
+  flutter_svg: ^2.0.5
 
   
 
@@ -69,8 +70,10 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #    - C:/Users/DELL/OneDriveDesktop/Dart Projects/assets/imgs/
+  assets:
+     - svg/home.svg
+     - svg/user.svg
+     - svg/puzzle.svg
   
 
   # An image asset can refer to one or more resolution-specific "variants", see

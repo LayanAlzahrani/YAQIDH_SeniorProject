@@ -32,8 +32,9 @@ class MyApp1 extends StatelessWidget {
     );
   }
 }
+
 class StudentListPage extends StatelessWidget {
-  const StudentListPage({Key? key});
+  const StudentListPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +60,6 @@ class StudentListPage extends StatelessWidget {
                         prefixIcon: Icon(Icons.search),
                       ),
                     ),
-                    
                   ),
                 ],
               ),
@@ -78,8 +78,9 @@ class StudentListPage extends StatelessWidget {
   }
 }
 
-
 class StudentList extends StatelessWidget {
+  const StudentList({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
