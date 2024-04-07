@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "80276160707",
+    "project_id": "seniorproject-b001e",
+    "storage_bucket": "seniorproject-b001e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:80276160707:android:4a14d27e0ac548372da276",
+        "android_client_info": {
+          "package_name": "com.example.yaqidh_first"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfCWoiVb7RHtrRelHaST-kkDxZfy5g35w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

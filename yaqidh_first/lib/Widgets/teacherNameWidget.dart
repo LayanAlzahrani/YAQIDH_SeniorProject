@@ -82,7 +82,7 @@ class TeacherNameListWidget extends StatelessWidget {
                   ),
                   SizedBox(
                     width: 15,
-                  )
+                  ),
                 ],
               ),
             ),
