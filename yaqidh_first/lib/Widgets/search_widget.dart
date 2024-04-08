@@ -26,7 +26,7 @@ class SearchWidget extends StatelessWidget {
             child: Icon(
               FontAwesomeIcons.search,
               color: Colors.white,
-              size: screenHeight * 0.026,
+              size: screenHeight * 0.02,
             ),
           ),
           SizedBox(width: screenWidth * 0.015),
@@ -36,10 +36,12 @@ class SearchWidget extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(screenHeight * 0.02),
               ),
+              padding: EdgeInsets.symmetric(vertical: screenHeight * 0.00001),
               child: TextField(
                 textAlign: TextAlign.right,
                 decoration: InputDecoration(
                   hintText: '...إبحث',
+                  hintStyle: TextStyle(fontSize: screenHeight * 0.016),
                   contentPadding:
                       EdgeInsets.symmetric(horizontal: screenHeight * 0.02),
                   border: InputBorder.none,

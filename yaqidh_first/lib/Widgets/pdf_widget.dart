@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_adjacent_string_concatenation
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:flutter/services.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;

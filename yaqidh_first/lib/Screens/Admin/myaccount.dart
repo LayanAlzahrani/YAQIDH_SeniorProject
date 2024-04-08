@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:yaqidh_first/Screens/Admin/admin_profile.dart';
 import 'package:yaqidh_first/Screens/Admin/homepage.dart';
 import 'package:yaqidh_first/Screens/Admin/login.dart';
+import 'package:yaqidh_first/Screens/Teacher/homepage_T.dart';
 import 'package:yaqidh_first/Widgets/customBottomNavigationBar.dart';
 import 'package:yaqidh_first/Widgets/myaccWidget.dart';
 import 'package:yaqidh_first/Widgets/settingsWidget.dart';
@@ -80,6 +81,14 @@ class _MyAccountState extends State<MyAccount> {
                 name: 'تسجيل الخروج',
                 ontap: () {
                   signUserOut(context);
+                },
+              ),
+              SettingsWidget(
+                name: 'زر مؤقت عشان اروح للمعلم',
+                ontap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => HomePageTeacher()),
+                  );
                 },
               ),
             ],

@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_key_in_widget_constructors
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:yaqidh_first/Screens/Admin/student_profile.dart';
 
 class StudentNamesForTeacher extends StatelessWidget {
   const StudentNamesForTeacher({Key? key});
@@ -22,11 +21,12 @@ class StudentNamesForTeacher extends StatelessWidget {
         children: List.generate(
           4,
           (index) => InkWell(
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => StudentProfile()),
-              );
-            },
+            // onTap: () {
+            //   Navigator.of(context).push(
+            //     MaterialPageRoute(
+            //         builder: (context) => StudentProfileForTeacher()),
+            //   );
+            // },
             child: Container(
               padding: EdgeInsets.symmetric(
                   vertical: screenHeight * 0.012,
@@ -39,18 +39,19 @@ class StudentNamesForTeacher extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      FontAwesomeIcons.chevronLeft,
-                      color: Colors.grey[500],
-                      size: screenHeight * 0.02,
-                    ),
-                  ),
+                  // IconButton(
+                  //   onPressed: () {},
+                  //   icon: Icon(
+                  //     FontAwesomeIcons.chevronLeft,
+                  //     color: Colors.grey[500],
+                  //     size: screenHeight * 0.02,
+                  //   ),
+                  // ),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
+                        SizedBox(height: screenHeight * 0.01),
                         Text(
                           "رقم الطالب",
                           style: TextStyle(
@@ -67,14 +68,6 @@ class StudentNamesForTeacher extends StatelessWidget {
                           ),
                           textDirection: TextDirection.rtl,
                         ),
-                        Text(
-                          "إسم المعلم المسؤول",
-                          style: TextStyle(
-                            fontSize: screenHeight * 0.012,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          textDirection: TextDirection.rtl,
-                        )
                       ],
                     ),
                   ),

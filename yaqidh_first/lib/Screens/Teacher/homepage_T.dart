@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:yaqidh_first/Screens/Teacher/game.dart';
@@ -15,7 +16,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  runApp(DevicePreview(builder: (context) => const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -63,7 +64,7 @@ class _HomePageState extends State<HomePageTeacher> {
             StudentListContainer(
               imgUrl:
                   'https://drive.google.com/uc?export=view&id=1rfPcVZwuBt0pHf9vfvM4OkE4ZJvCqDVQ',
-              fieldName: 'قائمة الطلاب',
+              fieldName: '‹  قائمة الطلاب',
               ontap: () {
                 Navigator.pushReplacement(
                   context,

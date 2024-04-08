@@ -6,14 +6,14 @@ class CustomBottomNavigationBar extends StatelessWidget {
   final Function(int) onTap;
 
   const CustomBottomNavigationBar(
-      {required this.currentIndex, required this.onTap});
+      {super.key, required this.currentIndex, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.sizeOf(context).height;
 
     return BottomNavigationBar(
-      selectedItemColor: Color(0xFF365486),
+      selectedItemColor: const Color(0xFF365486),
       currentIndex: currentIndex,
       onTap: onTap,
       items: <BottomNavigationBarItem>[
