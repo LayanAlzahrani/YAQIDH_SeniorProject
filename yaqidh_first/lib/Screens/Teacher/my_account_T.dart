@@ -3,10 +3,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:yaqidh_first/Screens/Admin/admin_profile.dart';
 import 'package:yaqidh_first/Screens/Admin/login.dart';
 import 'package:yaqidh_first/Screens/Teacher/game.dart';
 import 'package:yaqidh_first/Screens/Teacher/homepage_T.dart';
+import 'package:yaqidh_first/Screens/Teacher/teacher_profile_T.dart';
 import 'package:yaqidh_first/Widgets/myaccWidget.dart';
 import 'package:yaqidh_first/Widgets/settingsWidget.dart';
 import 'package:yaqidh_first/Widgets/teacher_navigation_bar.dart';
@@ -66,7 +66,7 @@ class _MyAccountState extends State<MyAccountTeacher> {
                 name: 'الإعدادات',
                 ontap: () {
                   Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => AdminProfile()),
+                    MaterialPageRoute(builder: (context) => TeacherMyProfile()),
                   );
                 },
               ),

@@ -36,13 +36,13 @@ class StudentListContainer extends StatelessWidget {
               color: Colors.grey[500],
               size: screenHeight * 0.02,
             ),
-            SizedBox(width: screenHeight * 0.493),
+            SizedBox(width: screenWidth * 0.585),
             Text(
               fieldName,
               style: TextStyle(
-                  fontSize: screenHeight * 0.02, fontWeight: FontWeight.w600),
+                  fontSize: screenHeight * 0.018, fontWeight: FontWeight.w600),
             ),
-            SizedBox(width: screenHeight * 0.02),
+            SizedBox(width: screenWidth * 0.02),
             Image.network(
               imgUrl,
               height: screenHeight * 0.075,

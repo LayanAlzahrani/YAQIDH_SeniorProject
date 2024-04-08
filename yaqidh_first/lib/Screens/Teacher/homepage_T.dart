@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:yaqidh_first/Screens/Teacher/game.dart';
 import 'package:yaqidh_first/Screens/Teacher/my_account_T.dart';
+import 'package:yaqidh_first/Screens/Teacher/student_list_T.dart';
 import 'package:yaqidh_first/Widgets/list_widget_T.dart';
 import 'package:yaqidh_first/Widgets/student_name_list_T.dart';
 import 'package:yaqidh_first/Widgets/teacher_navigation_bar.dart';
@@ -63,7 +64,12 @@ class _HomePageState extends State<HomePageTeacher> {
               imgUrl:
                   'https://drive.google.com/uc?export=view&id=1rfPcVZwuBt0pHf9vfvM4OkE4ZJvCqDVQ',
               fieldName: 'قائمة الطلاب',
-              ontap: () {},
+              ontap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => StudentListTeacher()),
+                );
+              },
             ),
             SizedBox(
               height: screenHeight * 0.022,

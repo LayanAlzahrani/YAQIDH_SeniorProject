@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
   final int currentIndex;
@@ -19,14 +19,14 @@ class CustomBottomNavigationBar extends StatelessWidget {
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(
-            FontAwesomeIcons.house,
+            FluentIcons.home_24_regular,
             size: screenHeight * 0.026,
           ),
           label: 'الرئيسية',
         ),
         BottomNavigationBarItem(
           icon: Icon(
-            FontAwesomeIcons.solidUser,
+            FluentIcons.person_20_regular,
             size: screenHeight * 0.026,
           ),
           label: 'حسابي',
