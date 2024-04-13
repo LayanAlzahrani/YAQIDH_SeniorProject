@@ -33,6 +33,9 @@ class FirstPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.sizeOf(context).height;
+    double screenWidth = MediaQuery.sizeOf(context).width;
+
     // Delay navigation to login page after 3000ms
     Timer(const Duration(milliseconds: 3000), () {
       Navigator.pushReplacement(
@@ -48,8 +51,7 @@ class FirstPage extends StatelessWidget {
           child: Image.network(
             //Yaqidh Logo
             'https://drive.google.com/uc?export=view&id=1RYgADNjK6VMqOAIxB9pjMbfcKCsxZ-SU',
-            width: 350,
-            height: 350,
+            height: screenHeight * 0.25,
             fit: BoxFit.cover,
           ),
         ),

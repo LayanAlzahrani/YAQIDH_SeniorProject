@@ -75,10 +75,11 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            SizedBox(height: screenHeight * 0.08),
             Image.network(
               'https://drive.google.com/uc?export=view&id=1RYgADNjK6VMqOAIxB9pjMbfcKCsxZ-SU',
               //width: MediaQuery.of(context).size.width * 0.4,
-              height: screenHeight * 0.25,
+              height: screenHeight * 0.14,
             ),
             SizedBox(height: screenHeight * 0.05),
             LayoutBuilder(
