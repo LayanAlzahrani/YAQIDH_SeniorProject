@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:yaqidh_first/Screens/Admin/login.dart';
+import 'package:yaqidh_first/Screens/Admin/homepage.dart';
 import 'package:yaqidh_first/Screens/Teacher/game.dart';
 import 'package:yaqidh_first/Screens/Teacher/homepage_T.dart';
 import 'package:yaqidh_first/Screens/Teacher/teacher_profile_T.dart';
@@ -74,6 +75,14 @@ class _MyAccountState extends State<MyAccountTeacher> {
                 name: 'تسجيل الخروج',
                 ontap: () {
                   signUserOut(context);
+                },
+              ),
+              SettingsWidget(
+                name: 'زر مؤقت عشان اروح للإداري',
+                ontap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => HomePage()),
+                  );
                 },
               ),
             ],
