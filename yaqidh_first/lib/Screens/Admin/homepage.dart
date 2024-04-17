@@ -80,7 +80,7 @@ class _HomePageState extends State<HomePage> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => StudentListPage()),
+                            builder: (context) => StudentListAdmin()),
                       );
                     },
                   )
