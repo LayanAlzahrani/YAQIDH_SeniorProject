@@ -1,6 +1,11 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-void main() {
+void main() async {
+  // Initialize Firebase before running the app
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp1());
 }
 
@@ -56,133 +61,142 @@ class MyApp1 extends StatelessWidget {
   }
 }
 
-
-
-// Importing material.dart for Flutter widgets
-
 class AccountActivationForm extends StatefulWidget {
-  const AccountActivationForm({super.key});
+  const AccountActivationForm({Key? key}) : super(key: key);
 
   @override
   _AccountActivationFormState createState() => _AccountActivationFormState();
 }
 
 class _AccountActivationFormState extends State<AccountActivationForm> {
-  // Initializing TextEditingController for each text field
   final TextEditingController nameController = TextEditingController();
   final TextEditingController dobController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
 
   @override
-@override
-Widget build(BuildContext context) {
-  // Building the UI for account activation form
-  return Column(
-    children: [
-      const SizedBox(height: 20), // Added SizedBox for equal space
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            const Text(
-              'إسم الطالب',
-              style: TextStyle(
-                fontSize: 16, // Custom font size
-                color: Color(0xFF888888),
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const SizedBox(height: 20), // Added SizedBox for equal space
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              const Text(
+                'إسم الطالب',
+                style: TextStyle(
+                  fontSize: 16, // Custom font size
+                  color: Color(0xFF888888),
+                  fontFamily: 'Tajawal', // Custom font family
+                ),
+              ), // Information above name text field
+              _buildCurvedTextField(nameController), // Building text field for name
+            ],
+          ),
+        ),
+        const SizedBox(height: 20), // Added SizedBox for equal space
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              const Text(
+                'تاريخ الميلاد',
+                style: TextStyle(
+                  fontSize: 16, // Custom font size
+                  color: Color(0xFF888888),
+                  fontFamily: 'Tajawal', // Custom font family
+                ),
+              ), // Information above date of birth text field
+              _buildCurvedTextField(dobController), // Building text field for date of birth
+            ],
+          ),
+        ),
+        const SizedBox(height: 20), // Added SizedBox for equal space
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              const Text(
+                ' البريد الالكتروني لـ ولي أمر الطالب ',
+                style: TextStyle(
+                  fontSize: 16, // Custom font size
+                  color: Color(0xFF888888),
+                  fontFamily: 'Tajawal', // Custom font family
+                ),
+              ), // Information above email text field
+              _buildCurvedTextField(emailController), // Building text field for email
+            ],
+          ),
+        ),
+        const SizedBox(height: 25), // Added SizedBox for equal space
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              const Text(
+                'رقم هاتف ولي أمر الطالب ',
+                style: TextStyle(
+                  fontSize: 16, // Custom font size
+                  color: Color(0xFF888888),
+                  fontFamily: 'Tajawal', // Custom font family
+                ),
+              ), // Information above phone number text field
+              _buildCurvedTextField(phoneController), // Building text field for phone number
+            ],
+          ),
+        ),
+        const SizedBox(height: 40), // Added SizedBox for equal space
+        SizedBox(
+          width: 290, // Set the desired width for the ElevatedButton
+          height: 60, // Set the desired height for the ElevatedButton
+          child: ElevatedButton(
+            onPressed: () {
+              // Perform action to activate the account here
+              // For now, let's just print the entered data
+              print('Student Name: ${nameController.text}');
+              print('Date of Birth: ${dobController.text}');
+              print('Email: ${emailController.text}');
+              print('Phone Number: ${phoneController.text}');
+              
+              // Add user to Firestore database
+              FirebaseFirestore.instance.collection('users').add({
+                'full_name': nameController.text,
+                'age': dobController.text,
+                'email': emailController.text,
+                'phone': phoneController.text,
+              }).then((_) {
+                // Clear text fields after adding user
+                nameController.clear();
+                dobController.clear();
+                emailController.clear();
+                phoneController.clear();
+              }).catchError((error) {
+                // Handle error if adding user fails
+                print("Failed to add user: $error");
+              });
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor:  const Color.fromRGBO(127, 199, 217, 1.0), // Background color
+              foregroundColor: const Color.fromARGB(255, 255, 255, 255), // Text color
+              textStyle: const TextStyle(
+                fontSize: 19,
+                fontWeight: FontWeight.bold, // Custom font size
                 fontFamily: 'Tajawal', // Custom font family
               ),
-            ), // Information above name text field
-            _buildCurvedTextField(nameController), // Building text field for name
-          ],
+            ),
+            child: const Text(
+              'تفعيل حساب الطالب',
+            ),
+          ),
         ),
-      ),
-      const SizedBox(height: 20), // Added SizedBox for equal space
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            const Text(
-              'تاريخ الميلاد',
-              style: TextStyle(
-                fontSize: 16, // Custom font size
-                color: Color(0xFF888888),
-                fontFamily: 'Tajawal', // Custom font family
-              ),
-            ), // Information above date of birth text field
-            _buildCurvedTextField(dobController), // Building text field for date of birth
-          ],
-        ),
-      ),
-      const SizedBox(height: 20), // Added SizedBox for equal space
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            const Text(
-              ' البريد الالكتروني لـ ولي أمر الطالب ',
-              style: TextStyle(
-                fontSize: 16, // Custom font size
-                color: Color(0xFF888888),
-                fontFamily: 'Tajawal', // Custom font family
-              ),
-            ), // Information above email text field
-            _buildCurvedTextField(emailController), // Building text field for email
-          ],
-        ),
-      ),
-      const SizedBox(height: 25), // Added SizedBox for equal space
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            const Text(
-              'رقم هاتف ولي أمر الطالب ',
-              style: TextStyle(
-                fontSize: 16, // Custom font size
-                color: Color(0xFF888888),
-                fontFamily: 'Tajawal', // Custom font family
-              ),
-            ), // Information above phone number text field
-            _buildCurvedTextField(phoneController), // Building text field for phone number
-          ],
-        ),
-      ),
-      const SizedBox(height: 40), // Added SizedBox for equal space
-SizedBox(
-  width: 290, // Set the desired width for the ElevatedButton
-  height: 60, // Set the desired height for the ElevatedButton
-  child: ElevatedButton(
-    onPressed: () {
-      // Perform action to activate the account here
-      // For now, let's just print the entered data
-      print('Student Name: ${nameController.text}');
-      print('Date of Birth: ${dobController.text}');
-      print('Email: ${emailController.text}');
-      print('Phone Number: ${phoneController.text}');
-    },
-    style: ElevatedButton.styleFrom(
-      backgroundColor:  const Color.fromRGBO(127, 199, 217, 1.0), // Background color
-      foregroundColor: const Color.fromARGB(255, 255, 255, 255), // Text color
-      textStyle: const TextStyle(
-        fontSize: 19,
-        fontWeight:FontWeight.bold, // Custom font size
-        fontFamily: 'Tajawal', // Custom font family
-      ),
-    ),
-    child: const Text(
-      'تفعيل حساب الطالب',
-    ),
-  ),
-),
-    ],
-  );
-}
-
+      ],
+    );
+  }
 
   // Function to build curved text field
   Widget _buildCurvedTextField(TextEditingController controller) {
@@ -205,16 +219,4 @@ SizedBox(
       ),
     );
   }
-
-  // Dispose method to dispose of text controllers when the widget is removed from the tree
-  @override
-  void dispose() {
-    nameController.dispose();
-    dobController.dispose();
-    emailController.dispose();
-    phoneController.dispose();
-    super.dispose();
-  }
 }
-
-
