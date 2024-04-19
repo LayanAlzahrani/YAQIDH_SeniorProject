@@ -46,7 +46,7 @@ class _StudentListTeacherState extends State<StudentListAdmin> {
           icon: Icon(FontAwesomeIcons.chevronLeft, color: Colors.white),
           onPressed: () {
             Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) =>  HomePage()),
+              MaterialPageRoute(builder: (context) => const HomePage()),
             );
           },
         ),

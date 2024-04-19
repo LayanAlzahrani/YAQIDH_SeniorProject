@@ -34,10 +34,9 @@ class FirstPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.sizeOf(context).height;
-    double screenWidth = MediaQuery.sizeOf(context).width;
 
     // Delay navigation to login page after 3000ms
-    Timer(const Duration(milliseconds: 10000), () {
+    Timer(const Duration(milliseconds: 4000), () {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const LoginPage()),
