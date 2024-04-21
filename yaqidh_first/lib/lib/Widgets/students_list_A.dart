@@ -100,13 +100,13 @@ class AllStudentNamesForAdmin extends StatelessWidget {
                                 ),
                                 textDirection: TextDirection.rtl,
                               ),
-                              // Text(
-                              //  "المعلم",
-                              //  style: TextStyle(
-                              //    fontSize: screenHeight * 0.013,
-                              //  ),
-                              //  textDirection: TextDirection.rtl,
-                            //  ),
+                               Text(
+                                "المعلم",
+                                style: TextStyle(
+                                  fontSize: screenHeight * 0.013,
+                                ),
+                                textDirection: TextDirection.rtl,
+                              ),
                             ],
                           ),
                         ),

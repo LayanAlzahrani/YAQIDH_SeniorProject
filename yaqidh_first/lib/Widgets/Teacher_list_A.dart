@@ -1,12 +1,12 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_key_in_widget_constructors
 import 'package:flutter/material.dart';
-import 'package:yaqidh_first/Screens/Admin/student_profile.dart';
+import 'package:yaqidh_first/Screens/Admin/teacher_profile.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class AllStudentNamesForAdmin extends StatelessWidget {
+class TeacherNamesForAdmin extends StatelessWidget {
   final bool isTested = false;
 
-  const AllStudentNamesForAdmin({Key? key}) : super(key: key);
+  const TeacherNamesForAdmin({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class AllStudentNamesForAdmin extends StatelessWidget {
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => StudentProfile(),
+                        builder: (context) => TeacherProfile(),
                       ),
                     );
                   },
@@ -100,13 +100,6 @@ class AllStudentNamesForAdmin extends StatelessWidget {
                                 ),
                                 textDirection: TextDirection.rtl,
                               ),
-                              // Text(
-                              //  "المعلم",
-                              //  style: TextStyle(
-                              //    fontSize: screenHeight * 0.013,
-                              //  ),
-                              //  textDirection: TextDirection.rtl,
-                            //  ),
                             ],
                           ),
                         ),

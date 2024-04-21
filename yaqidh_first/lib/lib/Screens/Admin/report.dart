@@ -1,9 +1,9 @@
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:yaqidh_first/Screens//Admin/homepage.dart';
-import 'package:yaqidh_first/Widgets/student_list_Admin.dart';
-import 'package:yaqidh_first/Widgets/search_widget.dart';
+import 'package:yaqidh_first/Screens/Admin/student_profile.dart';
 import 'package:yaqidh_first/firebase_options.dart';
 
 Future<void> main() async {
@@ -22,51 +22,52 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Tajawal', useMaterial3: true),
-      home: StudentListAdmin(),
+      home: Report(),
     );
   }
 }
 
-class StudentListAdmin extends StatefulWidget {
-  const StudentListAdmin({Key? key}) : super(key: key);
+class Report extends StatefulWidget {
+  const Report({Key? key}) : super(key: key);
 
   @override
-  State<StudentListAdmin> createState() => _StudentListAdminState();
+  State<Report> createState() => _ReportState();
 }
 
-
-class _StudentListAdminState extends State<StudentListAdmin> {
+class _ReportState extends State<Report> {
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.sizeOf(context).height;
-
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
         leading: IconButton(
-          icon: Icon(FontAwesomeIcons.chevronLeft, color: Colors.white),
+          icon: Icon(FontAwesomeIcons.chevronLeft,
+              color: Colors.white), // Set icon color to white
           onPressed: () {
             Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => HomePage()),
+              MaterialPageRoute(
+                  builder: (context) =>
+                      StudentProfile()), // Navigate to MyAccount()
             );
           },
         ),
-        title: Text(
-          'قائمة الطلاب',
+
+        //elevation: 0.0,
+        automaticallyImplyLeading: false,
+        title: const Text(
+          'التقرير',
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
-        backgroundColor: Color(0xFF365486),
+        backgroundColor: const Color(0xFF365486),
       ),
       body: Container(
-        height: double.infinity,
-        color: Color(0xFFF8F8F8),
-        child: SingleChildScrollView(
-          child: Column(children: [
-            SizedBox(height: screenHeight * 0.02),
-            SearchWidget(),
-            StudentListForAdmin(),
-          ]),
+        padding: EdgeInsets.symmetric(horizontal: screenHeight * 0.03),
+        color: const Color(0xFFF8F8F8),
+        child: Center(
+          child: Column(
+            children: const [],
+          ),
         ),
       ),
     );
