@@ -44,14 +44,21 @@ class StudentListForAdmin extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                     IconButton(
-                       onPressed: () {},
-                       icon: Icon(
-                         FontAwesomeIcons.ellipsisVertical,
-                         color: Colors.grey[500],
-                         size: screenHeight * 0.02,
-                       ),
-                     ),
+                  PopupMenuButton( 
+                    itemBuilder: (context) {
+                        return [
+                          PopupMenuItem(
+                            
+                            child: MenuItems(), 
+                          ),
+                        ];
+                      },
+                      icon: Icon(
+                        FontAwesomeIcons.ellipsisVertical,
+                        color: Colors.grey[500],
+                        size: screenHeight * 0.02,
+                      ),
+                    ),
                     SizedBox(width: screenWidth * 0.01),
                     Container(
                       width: screenHeight * 0.1,
