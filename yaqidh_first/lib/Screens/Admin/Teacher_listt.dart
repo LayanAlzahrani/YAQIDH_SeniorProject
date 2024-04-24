@@ -1,10 +1,8 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:yaqidh_first/Screens/Teacher/homepage_T.dart';
-import 'package:yaqidh_first/Widgets/all_student_list_T.dart';
+import 'package:yaqidh_first/Screens//Admin/homepage.dart';
+import 'package:yaqidh_first/Widgets/Teacher_list_A.dart';
 import 'package:yaqidh_first/Widgets/search_widget.dart';
 import 'package:yaqidh_first/firebase_options.dart';
 
@@ -24,19 +22,19 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Tajawal', useMaterial3: true),
-      home: StudentListTeacher(),
+      home: TeacherListAdmin(),
     );
   }
 }
 
-class StudentListTeacher extends StatefulWidget {
-  const StudentListTeacher({Key? key}) : super(key: key);
+class TeacherListAdmin extends StatefulWidget {
+  const TeacherListAdmin({Key? key}) : super(key: key);
 
   @override
-  State<StudentListTeacher> createState() => _StudentListTeacherState();
+  State<TeacherListAdmin> createState() => _TeacherListAdminState();
 }
 
-class _StudentListTeacherState extends State<StudentListTeacher> {
+class _TeacherListAdminState extends State<TeacherListAdmin> {
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.sizeOf(context).height;
@@ -48,7 +46,7 @@ class _StudentListTeacherState extends State<StudentListTeacher> {
           icon: Icon(FontAwesomeIcons.chevronLeft, color: Colors.white),
           onPressed: () {
             Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => HomePageTeacher()),
+              MaterialPageRoute(builder: (context) => HomePage()),
             );
           },
         ),
@@ -66,7 +64,7 @@ class _StudentListTeacherState extends State<StudentListTeacher> {
           child: Column(children: [
             SizedBox(height: screenHeight * 0.02),
             SearchWidget(),
-            AllStudentNamesForTeacher(),
+            TeacherNamesForAdmin(),
           ]),
         ),
       ),

@@ -1,7 +1,8 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_key_in_widget_constructors
 import 'package:flutter/material.dart';
 import 'package:yaqidh_first/Screens/Admin/student_profile.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:yaqidh_first/Widgets/Popmenu.dart';
+
 class StudentListForAdmin extends StatelessWidget {
   final bool isTested = false;
 
@@ -43,28 +44,20 @@ class StudentListForAdmin extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                  PopupMenuButton( 
-                    itemBuilder: (context) {
-                        return [
-                          PopupMenuItem(
-                            
-                            child: MenuItems(), 
-                          ),
-                        ];
-                      },
-                      icon: Icon(
-                        FontAwesomeIcons.ellipsisVertical,
-                        color: Colors.grey[500],
-                        size: screenHeight * 0.02,
-                      ),
-                    ),
+                     IconButton(
+                       onPressed: () {},
+                       icon: Icon(
+                         FontAwesomeIcons.ellipsisVertical,
+                         color: Colors.grey[500],
+                         size: screenHeight * 0.02,
+                       ),
+                     ),
                     SizedBox(width: screenWidth * 0.01),
-                    
                     Container(
                       width: screenHeight * 0.1,
-                       padding: EdgeInsets.symmetric(
-                         horizontal: screenHeight * 0.018,
-                       ),
+                      // padding: EdgeInsets.symmetric(
+                      //   horizontal: screenHeight * 0.018,
+                      // ),
                       margin:
                           EdgeInsets.symmetric(vertical: screenHeight * 0.013),
                       decoration: BoxDecoration(
@@ -105,6 +98,14 @@ class StudentListForAdmin extends StatelessWidget {
                             ),
                             textDirection: TextDirection.rtl,
                           ),
+                          Text(
+                            "إسم  ",
+                            style: TextStyle(
+                              fontSize: screenHeight * 0.013,
+                            ),
+                            textDirection: TextDirection.rtl,
+                          ),
+                          
                         ],
                       ),
                     ),
