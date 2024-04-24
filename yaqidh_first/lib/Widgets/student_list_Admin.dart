@@ -1,4 +1,3 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_key_in_widget_constructors
 import 'package:flutter/material.dart';
 import 'package:yaqidh_first/Screens/Admin/student_profile.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -44,14 +43,58 @@ class StudentListForAdmin extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                  PopupMenuButton( 
-                    itemBuilder: (context) {
+                    PopupMenuButton(
+                      color: Colors.white,
+                      itemBuilder: (context) {
                         return [
                           PopupMenuItem(
-                            
-                            child: MenuItems(), 
+                            value: '1',
+                            child: Center(
+                              child: Text(
+                                'حساب الطالب',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                          PopupMenuItem(
+                            value: '2',
+                            child: Center(
+                              child: Text(
+                                'إضافة إلى معلم', 
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                          PopupMenuItem(
+                            value: '3',
+                            child: Center(
+                              child: Text(
+                                'حذف',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
                           ),
                         ];
+                      },
+                      onSelected: (value) {
+                        if (value == '1') {
+                              Navigator.of(context).push(
+                               MaterialPageRoute(
+                                builder: (context) => StudentProfile()),
+                          );
+                        } else if (value == '2') {
+                          
+                        } else if (value == '3') {
+                        }
                       },
                       icon: Icon(
                         FontAwesomeIcons.ellipsisVertical,
@@ -60,11 +103,12 @@ class StudentListForAdmin extends StatelessWidget {
                       ),
                     ),
                     SizedBox(width: screenWidth * 0.01),
+                    
                     Container(
                       width: screenHeight * 0.1,
-                      // padding: EdgeInsets.symmetric(
-                      //   horizontal: screenHeight * 0.018,
-                      // ),
+                       padding: EdgeInsets.symmetric(
+                         horizontal: screenHeight * 0.018,
+                       ),
                       margin:
                           EdgeInsets.symmetric(vertical: screenHeight * 0.013),
                       decoration: BoxDecoration(
@@ -105,14 +149,6 @@ class StudentListForAdmin extends StatelessWidget {
                             ),
                             textDirection: TextDirection.rtl,
                           ),
-                          Text(
-                            "إسم  ",
-                            style: TextStyle(
-                              fontSize: screenHeight * 0.013,
-                            ),
-                            textDirection: TextDirection.rtl,
-                          ),
-                          
                         ],
                       ),
                     ),
