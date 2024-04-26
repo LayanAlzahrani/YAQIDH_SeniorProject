@@ -1,11 +1,28 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:yaqidh_first/Screens/Admin/student_profile.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:yaqidh_first/core/db.dart';
 
-class StudentListForAdmin extends StatelessWidget {
-  final bool isTested = false;
-
+class StudentListForAdmin extends StatefulWidget {
   const StudentListForAdmin({Key? key}) : super(key: key);
+
+  @override
+  State<StudentListForAdmin> createState() => _StudentListForAdminState();
+}
+
+class _StudentListForAdminState extends State<StudentListForAdmin> {
+  List<Map<String, dynamic>> _students = [];
+
+  @override
+  void initState() {
+    YDB.getAllStudents().then((result) {
+      setState(() {
+        _students = result;
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,19 +33,20 @@ class StudentListForAdmin extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.043),
       child: GridView.count(
         childAspectRatio: MediaQuery.of(context).size.width /
-            (MediaQuery.of(context).size.height / 9.7),
+            (MediaQuery.of(context).size.height / 8.8),
         physics: NeverScrollableScrollPhysics(),
         crossAxisCount: 1,
         shrinkWrap: true,
         children: List.generate(
-          12,
+          _students.length,
           (index) {
+            var student = _students[index];
+            student['isTested'] ??= false;
             int counter = index + 1;
             return InkWell(
               onTap: () {
                 Navigator.of(context).push(
-                  MaterialPageRoute(
-                      builder: (context) => StudentProfile()),
+                  MaterialPageRoute(builder: (context) => StudentProfile()),
                 );
               },
               child: Container(
@@ -63,7 +81,7 @@ class StudentListForAdmin extends StatelessWidget {
                             value: '2',
                             child: Center(
                               child: Text(
-                                'إضافة إلى معلم', 
+                                'إضافة إلى معلم',
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -87,14 +105,12 @@ class StudentListForAdmin extends StatelessWidget {
                       },
                       onSelected: (value) {
                         if (value == '1') {
-                              Navigator.of(context).push(
-                               MaterialPageRoute(
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
                                 builder: (context) => StudentProfile()),
                           );
                         } else if (value == '2') {
-                          
-                        } else if (value == '3') {
-                        }
+                        } else if (value == '3') {}
                       },
                       icon: Icon(
                         FontAwesomeIcons.ellipsisVertical,
@@ -103,24 +119,27 @@ class StudentListForAdmin extends StatelessWidget {
                       ),
                     ),
                     SizedBox(width: screenWidth * 0.01),
-                    
                     Container(
-                      width: screenHeight * 0.1,
-                       padding: EdgeInsets.symmetric(
-                         horizontal: screenHeight * 0.018,
-                       ),
+                      width: screenHeight * 0.12,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: screenHeight * 0.018,
+                      ),
                       margin:
                           EdgeInsets.symmetric(vertical: screenHeight * 0.013),
                       decoration: BoxDecoration(
-                        color: isTested ? Colors.red[100] : Colors.green[100],
+                        color: !student['isTested']
+                            ? Colors.red[100]
+                            : Colors.green[100],
                         borderRadius:
                             BorderRadius.circular(screenHeight * 0.016),
                       ),
                       child: Center(
                         child: Text(
-                          isTested ? "لم يتم الاختبار" : "تم الاختبار",
+                          !student['isTested']
+                              ? "لم يتم الاختبار"
+                              : "تم الاختبار",
                           style: TextStyle(
-                              color: isTested
+                              color: !student['isTested']
                                   ? Colors.red[600]
                                   : Colors.green[600],
                               fontWeight: FontWeight.bold,
@@ -134,7 +153,7 @@ class StudentListForAdmin extends StatelessWidget {
                         children: [
                           SizedBox(height: screenHeight * 0.01),
                           Text(
-                            "رقم الطالب",
+                            student['id'],
                             style: TextStyle(
                               fontSize: screenHeight * 0.012,
                               color: Color(0xFF999999),
@@ -142,12 +161,29 @@ class StudentListForAdmin extends StatelessWidget {
                             textDirection: TextDirection.rtl,
                           ),
                           Text(
-                            "إسم الطالب",
+                            student['fullName'],
                             style: TextStyle(
                               fontSize: screenHeight * 0.013,
                               fontWeight: FontWeight.bold,
                             ),
                             textDirection: TextDirection.rtl,
+                          ),
+                          FutureBuilder(
+                            future:
+                                (student['teacher'] as DocumentReference).get(),
+                            builder: (context, snapshot) {
+                              if (snapshot.data == null) return Container();
+                              var teacher = (snapshot.data as DocumentSnapshot)
+                                  .data() as Map<String, dynamic>;
+                              return Text(
+                                teacher['name'],
+                                style: TextStyle(
+                                  fontSize: screenHeight * 0.013,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                textDirection: TextDirection.rtl,
+                              );
+                            },
                           ),
                         ],
                       ),

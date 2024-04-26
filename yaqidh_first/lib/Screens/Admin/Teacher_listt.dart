@@ -51,7 +51,7 @@ class _TeacherListAdminState extends State<TeacherListAdmin> {
           },
         ),
         title: Text(
-          'قائمة الطلاب',
+          'قائمة المعلمين',
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,

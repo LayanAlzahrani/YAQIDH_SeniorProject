@@ -1,19 +1,22 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/widgets.dart';
+import 'package:yaqidh_first/Screens/Admin/select_teacher.dart';
+import 'package:yaqidh_first/core/db.dart';
 
 void main() async {
   // Initialize Firebase before running the app
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApp1());
+  runApp(const AddStudentScreen());
 }
 
-class MyApp1 extends StatelessWidget {
-  const MyApp1({Key? key}) : super(key: key);
+class AddStudentScreen extends StatelessWidget {
+  const AddStudentScreen({Key? key}) : super(key: key);
 
   @override
- Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     return MaterialApp(
       title: 'إنشاء حساب طالب ',
       theme: ThemeData(
@@ -28,33 +31,45 @@ class MyApp1 extends StatelessWidget {
           ),
           centerTitle: true,
           backgroundColor: const Color(0xFF365486),
-          leading: const SizedBox(
-            height: double.infinity, // Adjust the height as needed
-            child: Center(
-              child: Padding(
-                padding: EdgeInsets.only(left: 18.0),
-                child: Text(
-                  'تراجع',
-                  style: TextStyle(color: Colors.white, fontFamily: 'Tajawal', fontSize: 14),
+          leading: GestureDetector(
+            onTap: () => Navigator.pop(context),
+            child: const SizedBox(
+              height: double.infinity, // Adjust the height as needed
+              child: Center(
+                child: Padding(
+                  padding: EdgeInsets.only(left: 18.0),
+                  child: Text(
+                    'تراجع',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'Tajawal',
+                        fontSize: 14),
+                  ),
                 ),
               ),
             ),
           ),
         ),
-        body: const Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            SizedBox(height: 40), // Added SizedBox for equal space
-            Padding(
-              padding: EdgeInsets.only(right: 16.0, left: 16.0),
-              child: Text(
-                ': الرجاء تعبئة البيانات التالية ',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, fontFamily: 'Tajawal'),
+        body: const SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              SizedBox(height: 40), // Added SizedBox for equal space
+              Padding(
+                padding: EdgeInsets.only(right: 16.0, left: 16.0),
+                child: Text(
+                  ': الرجاء تعبئة البيانات التالية ',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    fontFamily: 'Tajawal',
+                  ),
+                ),
               ),
-            ),
-            SizedBox(height: 20), // Added SizedBox for equal space
-            AccountActivationForm(),
-          ],
+              SizedBox(height: 20), // Added SizedBox for equal space
+              AccountActivationForm(),
+            ],
+          ),
         ),
       ),
     );
@@ -70,9 +85,11 @@ class AccountActivationForm extends StatefulWidget {
 
 class _AccountActivationFormState extends State<AccountActivationForm> {
   final TextEditingController nameController = TextEditingController();
-  final TextEditingController dobController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
+
+  DateTime _currentDob = DateTime.now();
+  Map<String, dynamic>? _selectedTeacher;
 
   @override
   Widget build(BuildContext context) {
@@ -92,25 +109,78 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
                   fontFamily: 'Tajawal', // Custom font family
                 ),
               ), // Information above name text field
-              _buildCurvedTextField(nameController), // Building text field for name
+              _buildCurvedTextField(
+                  nameController), // Building text field for name
             ],
           ),
         ),
         const SizedBox(height: 20), // Added SizedBox for equal space
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          padding: EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              const Text(
-                'تاريخ الميلاد',
-                style: TextStyle(
-                  fontSize: 16, // Custom font size
-                  color: Color(0xFF888888),
-                  fontFamily: 'Tajawal', // Custom font family
-                ),
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    'تاريخ الميلاد',
+                    style: TextStyle(
+                      fontSize: 16, // Custom font size
+                      color: Color(0xFF888888),
+                      fontFamily: 'Tajawal', // Custom font family
+                    ),
+                  )
+                ],
               ), // Information above date of birth text field
-              _buildCurvedTextField(dobController), // Building text field for date of birth
+              GestureDetector(
+                onTap: _showDatePicker,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10), // Curved corners
+                    border: Border.all(color: Colors.grey), // Gray border
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Text(_currentDob.toString()),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 20), // Added SizedBox for equal space
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    "المسؤول عن التشخيص",
+                    style: TextStyle(
+                      fontSize: 16, // Custom font size
+                      color: Color(0xFF888888),
+                      fontFamily: 'Tajawal', // Custom font family
+                    ),
+                  )
+                ],
+              ), // Information above date of birth text field
+              GestureDetector(
+                onTap: _selectTeacher,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10), // Curved corners
+                    border: Border.all(color: Colors.grey), // Gray border
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Text(_selectedTeacher?['name'] ?? 'اختر مسؤول'),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -128,7 +198,8 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
                   fontFamily: 'Tajawal', // Custom font family
                 ),
               ), // Information above email text field
-              _buildCurvedTextField(emailController), // Building text field for email
+              _buildCurvedTextField(
+                  emailController), // Building text field for email
             ],
           ),
         ),
@@ -146,7 +217,8 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
                   fontFamily: 'Tajawal', // Custom font family
                 ),
               ), // Information above phone number text field
-              _buildCurvedTextField(phoneController), // Building text field for phone number
+              _buildCurvedTextField(
+                  phoneController), // Building text field for phone number
             ],
           ),
         ),
@@ -156,33 +228,45 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
           height: 60, // Set the desired height for the ElevatedButton
           child: ElevatedButton(
             onPressed: () {
+              var studentId = "2${YDB.generateRandomNumber(6)}";
               // Perform action to activate the account here
               // For now, let's just print the entered data
               print('Student Name: ${nameController.text}');
-              print('Date of Birth: ${dobController.text}');
+              print('Date of Birth: ${_currentDob}');
               print('Email: ${emailController.text}');
               print('Phone Number: ${phoneController.text}');
-              
+
+              // TODO: teacher must be selected
               // Add user to Firestore database
-              FirebaseFirestore.instance.collection('users').add({
-                'full_name': nameController.text,
-                'age': dobController.text,
+              FirebaseFirestore.instance
+                  .collection('students')
+                  .doc(studentId)
+                  .set({
+                'fullName': nameController.text,
+                'age': _currentDob,
                 'email': emailController.text,
                 'phone': phoneController.text,
+                "isTested": false,
+                "teacher": FirebaseFirestore.instance
+                    .collection('users')
+                    .doc(_selectedTeacher?['id'])
               }).then((_) {
                 // Clear text fields after adding user
                 nameController.clear();
-                dobController.clear();
                 emailController.clear();
                 phoneController.clear();
+                _selectedTeacher = null;
+                // TODO: Add A message
               }).catchError((error) {
                 // Handle error if adding user fails
                 print("Failed to add user: $error");
               });
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor:  const Color.fromRGBO(127, 199, 217, 1.0), // Background color
-              foregroundColor: const Color.fromARGB(255, 255, 255, 255), // Text color
+              backgroundColor:
+                  const Color.fromRGBO(127, 199, 217, 1.0), // Background color
+              foregroundColor:
+                  const Color.fromARGB(255, 255, 255, 255), // Text color
               textStyle: const TextStyle(
                 fontSize: 19,
                 fontWeight: FontWeight.bold, // Custom font size
@@ -218,5 +302,30 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
         ),
       ),
     );
+  }
+
+  void _showDatePicker() {
+    showDatePicker(
+      context: context,
+      initialDate: _currentDob,
+      firstDate: DateTime(1950),
+      lastDate: DateTime(2050),
+    ).then((value) {
+      if (value != null) {
+        setState(() {
+          _currentDob = value;
+        });
+      }
+    });
+  }
+
+  void _selectTeacher() async {
+    var teacher = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => SelectTeacher()),
+    );
+    setState(() {
+      _selectedTeacher = teacher;
+    });
   }
 }

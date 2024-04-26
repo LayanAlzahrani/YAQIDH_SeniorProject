@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:yaqidh_first/Screens//Admin/homepage.dart';
+import 'package:yaqidh_first/Screens/Admin/addStudent.dart';
 import 'package:yaqidh_first/Widgets/student_list_Admin.dart';
 import 'package:yaqidh_first/Widgets/search_widget.dart';
 import 'package:yaqidh_first/firebase_options.dart';
@@ -33,7 +34,6 @@ class StudentListAdmin extends StatefulWidget {
   @override
   State<StudentListAdmin> createState() => _StudentListAdminState();
 }
-
 
 class _StudentListAdminState extends State<StudentListAdmin> {
   @override
@@ -69,6 +69,24 @@ class _StudentListAdminState extends State<StudentListAdmin> {
           ]),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        shape: CircleBorder(),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddStudentScreen()),
+          );
+        },
+        tooltip: 'اضافة',
+        backgroundColor: Color(0xFF7FC7D9),
+        foregroundColor: Colors.white,
+        elevation: screenHeight * 0.002,
+        child: Icon(
+          FontAwesomeIcons.plus,
+          size: screenHeight * 0.025,
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }
