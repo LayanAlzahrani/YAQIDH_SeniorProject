@@ -7,6 +7,8 @@ import 'package:yaqidh_first/Screens/Admin/myaccount.dart';
 import 'package:yaqidh_first/Widgets/profile_info.dart';
 import 'package:yaqidh_first/firebase_options.dart';
 
+import '../../core/db.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -36,6 +38,18 @@ class AdminProfile extends StatefulWidget {
 }
 
 class _AdminProfileState extends State<AdminProfile> {
+  Map<String, dynamic>? _admin;
+
+  @override
+  void initState() {
+    super.initState();
+    YDB.getAdmin().then((result) {
+      setState(() {
+        _admin = result;
+      });
+    });
+  }
+
   final double coverHeight = 85;
   final double profileHeight = 95;
 
@@ -45,6 +59,9 @@ class _AdminProfileState extends State<AdminProfile> {
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.sizeOf(context).height;
     //double screenWidth = MediaQuery.sizeOf(context).width;
+
+    var admin = _admin;
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -68,25 +85,29 @@ class _AdminProfileState extends State<AdminProfile> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
-                    "إسم الإداري",
-                    style: TextStyle(
-                        fontSize: screenHeight * 0.02,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: screenHeight * 0.01),
-                  ProfileInfo(
-                    sectionName: 'رقم التعريف',
-                    info: '000000',
-                  ),
-                  ProfileInfo(
-                    sectionName: 'البريد الإلكتروني',
-                    info: 'Admin@gmail.com',
-                  ),
-                  ProfileInfo(
-                    sectionName: 'رقم الهاتف',
-                    info: '0531324894',
-                  ),
+                  if (admin != null) ...[
+                    Text(
+                      admin['name'],
+                      style: TextStyle(
+                          fontSize: screenHeight * 0.02,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: screenHeight * 0.01),
+                    ProfileInfo(
+                      sectionName: 'رقم التعريف',
+                      info: admin['givenId'],
+                    ),
+                    ProfileInfo(
+                      sectionName: 'البريد الإلكتروني',
+                      info: admin['email'],
+                    ),
+                    ProfileInfo(
+                      sectionName: 'رقم الهاتف',
+                      info: admin['phone'],
+                    ),
+                  ] else ...[
+                    CircularProgressIndicator(),
+                  ],
                 ],
               ),
             ),

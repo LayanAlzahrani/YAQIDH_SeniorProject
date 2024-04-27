@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Tajawal', useMaterial3: true),
-      home: StudentListAdmin(),
+      home: const StudentListAdmin(),
     );
   }
 }
@@ -44,41 +44,41 @@ class _StudentListAdminState extends State<StudentListAdmin> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         leading: IconButton(
-          icon: Icon(FontAwesomeIcons.chevronLeft, color: Colors.white),
+          icon: const Icon(FontAwesomeIcons.chevronLeft, color: Colors.white),
           onPressed: () {
             Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => HomePage()),
+              MaterialPageRoute(builder: (context) => const HomePage()),
             );
           },
         ),
-        title: Text(
+        title: const Text(
           'قائمة الطلاب',
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
-        backgroundColor: Color(0xFF365486),
+        backgroundColor: const Color(0xFF365486),
       ),
       body: Container(
         height: double.infinity,
-        color: Color(0xFFF8F8F8),
+        color: const Color(0xFFF8F8F8),
         child: SingleChildScrollView(
           child: Column(children: [
             SizedBox(height: screenHeight * 0.02),
-            SearchWidget(),
-            StudentListForAdmin(),
+            const SearchWidget(),
+            const StudentListForAdmin(),
           ]),
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        shape: CircleBorder(),
+        shape: const CircleBorder(),
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => AddStudentScreen()),
+            MaterialPageRoute(builder: (context) => const AddStudentScreen()),
           );
         },
         tooltip: 'اضافة',
-        backgroundColor: Color(0xFF7FC7D9),
+        backgroundColor: const Color(0xFF7FC7D9),
         foregroundColor: Colors.white,
         elevation: screenHeight * 0.002,
         child: Icon(

@@ -62,7 +62,7 @@ class _MyAccountState extends State<MyAccountTeacher> {
         child: Center(
           child: Column(
             children: [
-              MyAccWidget(),
+              //MyAccWidget(),
               SettingsWidget(
                 name: 'الإعدادات',
                 ontap: () {

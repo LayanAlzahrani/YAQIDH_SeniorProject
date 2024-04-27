@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:yaqidh_first/Screens//Admin/homepage.dart';
+import 'package:yaqidh_first/Screens/Admin/addTeacher.dart';
 import 'package:yaqidh_first/Widgets/Teacher_list_A.dart';
 import 'package:yaqidh_first/Widgets/search_widget.dart';
 import 'package:yaqidh_first/firebase_options.dart';
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Tajawal', useMaterial3: true),
-      home: TeacherListAdmin(),
+      home: const TeacherListAdmin(),
     );
   }
 }
@@ -43,31 +44,49 @@ class _TeacherListAdminState extends State<TeacherListAdmin> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         leading: IconButton(
-          icon: Icon(FontAwesomeIcons.chevronLeft, color: Colors.white),
+          icon: const Icon(FontAwesomeIcons.chevronLeft, color: Colors.white),
           onPressed: () {
             Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => HomePage()),
+              MaterialPageRoute(builder: (context) => const HomePage()),
             );
           },
         ),
-        title: Text(
+        title: const Text(
           'قائمة المعلمين',
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
-        backgroundColor: Color(0xFF365486),
+        backgroundColor: const Color(0xFF365486),
       ),
       body: Container(
         height: double.infinity,
-        color: Color(0xFFF8F8F8),
+        color: const Color(0xFFF8F8F8),
         child: SingleChildScrollView(
           child: Column(children: [
             SizedBox(height: screenHeight * 0.02),
-            SearchWidget(),
-            TeacherNamesForAdmin(),
+            const SearchWidget(),
+            const TeacherNamesForAdmin(),
           ]),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        shape: const CircleBorder(),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const AddTeacherScreen()),
+          );
+        },
+        tooltip: 'اضافة',
+        backgroundColor: const Color(0xFF7FC7D9),
+        foregroundColor: Colors.white,
+        elevation: screenHeight * 0.002,
+        child: Icon(
+          FontAwesomeIcons.plus,
+          size: screenHeight * 0.025,
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }

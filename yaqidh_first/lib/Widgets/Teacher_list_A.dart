@@ -2,16 +2,82 @@
 import 'package:flutter/material.dart';
 import 'package:yaqidh_first/Screens/Admin/teacher_profile.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:yaqidh_first/core/db.dart';
 
-class TeacherNamesForAdmin extends StatelessWidget {
-  final bool isTested = false;
-
+class TeacherNamesForAdmin extends StatefulWidget {
   const TeacherNamesForAdmin({Key? key}) : super(key: key);
 
   @override
-Widget build(BuildContext context) {
+  State<TeacherNamesForAdmin> createState() => _TeacherNamesForAdminState();
+}
+
+class _TeacherNamesForAdminState extends State<TeacherNamesForAdmin> {
+  List<Map<String, dynamic>> _teachers = [];
+
+  @override
+  void initState() {
+    YDB.getAllTeachers().then((result) {
+      setState(() {
+        _teachers = result;
+      });
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     double screenHeight = MediaQuery.sizeOf(context).height;
     double screenWidth = MediaQuery.sizeOf(context).width;
+
+    void _deleteTeacher(String teacherId) {
+      YDB.deleteTeacher(teacherId).then((_) {
+        setState(() {
+          _teachers.removeWhere((student) => student['id'] == teacherId);
+        });
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('تم حذف الطالب بنجاح'),
+        ));
+      }).catchError((error) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('خطأ في حذف الطالب: $error'),
+        ));
+      });
+    }
+
+    Future<void> _showDeleteConfirmationDialog(
+        BuildContext context, String studentId) async {
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('تأكيد الحذف'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text('هل أنت متأكد أنك تريد حذف هذا المعلم؟'),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text('إلغاء'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: Text('حذف'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  _deleteTeacher(studentId);
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.043),
@@ -22,14 +88,14 @@ Widget build(BuildContext context) {
         crossAxisCount: 1,
         shrinkWrap: true,
         children: List.generate(
-          12,
+          _teachers.length,
           (index) {
+            var teacher = _teachers[index];
             int counter = index + 1;
             return InkWell(
               onTap: () {
                 Navigator.of(context).push(
-                  MaterialPageRoute(
-                      builder: (context) => TeacherProfile()),
+                  MaterialPageRoute(builder: (context) => TeacherProfile()),
                 );
               },
               child: Container(
@@ -76,13 +142,13 @@ Widget build(BuildContext context) {
                       },
                       onSelected: (value) {
                         if (value == '1') {
-                              Navigator.of(context).push(
-                               MaterialPageRoute(
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
                                 builder: (context) => TeacherProfile()),
                           );
                         } else if (value == '2') {
-
-                        } 
+                          _showDeleteConfirmationDialog(context, teacher['id']);
+                        }
                       },
                       icon: Icon(
                         FontAwesomeIcons.ellipsisVertical,
@@ -97,7 +163,7 @@ Widget build(BuildContext context) {
                         children: [
                           SizedBox(height: screenHeight * 0.01),
                           Text(
-                            "رقم المعلم",
+                            teacher['id'],
                             style: TextStyle(
                               fontSize: screenHeight * 0.012,
                               color: Color(0xFF999999),
@@ -105,7 +171,7 @@ Widget build(BuildContext context) {
                             textDirection: TextDirection.rtl,
                           ),
                           Text(
-                            "إسم المعلم",
+                            teacher['name'],
                             style: TextStyle(
                               fontSize: screenHeight * 0.013,
                               fontWeight: FontWeight.bold,

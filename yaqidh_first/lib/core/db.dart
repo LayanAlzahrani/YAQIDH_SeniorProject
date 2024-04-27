@@ -1,5 +1,5 @@
 import 'dart:math';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class YDB {
@@ -36,6 +36,14 @@ class YDB {
         .toList();
   }
 
+  static Future<Map<String, dynamic>?> getAdmin() async {
+    var data = await getAllData('users');
+
+    var admin = data.firstWhere(
+        (element) => element['userType'].toString().toLowerCase() == 'admin');
+    return admin;
+  }
+
   static Future<List<Map<String, dynamic>>> getAllStudents() async {
     return await getAllData('students');
   }
@@ -57,5 +65,37 @@ class YDB {
     }
 
     return number;
+  }
+
+  static String generateRandomPassword() {
+    Random random = Random();
+    String uppercaseLetter = String.fromCharCode(random.nextInt(26) + 65);
+    String numbersAndLetters = '0123456789abcdefghijklmnopqrstuvwxyz';
+    String randomLetters = List.generate(7,
+            (_) => numbersAndLetters[random.nextInt(numbersAndLetters.length)])
+        .join('');
+    return uppercaseLetter + randomLetters;
+  }
+
+  static Future<void> deleteStudent(String studentId) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('students')
+          .doc(studentId)
+          .delete();
+    } catch (error) {
+      print('Error deleting student: $error');
+    }
+  }
+
+  static Future<void> deleteTeacher(String teacherId) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(teacherId)
+          .delete();
+    } catch (error) {
+      print('Error deleting student: $error');
+    }
   }
 }

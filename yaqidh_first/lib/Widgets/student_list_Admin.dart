@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, no_leading_underscores_for_local_identifiers, prefer_const_literals_to_create_immutables
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:yaqidh_first/Screens/Admin/student_profile.dart';
@@ -29,12 +31,62 @@ class _StudentListForAdminState extends State<StudentListForAdmin> {
     double screenHeight = MediaQuery.sizeOf(context).height;
     double screenWidth = MediaQuery.sizeOf(context).width;
 
+    void _deleteStudent(String studentId) {
+      YDB.deleteStudent(studentId).then((_) {
+        setState(() {
+          _students.removeWhere((student) => student['id'] == studentId);
+        });
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('تم حذف الطالب بنجاح'),
+        ));
+      }).catchError((error) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('خطأ في حذف الطالب: $error'),
+        ));
+      });
+    }
+
+    Future<void> _showDeleteConfirmationDialog(
+        BuildContext context, String studentId) async {
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('تأكيد الحذف'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text('هل أنت متأكد أنك تريد حذف هذا الطالب؟'),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text('إلغاء'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: Text('حذف'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  _deleteStudent(studentId);
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.043),
       child: GridView.count(
         childAspectRatio: MediaQuery.of(context).size.width /
-            (MediaQuery.of(context).size.height / 8.8),
-        physics: NeverScrollableScrollPhysics(),
+            (MediaQuery.of(context).size.height / 9.2),
+        physics: const NeverScrollableScrollPhysics(),
         crossAxisCount: 1,
         shrinkWrap: true,
         children: List.generate(
@@ -46,13 +98,16 @@ class _StudentListForAdminState extends State<StudentListForAdmin> {
             return InkWell(
               onTap: () {
                 Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => StudentProfile()),
+                  MaterialPageRoute(
+                      builder: (context) => const StudentProfile()),
                 );
               },
               child: Container(
-                padding: EdgeInsets.symmetric(
-                    vertical: screenHeight * 0.012,
-                    horizontal: screenWidth * 0.035),
+                padding: EdgeInsets.only(
+                    top: screenHeight * 0.008,
+                    bottom: screenHeight * 0.008,
+                    right: screenWidth * 0.035,
+                    left: screenWidth * 0.012),
                 margin: EdgeInsets.only(top: screenHeight * 0.013),
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -65,7 +120,7 @@ class _StudentListForAdminState extends State<StudentListForAdmin> {
                       color: Colors.white,
                       itemBuilder: (context) {
                         return [
-                          PopupMenuItem(
+                          const PopupMenuItem(
                             value: '1',
                             child: Center(
                               child: Text(
@@ -77,7 +132,7 @@ class _StudentListForAdminState extends State<StudentListForAdmin> {
                               ),
                             ),
                           ),
-                          PopupMenuItem(
+                          const PopupMenuItem(
                             value: '2',
                             child: Center(
                               child: Text(
@@ -89,7 +144,7 @@ class _StudentListForAdminState extends State<StudentListForAdmin> {
                               ),
                             ),
                           ),
-                          PopupMenuItem(
+                          const PopupMenuItem(
                             value: '3',
                             child: Center(
                               child: Text(
@@ -107,10 +162,12 @@ class _StudentListForAdminState extends State<StudentListForAdmin> {
                         if (value == '1') {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                                builder: (context) => StudentProfile()),
+                                builder: (context) => const StudentProfile()),
                           );
                         } else if (value == '2') {
-                        } else if (value == '3') {}
+                        } else if (value == '3') {
+                          _showDeleteConfirmationDialog(context, student['id']);
+                        }
                       },
                       icon: Icon(
                         FontAwesomeIcons.ellipsisVertical,
@@ -118,30 +175,30 @@ class _StudentListForAdminState extends State<StudentListForAdmin> {
                         size: screenHeight * 0.02,
                       ),
                     ),
-                    SizedBox(width: screenWidth * 0.01),
+                    SizedBox(width: screenWidth * 0.001),
                     Container(
-                      width: screenHeight * 0.12,
+                      width: screenHeight * 0.11,
                       padding: EdgeInsets.symmetric(
-                        horizontal: screenHeight * 0.018,
+                        horizontal: screenHeight * 0.012,
                       ),
                       margin:
-                          EdgeInsets.symmetric(vertical: screenHeight * 0.013),
+                          EdgeInsets.symmetric(vertical: screenHeight * 0.02),
                       decoration: BoxDecoration(
-                        color: !student['isTested']
-                            ? Colors.red[100]
-                            : Colors.green[100],
+                        color: student['isTested']
+                            ? Colors.green[100]
+                            : Colors.red[100],
                         borderRadius:
                             BorderRadius.circular(screenHeight * 0.016),
                       ),
                       child: Center(
                         child: Text(
-                          !student['isTested']
-                              ? "لم يتم الاختبار"
-                              : "تم الاختبار",
+                          student['isTested']
+                              ? "تم الاختبار"
+                              : "لم يتم الاختبار",
                           style: TextStyle(
-                              color: !student['isTested']
-                                  ? Colors.red[600]
-                                  : Colors.green[600],
+                              color: student['isTested']
+                                  ? Colors.green[600]
+                                  : Colors.red[600],
                               fontWeight: FontWeight.bold,
                               fontSize: screenHeight * 0.013),
                         ),
@@ -156,7 +213,7 @@ class _StudentListForAdminState extends State<StudentListForAdmin> {
                             student['id'],
                             style: TextStyle(
                               fontSize: screenHeight * 0.012,
-                              color: Color(0xFF999999),
+                              color: const Color(0xFF999999),
                             ),
                             textDirection: TextDirection.rtl,
                           ),
@@ -175,13 +232,26 @@ class _StudentListForAdminState extends State<StudentListForAdmin> {
                               if (snapshot.data == null) return Container();
                               var teacher = (snapshot.data as DocumentSnapshot)
                                   .data() as Map<String, dynamic>;
-                              return Text(
-                                teacher['name'],
-                                style: TextStyle(
-                                  fontSize: screenHeight * 0.013,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                textDirection: TextDirection.rtl,
+                              return Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    teacher['name'],
+                                    style: TextStyle(
+                                      fontSize: screenHeight * 0.013,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                    textDirection: TextDirection.rtl,
+                                  ),
+                                  Text(
+                                    'المسؤول: ',
+                                    style: TextStyle(
+                                      fontSize: screenHeight * 0.013,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                    textDirection: TextDirection.rtl,
+                                  ),
+                                ],
                               );
                             },
                           ),
