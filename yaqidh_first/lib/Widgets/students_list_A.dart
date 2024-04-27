@@ -15,7 +15,8 @@ class AllStudentNamesForAdmin extends StatelessWidget {
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.043),
-      child: ListView( // Wrap with ListView
+      child: ListView(
+        // Wrap with ListView
         children: [
           GridView.count(
             physics: NeverScrollableScrollPhysics(),
@@ -61,11 +62,10 @@ class AllStudentNamesForAdmin extends StatelessWidget {
                           margin: EdgeInsets.symmetric(
                               vertical: screenHeight * 0.013),
                           decoration: BoxDecoration(
-                            color: isTested
-                                ? Colors.red[100]
-                                : Colors.green[100],
-                            borderRadius: BorderRadius.circular(
-                                screenHeight * 0.016),
+                            color:
+                                isTested ? Colors.red[100] : Colors.green[100],
+                            borderRadius:
+                                BorderRadius.circular(screenHeight * 0.016),
                           ),
                           child: Center(
                             child: Text(
@@ -100,13 +100,13 @@ class AllStudentNamesForAdmin extends StatelessWidget {
                                 ),
                                 textDirection: TextDirection.rtl,
                               ),
-                              // Text(
-                              //  "المعلم",
-                              //  style: TextStyle(
-                              //    fontSize: screenHeight * 0.013,
-                              //  ),
-                              //  textDirection: TextDirection.rtl,
-                            //  ),
+                              Text(
+                                "المعلم",
+                                style: TextStyle(
+                                  fontSize: screenHeight * 0.013,
+                                ),
+                                textDirection: TextDirection.rtl,
+                              ),
                             ],
                           ),
                         ),
@@ -134,4 +134,3 @@ class AllStudentNamesForAdmin extends StatelessWidget {
     );
   }
 }
-

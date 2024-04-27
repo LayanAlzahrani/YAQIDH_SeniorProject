@@ -12,6 +12,8 @@ import 'package:yaqidh_first/Widgets/myaccWidget.dart';
 import 'package:yaqidh_first/Widgets/settingsWidget.dart';
 import 'package:yaqidh_first/firebase_options.dart';
 
+import 'package:yaqidh_first/core/db.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -48,8 +50,23 @@ class _MyAccountState extends State<MyAccount> {
   //     _selectedIndex = index;
   //   });
   // }
+
+  Map<String, dynamic>? _admin;
+  @override
+  void initState() {
+    super.initState();
+    YDB.getAdmin().then((result) {
+      setState(() {
+        _admin = result;
+      });
+      print("Admin data: $_admin");
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    var admin = _admin;
+
     double screenHeight = MediaQuery.sizeOf(context).height;
     return Scaffold(
       appBar: AppBar(
@@ -68,29 +85,32 @@ class _MyAccountState extends State<MyAccount> {
         child: Center(
           child: Column(
             children: [
-              MyAccWidget(),
-              SettingsWidget(
-                name: 'الإعدادات',
-                ontap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => AdminProfile()),
-                  );
-                },
-              ),
-              SettingsWidget(
-                name: 'تسجيل الخروج',
-                ontap: () {
-                  signUserOut(context);
-                },
-              ),
-              SettingsWidget(
-                name: 'زر مؤقت عشان اروح للمعلم',
-                ontap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => HomePageTeacher()),
-                  );
-                },
-              ),
+              if (admin != null) ...[
+                MyAccWidget(name: admin['name'], id: admin['givenId']),
+                SettingsWidget(
+                  name: 'الإعدادات',
+                  ontap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => AdminProfile()),
+                    );
+                  },
+                ),
+                SettingsWidget(
+                  name: 'تسجيل الخروج',
+                  ontap: () {
+                    signUserOut(context);
+                  },
+                ),
+                SettingsWidget(
+                  name: 'زر مؤقت عشان اروح للمعلم',
+                  ontap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder: (context) => HomePageTeacher()),
+                    );
+                  },
+                ),
+              ],
             ],
           ),
         ),

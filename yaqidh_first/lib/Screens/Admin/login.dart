@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:yaqidh_first/Screens//Admin/homepage.dart';
+import 'package:yaqidh_first/Screens/Teacher/homepage_T.dart';
 import 'package:yaqidh_first/Widgets/buttonWidget.dart';
 import 'package:yaqidh_first/Widgets/login_textfield.dart';
+import 'package:yaqidh_first/core/db.dart';
 import 'package:yaqidh_first/firebase_options.dart';
 import 'package:yaqidh_first/user_auth/firebase_auth_services.dart';
 
@@ -49,6 +51,14 @@ class _LoginPageState extends State<LoginPage> {
 
   bool _emailError = false;
   bool _passwordError = false;
+
+  @override
+  void initState() {
+    if (FirebaseAuth.instance.currentUser != null) {
+      _redirect_user(FirebaseAuth.instance.currentUser!.uid);
+    }
+    super.initState();
+  }
 
   //For errors which i didn't use, not yet anyways
   @override
@@ -100,6 +110,7 @@ class _LoginPageState extends State<LoginPage> {
 
   _close() {
     Navigator.pop(context);
+    Navigator.pop(context);
   }
 
   void _signIn() async {
@@ -126,10 +137,7 @@ class _LoginPageState extends State<LoginPage> {
       User? user = await _auth.signInWithEmailAndPassword(email, password);
 
       if (user != null) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => HomePage()),
-        );
+        _redirect_user(user.uid, true);
       } else {
         Navigator.pop(context);
       }
@@ -271,6 +279,24 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  _redirect_user(String uid, [bool usePop = false]) async {
+    var userData = await YDB.getDocumentDataById(uid, "users");
+    if (usePop) {
+      Navigator.pop(context);
+    }
+    if (userData['userType'] == 'admin') {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomePageTeacher()),
+      );
+    }
   }
 }
 

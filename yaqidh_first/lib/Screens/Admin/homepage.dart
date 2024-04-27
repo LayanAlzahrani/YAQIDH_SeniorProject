@@ -9,6 +9,7 @@ import 'package:yaqidh_first/Widgets/listWidget.dart';
 import 'package:yaqidh_first/Widgets/studentNameListWidget.dart';
 import 'package:yaqidh_first/Widgets/teacherNameWidget.dart';
 import 'package:yaqidh_first/firebase_options.dart';
+import 'package:yaqidh_first/Screens/Admin/Teacher_listt.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -69,7 +70,13 @@ class _HomePageState extends State<HomePage> {
                     imgUrl:
                         'https://drive.google.com/uc?export=view&id=1VS5pzOzvOPWrLOR3JNkEp9MC9nplBHPW',
                     fieldName: 'قائمة المعلمين',
-                    ontap: () {},
+                    ontap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => TeacherListAdmin()),
+                      );
+                    },
                   ),
                   SizedBox(width: screenWidth * 0.035),
                   ListWidget(

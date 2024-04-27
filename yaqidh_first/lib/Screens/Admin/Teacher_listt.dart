@@ -2,8 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:yaqidh_first/Screens//Admin/homepage.dart';
-import 'package:yaqidh_first/Screens/Admin/addStudent.dart';
-import 'package:yaqidh_first/Widgets/student_list_Admin.dart';
+import 'package:yaqidh_first/Screens/Admin/addTeacher.dart';
+import 'package:yaqidh_first/Widgets/Teacher_list_A.dart';
 import 'package:yaqidh_first/Widgets/search_widget.dart';
 import 'package:yaqidh_first/firebase_options.dart';
 
@@ -23,19 +23,19 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Tajawal', useMaterial3: true),
-      home: const StudentListAdmin(),
+      home: const TeacherListAdmin(),
     );
   }
 }
 
-class StudentListAdmin extends StatefulWidget {
-  const StudentListAdmin({Key? key}) : super(key: key);
+class TeacherListAdmin extends StatefulWidget {
+  const TeacherListAdmin({Key? key}) : super(key: key);
 
   @override
-  State<StudentListAdmin> createState() => _StudentListAdminState();
+  State<TeacherListAdmin> createState() => _TeacherListAdminState();
 }
 
-class _StudentListAdminState extends State<StudentListAdmin> {
+class _TeacherListAdminState extends State<TeacherListAdmin> {
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.sizeOf(context).height;
@@ -52,7 +52,7 @@ class _StudentListAdminState extends State<StudentListAdmin> {
           },
         ),
         title: const Text(
-          'قائمة الطلاب',
+          'قائمة المعلمين',
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
@@ -65,7 +65,7 @@ class _StudentListAdminState extends State<StudentListAdmin> {
           child: Column(children: [
             SizedBox(height: screenHeight * 0.02),
             const SearchWidget(),
-            const StudentListForAdmin(),
+            const TeacherNamesForAdmin(),
           ]),
         ),
       ),
@@ -74,7 +74,7 @@ class _StudentListAdminState extends State<StudentListAdmin> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const AddStudentScreen()),
+            MaterialPageRoute(builder: (context) => const AddTeacherScreen()),
           );
         },
         tooltip: 'اضافة',
