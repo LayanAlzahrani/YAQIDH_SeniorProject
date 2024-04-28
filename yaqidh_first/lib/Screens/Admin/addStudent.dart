@@ -53,7 +53,7 @@ class AddStudentScreen extends StatelessWidget {
           ),
         ),
         body: Container(
-          color: Color(0xFFF8F8F8),
+          color: const Color(0xFFF8F8F8),
           width: double.infinity,
           height: double.infinity,
           child: SingleChildScrollView(
@@ -71,7 +71,7 @@ class AddStudentScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                AccountActivationForm(),
+                const AccountActivationForm(),
               ],
             ),
           ),
@@ -113,7 +113,7 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
                 'إسم الطالب',
                 style: TextStyle(
                   fontSize: screenHeight * 0.015, // Custom font size
-                  color: Color(0xFF888888),
+                  color: const Color(0xFF888888),
                   fontFamily: 'Tajawal', // Custom font family
                 ),
               ), // Information above name text field
@@ -137,7 +137,7 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
                     'تاريخ الميلاد',
                     style: TextStyle(
                       fontSize: screenHeight * 0.015, // Custom font size
-                      color: Color(0xFF888888),
+                      color: const Color(0xFF888888),
                       fontFamily: 'Tajawal', // Custom font family
                     ),
                   )
@@ -149,7 +149,8 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(13), // Curved corners
-                    border: Border.all(color: Color(0xFFECECEC)), // Gray border
+                    border: Border.all(
+                        color: const Color(0xFFECECEC)), // Gray border
                   ),
                   child: Padding(
                     padding: EdgeInsets.symmetric(
@@ -191,7 +192,8 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10), // Curved corners
-                    border: Border.all(color: Color(0xFFECECEC)), // Gray border
+                    border: Border.all(
+                        color: const Color(0xFFECECEC)), // Gray border
                   ),
                   child: Padding(
                     padding: EdgeInsets.symmetric(
@@ -216,7 +218,7 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
                 ' البريد الالكتروني لـ ولي أمر الطالب ',
                 style: TextStyle(
                   fontSize: screenHeight * 0.015, // Custom font size
-                  color: Color(0xFF888888),
+                  color: const Color(0xFF888888),
                   fontFamily: 'Tajawal', // Custom font family
                 ),
               ), // Information above email text field
@@ -237,7 +239,7 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
                 'رقم هاتف ولي أمر الطالب ',
                 style: TextStyle(
                   fontSize: screenHeight * 0.015, // Custom font size
-                  color: Color(0xFF888888),
+                  color: const Color(0xFF888888),
                   fontFamily: 'Tajawal', // Custom font family
                 ),
               ), // Information above phone number text field
@@ -249,11 +251,11 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
         SizedBox(
             height: screenHeight * 0.039), // Added SizedBox for equal space
         SizedBox(
-          width: 290, // Set the desired width for the ElevatedButton
-          height: 60, // Set the desired height for the ElevatedButton
+          width: 290,
+          height: 60,
           child: MyButton3(
               onTap: () {
-                var studentId = "2${YDB.generateRandomNumber(6)}";
+                var studentId = "2${YDB.generateRandomNumber(7)}";
                 // Perform action to activate the account here
                 // For now, let's just print the entered data
                 print('Student Name: ${nameController.text}');
@@ -272,6 +274,7 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
                   'email': emailController.text,
                   'phone': phoneController.text,
                   "isTested": false,
+                  'createdAt': FieldValue.serverTimestamp(),
                   "teacher": FirebaseFirestore.instance
                       .collection('users')
                       .doc(_selectedTeacher?['id'])
@@ -281,6 +284,7 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
                   emailController.clear();
                   phoneController.clear();
                   _selectedTeacher = null;
+                  _showConfirmationDialog('تمت إضافة الطالب بنجاح.');
                   // TODO: Add A message
                 }).catchError((error) {
                   // Handle error if adding user fails
@@ -303,7 +307,7 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
         height: screenHeight * 0.05,
         margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.001),
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 255, 255, 255),
+          color: const Color.fromARGB(255, 255, 255, 255),
           borderRadius: BorderRadius.circular(13.0),
         ),
         child: TextField(
@@ -315,11 +319,11 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
           decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                    color: Color(0xFFECECEC), width: screenWidth * 0.003),
+                    color: const Color(0xFFECECEC), width: screenWidth * 0.003),
                 borderRadius: BorderRadius.circular(13)),
             focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                    color: Color(0xFF7FC7D9), width: screenWidth * 0.003),
+                    color: const Color(0xFF7FC7D9), width: screenWidth * 0.003),
                 borderRadius: BorderRadius.circular(13)),
           ),
         ),
@@ -375,6 +379,26 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
       _selectedTeacher = teacher;
     });
   }
+
+  void _showConfirmationDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('تمت الإضافة بنجاح'),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('حسنا'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
 
 class MyButton3 extends StatelessWidget {
@@ -396,7 +420,8 @@ class MyButton3 extends StatelessWidget {
         margin: EdgeInsets.symmetric(
             horizontal: screenWidth * 0.018, vertical: screenHeight * 0.011),
         decoration: BoxDecoration(
-            color: Color(0xFF7FC7D9), borderRadius: BorderRadius.circular(13)),
+            color: const Color(0xFF7FC7D9),
+            borderRadius: BorderRadius.circular(13)),
         child: Center(child: LayoutBuilder(
           builder: (context, constraints) {
             return Text(

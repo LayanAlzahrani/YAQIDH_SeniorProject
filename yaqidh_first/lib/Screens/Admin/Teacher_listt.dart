@@ -64,7 +64,6 @@ class _TeacherListAdminState extends State<TeacherListAdmin> {
         child: SingleChildScrollView(
           child: Column(children: [
             SizedBox(height: screenHeight * 0.02),
-            const SearchWidget(),
             const TeacherNamesForAdmin(),
           ]),
         ),

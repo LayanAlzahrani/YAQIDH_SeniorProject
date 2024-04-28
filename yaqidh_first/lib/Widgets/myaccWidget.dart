@@ -29,7 +29,7 @@ class MyAccWidget extends StatelessWidget {
               right: screenWidth * 0.0001,
             ),
             decoration: BoxDecoration(
-              color: Color(0xFFF8F8F8),
+              color: const Color(0xFFF8F8F8),
               borderRadius: BorderRadius.circular(15),
             ),
             child: Row(
@@ -52,7 +52,7 @@ class MyAccWidget extends StatelessWidget {
                         id,
                         style: TextStyle(
                           fontSize: screenHeight * 0.014,
-                          color: Color(0xFF999999),
+                          color: const Color(0xFF999999),
                         ),
                       ),
                     ],
@@ -63,7 +63,7 @@ class MyAccWidget extends StatelessWidget {
                 ),
                 CircleAvatar(
                   radius: screenHeight * 0.034,
-                  backgroundImage: NetworkImage(
+                  backgroundImage: const NetworkImage(
                     "https://drive.google.com/uc?export=view&id=1sE88XrMfk_xWqdSES3k3NVeEnpU70n1t",
                   ),
                 ),

@@ -71,7 +71,7 @@ class _HomePageState extends State<HomePage> {
                         'https://drive.google.com/uc?export=view&id=1VS5pzOzvOPWrLOR3JNkEp9MC9nplBHPW',
                     fieldName: 'قائمة المعلمين',
                     ontap: () {
-                      Navigator.pushReplacement(
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => TeacherListAdmin()),

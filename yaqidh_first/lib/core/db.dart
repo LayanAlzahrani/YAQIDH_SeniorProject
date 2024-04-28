@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class YDB {
   static CollectionReference _getCollection(String collectionName) {
@@ -45,6 +46,27 @@ class YDB {
 
   static Future<List<Map<String, dynamic>>> getAllStudents() async {
     return await getAllData('students');
+  }
+
+  static Future<List<DocumentSnapshot>> getRecentlyCreatedStudents() async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('students')
+        .orderBy('createdAt', descending: true)
+        .limit(10)
+        .get();
+
+    return querySnapshot.docs;
+  }
+
+  static Future<List<DocumentSnapshot>> getRecentlyCreatedTeachers() async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .where('userType', isEqualTo: 'teacher')
+        .orderBy('createdAt', descending: true)
+        .limit(10)
+        .get();
+
+    return querySnapshot.docs;
   }
 
   static Future<List<Map<String, dynamic>>> getAllStudentsOfTeacher(
@@ -95,6 +117,34 @@ class YDB {
           .delete();
     } catch (error) {
       print('Error deleting student: $error');
+    }
+  }
+
+//Not working
+  static Future<void> createNewUserWithEmailAndPassword(
+      String email, String password) async {
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      print('User account created successfully');
+    } catch (e) {
+      print('Failed to create user account: $e');
+    }
+  }
+
+  static Future<Map<String, dynamic>> getTeacherById(String teacherId) async {
+    final DocumentSnapshot<Map<String, dynamic>> snapshot =
+        await FirebaseFirestore.instance
+            .collection('teachers')
+            .doc(teacherId)
+            .get();
+
+    if (snapshot.exists) {
+      return snapshot.data()!;
+    } else {
+      return {};
     }
   }
 }
