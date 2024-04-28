@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:yaqidh_first/Widgets/Teacher_list_A.dart';
 import 'package:yaqidh_first/core/db.dart';
 
 void main() {
@@ -49,7 +47,7 @@ class AddTeacherScreen extends StatelessWidget {
           backgroundColor: const Color(0xFF365486),
         ),
         body: Container(
-          color: Color(0xFFF8F8F8),
+          color: const Color(0xFFF8F8F8),
           width: double.infinity,
           height: double.infinity,
           child: SingleChildScrollView(
@@ -67,7 +65,7 @@ class AddTeacherScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                AccountActivationForm(),
+                const AccountActivationForm(),
               ],
             ),
           ),
@@ -105,7 +103,7 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
                 'إسم المعلم',
                 style: TextStyle(
                   fontSize: screenHeight * 0.015, // Custom font size
-                  color: Color(0xFF888888),
+                  color: const Color(0xFF888888),
                   fontFamily: 'Tajawal', // Custom font family
                 ),
               ), // Information above name text field
@@ -127,7 +125,7 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
                 ' البريد الالكتروني للمعلم ',
                 style: TextStyle(
                   fontSize: screenHeight * 0.015, // Custom font size
-                  color: Color(0xFF888888),
+                  color: const Color(0xFF888888),
                   fontFamily: 'Tajawal', // Custom font family
                 ),
               ), // Information above email text field
@@ -148,7 +146,7 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
                 'رقم هاتف المعلم ',
                 style: TextStyle(
                   fontSize: screenHeight * 0.015,
-                  color: Color(0xFF888888),
+                  color: const Color(0xFF888888),
                   fontFamily: 'Tajawal', // Custom font family
                 ),
               ), // Information above phone number text field
@@ -160,11 +158,11 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
         SizedBox(
             height: screenHeight * 0.039), // Added SizedBox for equal space
         SizedBox(
-          width: 290, // Set the desired width for the ElevatedButton
-          height: 60, // Set the desired height for the ElevatedButton
+          width: 290,
+          height: 60,
           child: MyButton3(
               onTap: () {
-                var studentId = "1${YDB.generateRandomNumber(6)}";
+                var teacherID = "1${YDB.generateRandomNumber(7)}";
                 // Perform action to activate the account here
                 // For now, let's just print the entered data
                 print('Teacher Name: ${nameController.text}');
@@ -175,20 +173,24 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
                 // Add user to Firestore database
                 FirebaseFirestore.instance
                     .collection('users')
-                    .doc(studentId)
+                    .doc(teacherID)
                     .set({
                   'userType': 'teacher',
                   'name': nameController.text,
                   'email': emailController.text,
                   'phone': phoneController.text,
-                  'password': YDB.generateRandomPassword(),
-                }).then((_) {
-                  // Clear text fields after adding user
+                  'password': '123456',
+                  //YDB.generateRandomPassword(),
+                  'createdAt': FieldValue.serverTimestamp(),
+                }).then((_) async {
                   nameController.clear();
                   emailController.clear();
                   phoneController.clear();
                   _showConfirmationDialog('تمت إضافة المعلم بنجاح.');
-                  // TODO: Add A message
+                  await YDB.createNewUserWithEmailAndPassword(
+                    emailController.text,
+                    '123456',
+                  );
                 }).catchError((error) {
                   print("Failed to add user: $error");
                 });
@@ -209,7 +211,7 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
         height: screenHeight * 0.05,
         margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.001),
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 255, 255, 255),
+          color: const Color.fromARGB(255, 255, 255, 255),
           borderRadius: BorderRadius.circular(13.0),
         ),
         child: TextField(
@@ -221,11 +223,11 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
           decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                    color: Color(0xFFECECEC), width: screenWidth * 0.003),
+                    color: const Color(0xFFECECEC), width: screenWidth * 0.003),
                 borderRadius: BorderRadius.circular(13)),
             focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                    color: Color(0xFF7FC7D9), width: screenWidth * 0.003),
+                    color: const Color(0xFF7FC7D9), width: screenWidth * 0.003),
                 borderRadius: BorderRadius.circular(13)),
           ),
         ),
@@ -272,14 +274,14 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('تمت الإضافة بنجاح'),
+          title: const Text('تمت الإضافة بنجاح'),
           content: Text(message),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('حسنا'),
+              child: const Text('حسنا'),
             ),
           ],
         );
@@ -307,7 +309,8 @@ class MyButton3 extends StatelessWidget {
         margin: EdgeInsets.symmetric(
             horizontal: screenWidth * 0.018, vertical: screenHeight * 0.011),
         decoration: BoxDecoration(
-            color: Color(0xFF7FC7D9), borderRadius: BorderRadius.circular(13)),
+            color: const Color(0xFF7FC7D9),
+            borderRadius: BorderRadius.circular(13)),
         child: Center(child: LayoutBuilder(
           builder: (context, constraints) {
             return Text(

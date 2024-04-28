@@ -1,11 +1,29 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:yaqidh_first/Screens/Admin/teacher_profile.dart';
+import 'package:yaqidh_first/core/db.dart';
 
-class TeacherNameListWidget extends StatelessWidget {
-  const TeacherNameListWidget({super.key});
+class TeacherNameListWidget extends StatefulWidget {
+  const TeacherNameListWidget({Key? key}) : super(key: key);
+  @override
+  State<TeacherNameListWidget> createState() => _TeacherNameListWidgetState();
+}
+
+class _TeacherNameListWidgetState extends State<TeacherNameListWidget> {
+  List<DocumentSnapshot<Object?>> _teachers = [];
+
+  @override
+  void initState() {
+    YDB.getRecentlyCreatedTeachers().then((result) {
+      setState(() {
+        _teachers = result;
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,16 +34,19 @@ class TeacherNameListWidget extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.043),
       child: GridView.count(
         childAspectRatio: MediaQuery.of(context).size.width /
-            (MediaQuery.of(context).size.height / 11.3),
+            (MediaQuery.of(context).size.height / 9.7),
         physics: NeverScrollableScrollPhysics(),
         crossAxisCount: 1,
         shrinkWrap: true,
         children: List.generate(
-          3,
+          _teachers.length > 3 ? 3 : _teachers.length,
           (index) => InkWell(
             onTap: () {
+              String teacherId = _teachers[index]['id'];
               Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => TeacherProfile()),
+                MaterialPageRoute(
+                  builder: (context) => TeacherProfile(),
+                ),
               );
             },
             child: Container(
@@ -52,21 +73,19 @@ class TeacherNameListWidget extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        SizedBox(
-                          height: 5,
-                        ),
+                        SizedBox(height: screenHeight * 0.008),
                         Text(
-                          "رقم المعلم",
+                          _teachers[index].id,
                           style: TextStyle(
-                            fontSize: screenHeight * 0.012,
+                            fontSize: screenHeight * 0.014,
                             color: Color(0xFF999999),
                           ),
                           textDirection: TextDirection.rtl,
                         ),
                         Text(
-                          "إسم المعلم",
+                          _teachers[index]['name'],
                           style: TextStyle(
-                            fontSize: screenHeight * 0.013,
+                            fontSize: screenHeight * 0.015,
                             fontWeight: FontWeight.bold,
                           ),
                           textDirection: TextDirection.rtl,

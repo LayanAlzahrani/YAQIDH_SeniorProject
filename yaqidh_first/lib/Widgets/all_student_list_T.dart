@@ -55,25 +55,25 @@ class AllStudentNamesForTeacher extends StatelessWidget {
                     SizedBox(width: screenWidth * 0.01),
                     Container(
                       width: screenHeight * 0.1,
-                      // padding: EdgeInsets.symmetric(
-                      //   horizontal: screenHeight * 0.018,
-                      // ),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: screenHeight * 0.012,
+                      ),
                       margin:
                           EdgeInsets.symmetric(vertical: screenHeight * 0.013),
                       decoration: BoxDecoration(
-                        color: isTested ? Colors.red[100] : Colors.green[100],
+                        color: isTested ? Colors.green[100] : Colors.red[100],
                         borderRadius:
                             BorderRadius.circular(screenHeight * 0.016),
                       ),
                       child: Center(
                         child: Text(
-                          isTested ? "لم يتم الاختبار" : "تم الاختبار",
+                          isTested ? "تم الاختبار" : "لم يتم الاختبار",
                           style: TextStyle(
                               color: isTested
-                                  ? Colors.red[600]
-                                  : Colors.green[600],
+                                  ? Colors.green[600]
+                                  : Colors.red[600],
                               fontWeight: FontWeight.bold,
-                              fontSize: screenHeight * 0.013),
+                              fontSize: screenHeight * 0.0123),
                         ),
                       ),
                     ),
@@ -81,11 +81,11 @@ class AllStudentNamesForTeacher extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          SizedBox(height: screenHeight * 0.01),
+                          SizedBox(height: screenHeight * 0.008),
                           Text(
                             "رقم الطالب",
                             style: TextStyle(
-                              fontSize: screenHeight * 0.012,
+                              fontSize: screenHeight * 0.014,
                               color: Color(0xFF999999),
                             ),
                             textDirection: TextDirection.rtl,
@@ -93,7 +93,7 @@ class AllStudentNamesForTeacher extends StatelessWidget {
                           Text(
                             "إسم الطالب",
                             style: TextStyle(
-                              fontSize: screenHeight * 0.013,
+                              fontSize: screenHeight * 0.015,
                               fontWeight: FontWeight.bold,
                             ),
                             textDirection: TextDirection.rtl,

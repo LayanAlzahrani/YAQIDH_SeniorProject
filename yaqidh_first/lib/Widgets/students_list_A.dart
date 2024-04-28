@@ -3,10 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:yaqidh_first/Screens/Admin/student_profile.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class AllStudentNamesForAdmin extends StatelessWidget {
-  final bool isTested = false;
-
+class AllStudentNamesForAdmin extends StatefulWidget {
   const AllStudentNamesForAdmin({Key? key}) : super(key: key);
+
+  @override
+  State<AllStudentNamesForAdmin> createState() =>
+      _AllStudentNamesForAdminState();
+}
+
+class _AllStudentNamesForAdminState extends State<AllStudentNamesForAdmin> {
+  final bool isTested = false;
 
   @override
   Widget build(BuildContext context) {

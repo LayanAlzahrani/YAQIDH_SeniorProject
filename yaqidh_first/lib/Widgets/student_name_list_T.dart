@@ -51,11 +51,11 @@ class StudentNamesForTeacher extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        SizedBox(height: screenHeight * 0.01),
+                        SizedBox(height: screenHeight * 0.008),
                         Text(
                           "رقم الطالب",
                           style: TextStyle(
-                            fontSize: screenHeight * 0.012,
+                            fontSize: screenHeight * 0.014,
                             color: Color(0xFF999999),
                           ),
                           textDirection: TextDirection.rtl,
@@ -63,7 +63,7 @@ class StudentNamesForTeacher extends StatelessWidget {
                         Text(
                           "إسم الطالب",
                           style: TextStyle(
-                            fontSize: screenHeight * 0.013,
+                            fontSize: screenHeight * 0.015,
                             fontWeight: FontWeight.bold,
                           ),
                           textDirection: TextDirection.rtl,

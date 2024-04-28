@@ -8,7 +8,6 @@ import 'package:yaqidh_first/Screens/Admin/homepage.dart';
 import 'package:yaqidh_first/Screens/Teacher/game.dart';
 import 'package:yaqidh_first/Screens/Teacher/homepage_T.dart';
 import 'package:yaqidh_first/Screens/Teacher/teacher_profile_T.dart';
-import 'package:yaqidh_first/Widgets/myaccWidget.dart';
 import 'package:yaqidh_first/Widgets/settingsWidget.dart';
 import 'package:yaqidh_first/Widgets/teacher_navigation_bar.dart';
 import 'package:yaqidh_first/firebase_options.dart';
