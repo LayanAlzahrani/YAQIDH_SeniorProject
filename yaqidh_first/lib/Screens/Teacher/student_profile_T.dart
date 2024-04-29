@@ -84,30 +84,32 @@ class _StudentProfileForTeacherState extends State<StudentProfileForTeacher> {
                   ProfileInfo(
                     sectionName: 'رقم التعريف',
                     info: '200000',
+                    onPressed: () {},
                   ),
                   ProfileInfo(
                     sectionName: 'تاريخ الميلاد',
                     info: '12-3-2018',
+                    onPressed: () {},
                   ),
                   ProfileInfo(
                     sectionName: 'رقم هاتف ولي الأمر',
                     info: '0543278484',
+                    onPressed: () {},
                   ),
                   ProfileInfo(
                     sectionName: 'البريد الإلكتروني لـ ولي الأمر',
                     info: 'Parent@gmail.com',
+                    onPressed: () {},
                   ),
                   ProfileInfo(
                     sectionName: 'تاريخ التشخيص',
                     info: '22-6-2023',
-                  ),
-                  ProfileInfo(
-                    sectionName: 'نتيجة التشخيص',
-                    info: 'مشخص بنسبة 70 بالمئة',
+                    onPressed: () {},
                   ),
                   ProfileInfo(
                     sectionName: 'المسؤول عن التشخيص',
                     info: 'أ. ريم احمد',
+                    onPressed: () {},
                   ),
                   SettingsWidget(
                       name: 'التقرير',

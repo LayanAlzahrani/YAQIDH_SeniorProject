@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class YDB {
   static CollectionReference _getCollection(String collectionName) {
@@ -117,20 +116,6 @@ class YDB {
           .delete();
     } catch (error) {
       print('Error deleting student: $error');
-    }
-  }
-
-//Not working
-  static Future<void> createNewUserWithEmailAndPassword(
-      String email, String password) async {
-    try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      print('User account created successfully');
-    } catch (e) {
-      print('Failed to create user account: $e');
     }
   }
 

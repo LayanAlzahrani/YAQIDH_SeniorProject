@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:yaqidh_first/core/db.dart';
 
@@ -183,14 +184,14 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
                   //YDB.generateRandomPassword(),
                   'createdAt': FieldValue.serverTimestamp(),
                 }).then((_) async {
+                  await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                    email: emailController.text,
+                    password: '123456',
+                  );
                   nameController.clear();
                   emailController.clear();
                   phoneController.clear();
                   _showConfirmationDialog('تمت إضافة المعلم بنجاح.');
-                  await YDB.createNewUserWithEmailAndPassword(
-                    emailController.text,
-                    '123456',
-                  );
                 }).catchError((error) {
                   print("Failed to add user: $error");
                 });

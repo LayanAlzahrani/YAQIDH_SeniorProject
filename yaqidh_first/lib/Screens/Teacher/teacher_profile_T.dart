@@ -78,14 +78,17 @@ class _TeacherMyProfileState extends State<TeacherMyProfile> {
                   ProfileInfo(
                     sectionName: 'رقم التعريف',
                     info: '100000',
+                    onPressed: () {},
                   ),
                   ProfileInfo(
                     sectionName: 'البريد الإلكتروني',
                     info: 'Teacher@gmail.com',
+                    onPressed: () {},
                   ),
                   ProfileInfo(
                     sectionName: 'رقم الهاتف',
                     info: '0531324894',
+                    onPressed: () {},
                   ),
                 ],
               ),

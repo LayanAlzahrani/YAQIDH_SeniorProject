@@ -291,12 +291,12 @@ class _LoginPageState extends State<LoginPage> {
         context,
         MaterialPageRoute(builder: (context) => HomePage()),
       );
-    } else {
+    } else if (userData['userType'] == 'teacher') {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => HomePageTeacher()),
       );
-    }
+    } else {}
   }
 }
 

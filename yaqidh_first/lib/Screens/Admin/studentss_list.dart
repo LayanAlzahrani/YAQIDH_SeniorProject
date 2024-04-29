@@ -4,7 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:yaqidh_first/Screens//Admin/homepage.dart';
 import 'package:yaqidh_first/Screens/Admin/addStudent.dart';
 import 'package:yaqidh_first/Widgets/student_list_Admin.dart';
-import 'package:yaqidh_first/Widgets/search_widget.dart';
 import 'package:yaqidh_first/firebase_options.dart';
 
 Future<void> main() async {

@@ -25,6 +25,15 @@ class _NameListWidgetState extends State<NameListWidget> {
     super.initState();
   }
 
+  void navigateToStudentProfile(int index) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => StudentProfile(
+                  studentId: _students[index].id,
+                )));
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.sizeOf(context).height;
@@ -42,9 +51,7 @@ class _NameListWidgetState extends State<NameListWidget> {
           _students.length > 3 ? 3 : _students.length,
           (index) => InkWell(
             onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => StudentProfile()),
-              );
+              navigateToStudentProfile(index);
             },
             child: Container(
               padding: EdgeInsets.symmetric(

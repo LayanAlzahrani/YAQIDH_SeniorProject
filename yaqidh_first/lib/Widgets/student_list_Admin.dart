@@ -25,10 +25,10 @@ class _StudentListForAdminState extends State<StudentListForAdmin> {
 
   Future<void> _fetchStudents() async {
     try {
-      final teachers = await YDB.getAllStudents();
+      final students = await YDB.getAllStudents();
       setState(() {
-        _students = teachers;
-        _allStudents = teachers;
+        _students = students;
+        _allStudents = students;
       });
     } catch (error) {}
   }
@@ -125,7 +125,10 @@ class _StudentListForAdminState extends State<StudentListForAdmin> {
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                          builder: (context) => const StudentProfile()),
+                        builder: (context) => StudentProfile(
+                          studentId: student['id'],
+                        ),
+                      ),
                     );
                   },
                   child: Container(
@@ -162,18 +165,6 @@ class _StudentListForAdminState extends State<StudentListForAdmin> {
                                 value: '2',
                                 child: Center(
                                   child: Text(
-                                    'إضافة إلى معلم',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const PopupMenuItem(
-                                value: '3',
-                                child: Center(
-                                  child: Text(
                                     'حذف',
                                     style: TextStyle(
                                       fontSize: 16,
@@ -188,11 +179,11 @@ class _StudentListForAdminState extends State<StudentListForAdmin> {
                             if (value == '1') {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                    builder: (context) =>
-                                        const StudentProfile()),
+                                    builder: (context) => StudentProfile(
+                                          studentId: student['id'],
+                                        )),
                               );
                             } else if (value == '2') {
-                            } else if (value == '3') {
                               _showDeleteConfirmationDialog(
                                   context, student['id']);
                             }
@@ -259,6 +250,7 @@ class _StudentListForAdminState extends State<StudentListForAdmin> {
                                         .get(),
                                 builder: (context, snapshot) {
                                   if (snapshot.data == null) return Container();
+
                                   var teacher =
                                       (snapshot.data as DocumentSnapshot).data()
                                           as Map<String, dynamic>;

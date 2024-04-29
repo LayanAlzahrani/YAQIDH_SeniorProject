@@ -38,7 +38,9 @@ class _AllStudentNamesForAdminState extends State<AllStudentNamesForAdmin> {
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => StudentProfile(),
+                        builder: (context) => StudentProfile(
+                          studentId: "student['id']",
+                        ),
                       ),
                     );
                   },

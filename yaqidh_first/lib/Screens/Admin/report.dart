@@ -46,8 +46,9 @@ class _ReportState extends State<Report> {
           onPressed: () {
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(
-                  builder: (context) =>
-                      StudentProfile()), // Navigate to MyAccount()
+                  builder: (context) => StudentProfile(
+                        studentId: '',
+                      )), // Navigate to MyAccount()
             );
           },
         ),

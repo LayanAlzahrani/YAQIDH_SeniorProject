@@ -42,7 +42,7 @@ class _TeacherNameListWidgetState extends State<TeacherNameListWidget> {
           _teachers.length > 3 ? 3 : _teachers.length,
           (index) => InkWell(
             onTap: () {
-              String teacherId = _teachers[index]['id'];
+              //String teacherId = _teachers[index]['id'];
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => TeacherProfile(),

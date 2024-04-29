@@ -5,11 +5,12 @@ import 'package:flutter/material.dart';
 class ProfileInfo extends StatelessWidget {
   final String info;
   final String sectionName;
-
+  final void Function()? onPressed;
   const ProfileInfo({
     super.key,
     required this.sectionName,
     required this.info,
+    required this.onPressed,
   });
 
   @override
@@ -36,25 +37,33 @@ class ProfileInfo extends StatelessWidget {
       child: Column(
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              IconButton(
+                icon: Icon(
+                  Icons.settings,
+                  size: screenHeight * 0.021,
+                  color: Color.fromARGB(255, 179, 178, 178),
+                ),
+                onPressed: onPressed,
+              ),
               Text(
                 sectionName,
                 style: TextStyle(
-                    fontSize: screenHeight * 0.013,
+                    fontSize: screenHeight * 0.015,
                     fontWeight: FontWeight.normal,
                     color: Color(0xFF999999)),
               ),
             ],
           ),
-          SizedBox(height: screenHeight * 0.003),
+          SizedBox(height: screenHeight * 0.001),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
                 info,
                 style: TextStyle(
-                    fontSize: screenHeight * 0.015,
+                    fontSize: screenHeight * 0.016,
                     fontWeight: FontWeight.bold),
               ),
             ],

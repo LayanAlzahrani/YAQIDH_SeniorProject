@@ -1,13 +1,13 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:yaqidh_first/Screens/Admin/myaccount.dart';
 import 'package:yaqidh_first/Widgets/profile_info.dart';
 import 'package:yaqidh_first/firebase_options.dart';
-
-import '../../core/db.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,29 +38,49 @@ class AdminProfile extends StatefulWidget {
 }
 
 class _AdminProfileState extends State<AdminProfile> {
-  Map<String, dynamic>? _admin;
-
-  @override
-  void initState() {
-    super.initState();
-    YDB.getAdmin().then((result) {
-      setState(() {
-        _admin = result;
-      });
-    });
-  }
-
   final double coverHeight = 85;
   final double profileHeight = 95;
 
-  Future<void> editField(String field) async {}
+  final currentUser = FirebaseAuth.instance.currentUser;
+
+  final userCollection = FirebaseFirestore.instance.collection('users');
+
+  //function to edit fields
+  Future<void> editField(String field) async {
+    String newValue = "";
+    await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          "Edit $field",
+        ),
+        content: TextField(
+          autofocus: true,
+          decoration: InputDecoration(
+              hintText: 'Enter new $field',
+              hintStyle: TextStyle(color: Colors.grey)),
+          onChanged: (value) {
+            newValue = value;
+          },
+        ),
+        actions: [
+          TextButton(
+              onPressed: () => Navigator.pop(context), child: Text('cancel')),
+          TextButton(
+              onPressed: () => Navigator.of(context).pop(newValue),
+              child: Text('save'))
+        ],
+      ),
+    );
+    // Update in firestore
+    if (newValue.trim().isNotEmpty) {
+      await userCollection.doc(currentUser?.uid).update({field: newValue});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.sizeOf(context).height;
-    //double screenWidth = MediaQuery.sizeOf(context).width;
-
-    var admin = _admin;
 
     return Scaffold(
       appBar: AppBar(
@@ -74,59 +94,67 @@ class _AdminProfileState extends State<AdminProfile> {
         ),
         backgroundColor: Color(0xFF365486),
       ),
-      body: Container(
-        color: Color(0xFFF8F8F8),
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            buildTop(),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: screenHeight * 0.03),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  if (admin != null) ...[
-                    Text(
-                      admin['name'],
-                      style: TextStyle(
-                          fontSize: screenHeight * 0.02,
-                          fontWeight: FontWeight.bold),
+      body: StreamBuilder<DocumentSnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection('users')
+            .doc(currentUser?.uid)
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final userData = snapshot.data!.data() as Map<String, dynamic>;
+
+            return Container(
+              color: Color(0xFFF8F8F8),
+              child: ListView(
+                padding: EdgeInsets.zero,
+                children: <Widget>[
+                  buildTop(),
+                  Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: screenHeight * 0.03),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        ...[
+                          InkWell(
+                            onTap: () => editField('name'),
+                            child: Text(
+                              userData['name'],
+                              style: TextStyle(
+                                  fontSize: screenHeight * 0.02,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          SizedBox(height: screenHeight * 0.01),
+                          ProfileInfo(
+                              sectionName: 'رقم التعريف',
+                              info: userData['givenId'],
+                              onPressed: () {}),
+                          ProfileInfo(
+                            sectionName: 'البريد الإلكتروني',
+                            info: userData['email'],
+                            onPressed: () => editField('email'),
+                          ),
+                          ProfileInfo(
+                            sectionName: 'رقم الهاتف',
+                            info: userData['phone'],
+                            onPressed: () => editField('phone'),
+                          ),
+                        ],
+                      ],
                     ),
-                    SizedBox(height: screenHeight * 0.01),
-                    ProfileInfo(
-                      sectionName: 'رقم التعريف',
-                      info: admin['givenId'],
-                    ),
-                    ProfileInfo(
-                      sectionName: 'البريد الإلكتروني',
-                      info: admin['email'],
-                    ),
-                    ProfileInfo(
-                      sectionName: 'رقم الهاتف',
-                      info: admin['phone'],
-                    ),
-                  ] else ...[
-                    CircularProgressIndicator(),
-                  ],
+                  ),
                 ],
               ),
-            ),
-          ],
-        ),
+            );
+          } else if (snapshot.hasError) {
+            print('Error${snapshot.error}');
+          }
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        },
       ),
-      floatingActionButton: FloatingActionButton(
-        shape: CircleBorder(),
-        onPressed: () {},
-        tooltip: 'تعديل',
-        backgroundColor: Color(0xFF7FC7D9),
-        foregroundColor: Colors.white,
-        elevation: screenHeight * 0.002,
-        child: Icon(
-          FontAwesomeIcons.pen,
-          size: screenHeight * 0.025,
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 

@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -7,7 +9,9 @@ import 'package:yaqidh_first/Screens/Admin/homepage.dart';
 import 'package:yaqidh_first/Widgets/pdf_widget.dart';
 import 'package:yaqidh_first/Widgets/profile_info.dart';
 import 'package:yaqidh_first/Widgets/settingsWidget.dart';
+import 'package:yaqidh_first/core/db.dart';
 import 'package:yaqidh_first/firebase_options.dart';
+import 'package:intl/intl.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,13 +29,17 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Tajawal', useMaterial3: true),
-      home: const StudentProfile(),
+      home: const StudentProfile(
+        studentId: '',
+      ),
     );
   }
 }
 
 class StudentProfile extends StatefulWidget {
-  const StudentProfile({Key? key}) : super(key: key);
+  final String studentId;
+
+  const StudentProfile({Key? key, required this.studentId}) : super(key: key);
 
   @override
   State<StudentProfile> createState() => _StudentProfileState();
@@ -42,13 +50,75 @@ class _StudentProfileState extends State<StudentProfile> {
   final double coverHeight = 85;
   final double profileHeight = 98;
 
+  final currentUser = FirebaseAuth.instance.currentUser;
+
+  final userCollection = FirebaseFirestore.instance.collection('students');
+
+  List<Map<String, dynamic>> _students = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchStudents();
+  }
+
+  Future<void> _fetchStudents() async {
+    try {
+      final students = await YDB.getAllStudents();
+      setState(() {
+        _students = students;
+      });
+    } catch (error) {}
+  }
+
   //function to edit fields
-  Future<void> editField(String field) async {}
+  Future<void> editField(String field) async {
+    String newValue = "";
+    await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          "Edit $field",
+        ),
+        content: TextField(
+          autofocus: true,
+          decoration: InputDecoration(
+              hintText: 'Enter new $field',
+              hintStyle: TextStyle(color: Colors.grey)),
+          onChanged: (value) {
+            newValue = value;
+          },
+        ),
+        actions: [
+          TextButton(
+              onPressed: () => Navigator.pop(context), child: Text('cancel')),
+          TextButton(
+              onPressed: () => Navigator.of(context).pop(newValue),
+              child: Text('save'))
+        ],
+      ),
+    );
+    // Update in firestore
+    if (newValue.trim().isNotEmpty) {
+      await userCollection.doc(currentUser?.uid).update({field: newValue});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.sizeOf(context).height;
-    //double screenWidth = MediaQuery.sizeOf(context).width;
+
+    var student =
+        _students.firstWhere((student) => student['id'] == widget.studentId);
+
+    final timestamp = student['age'] as Timestamp?;
+    String formattedDate = '';
+
+    if (timestamp != null) {
+      final dateTime = timestamp.toDate();
+      formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
+    }
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -72,68 +142,154 @@ class _StudentProfileState extends State<StudentProfile> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
-                    "إسم الطالب",
-                    style: TextStyle(
+                  InkWell(
+                    onTap: () => editField('fullName'),
+                    child: Text(
+                      student['fullName'],
+                      style: TextStyle(
                         fontSize: screenHeight * 0.02,
-                        fontWeight: FontWeight.bold),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                   SizedBox(height: screenHeight * 0.01),
                   ProfileInfo(
                     sectionName: 'رقم التعريف',
-                    info: '200000',
+                    info: student['id'],
+                    onPressed: () {},
                   ),
                   ProfileInfo(
                     sectionName: 'تاريخ الميلاد',
-                    info: '12-3-2018',
+                    info: formattedDate,
+                    onPressed: () {},
                   ),
                   ProfileInfo(
                     sectionName: 'رقم هاتف ولي الأمر',
-                    info: '0543278484',
+                    info: student['phone'],
+                    onPressed: () => editField('phone'),
                   ),
                   ProfileInfo(
                     sectionName: 'البريد الإلكتروني لـ ولي الأمر',
-                    info: 'Parent@gmail.com',
+                    info: student['email'],
+                    onPressed: () => editField('email'),
                   ),
                   ProfileInfo(
                     sectionName: 'تاريخ التشخيص',
-                    info: '22-6-2023',
+                    info: '0000-00-00',
+                    onPressed: () {},
                   ),
-                  ProfileInfo(
-                    sectionName: 'نتيجة التشخيص',
-                    info: 'مشخص بنسبة 70 بالمئة',
-                  ),
-                  ProfileInfo(
-                    sectionName: 'المسؤول عن التشخيص',
-                    info: 'أ. ريم احمد',
+                  FutureBuilder(
+                    future: (student['teacher'] as DocumentReference).get(),
+                    builder: (context, snapshot) {
+                      if (snapshot.data == null) return Container();
+
+                      var teacher = (snapshot.data as DocumentSnapshot).data()
+                          as Map<String, dynamic>;
+                      return ProfileInfo(
+                        sectionName: 'المسؤول عن التشخيص',
+                        info: teacher['name'],
+                        onPressed: () {},
+                      );
+                    },
                   ),
                   SettingsWidget(
-                      name: 'التقرير',
-                      ontap: () async {
-                        final data = await pdfw.generatePDF();
-                        await pdfw.savePdfFile("ADHD_Report", data);
-                      })
+                    name: 'التقرير',
+                    ontap: () async {
+                      final data = await pdfw.generatePDF();
+                      await pdfw.savePdfFile("ADHD_Report", data);
+                    },
+                  )
                 ],
               ),
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        shape: CircleBorder(),
-        onPressed: () {},
-        tooltip: 'edit',
-        backgroundColor: Color(0xFF7FC7D9),
-        foregroundColor: Colors.white,
-        elevation: screenHeight * 0.002,
-        child: Icon(
-          FontAwesomeIcons.pen,
-          size: screenHeight * 0.025,
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
+  //   body: StreamBuilder<DocumentSnapshot>(
+  //   stream: FirebaseFirestore.instance
+  //       .collection('students')
+  //       .doc(widget.studentId)
+  //       .snapshots(),
+  //   builder: (context, snapshot) {
+  //     if (snapshot.hasData) {
+  //       final userData = snapshot.data?.data() as Map<String, dynamic>?;
+
+  //       return Container(
+  //         color: Color(0xFFF8F8F8),
+  //         child: ListView(
+  //           padding: EdgeInsets.zero,
+  //           children: <Widget>[
+  //             buildTop(),
+  //             Container(
+  //               padding:
+  //                   EdgeInsets.symmetric(horizontal: screenHeight * 0.03),
+  //               child: Column(
+  //                 crossAxisAlignment: CrossAxisAlignment.center,
+  //                 children: [
+  //                   ...[
+  //                     InkWell(
+  //                       onTap: () => editField('fullName'),
+  //                       child: Text(
+  //                         userData?['fullName'],
+  //                         style: TextStyle(
+  //                             fontSize: screenHeight * 0.02,
+  //                             fontWeight: FontWeight.bold),
+  //                       ),
+  //                     ),
+  //                     SizedBox(height: screenHeight * 0.01),
+  //                     ProfileInfo(
+  //                       sectionName: 'رقم التعريف',
+  //                       info: userData?['id'],
+  //                       onPressed: () {},
+  //                     ),
+  //                     ProfileInfo(
+  //                       sectionName: 'تاريخ الميلاد',
+  //                       info: userData?['age'],
+  //                       onPressed: () {},
+  //                     ),
+  //                     ProfileInfo(
+  //                       sectionName: 'رقم هاتف ولي الأمر',
+  //                       info: userData?['phone'],
+  //                       onPressed: () => editField('phone'),
+  //                     ),
+  //                     ProfileInfo(
+  //                       sectionName: 'البريد الإلكتروني لـ ولي الأمر',
+  //                       info: userData?['email'],
+  //                       onPressed: () => editField('email'),
+  //                     ),
+  //                     ProfileInfo(
+  //                       sectionName: 'تاريخ التشخيص',
+  //                       info: 'null',
+  //                       onPressed: () {},
+  //                     ),
+  //                     ProfileInfo(
+  //                       sectionName: 'المسؤول عن التشخيص',
+  //                       info: 'null',
+  //                       onPressed: () {},
+  //                     ),
+  //                     SettingsWidget(
+  //                         name: 'التقرير',
+  //                         ontap: () async {
+  //                           final data = await pdfw.generatePDF();
+  //                           await pdfw.savePdfFile("ADHD_Report", data);
+  //                         })
+  //                   ],
+  //                 ],
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       );
+  //     } else if (snapshot.hasError) {
+  //       print('Error${snapshot.error}');
+  //     }
+  //     return const Center(
+  //       child: CircularProgressIndicator(),
+  //     );
+  //   },
+  // ),
 
   Widget buildTop() {
     final bottom = profileHeight / 2 + 18;
