@@ -2,7 +2,6 @@
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:yaqidh_first/Screens/Teacher/homepage_T.dart';
 import 'package:yaqidh_first/Screens/Teacher/my_account_T.dart';
 import 'package:yaqidh_first/Screens/Teacher/student_selection.dart';
 import 'package:yaqidh_first/Widgets/button_widget2.dart';
@@ -111,12 +110,7 @@ class _GameState extends State<Game> {
               MaterialPageRoute(builder: (context) => const MyAccountTeacher()),
               (route) => false,
             );
-          } else if (index == 0) {
-            Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (context) => const HomePageTeacher()),
-              (route) => false,
-            );
-          }
+          } else if (index == 0) {}
         },
       ),
     );

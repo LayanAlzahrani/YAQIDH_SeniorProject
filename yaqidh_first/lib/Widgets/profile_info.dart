@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 class ProfileInfo extends StatelessWidget {
   final String info;
   final String sectionName;
-  final void Function()? onPressed;
+  final IconButton? icon;
+  final MainAxisAlignment Align;
   const ProfileInfo({
     super.key,
     required this.sectionName,
     required this.info,
-    required this.onPressed,
+    this.icon,
+    required this.Align,
   });
 
   @override
@@ -37,16 +39,17 @@ class ProfileInfo extends StatelessWidget {
       child: Column(
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: Align,
             children: [
-              IconButton(
-                icon: Icon(
-                  Icons.settings,
-                  size: screenHeight * 0.021,
-                  color: Color.fromARGB(255, 179, 178, 178),
-                ),
-                onPressed: onPressed,
-              ),
+              // IconButton(
+              //   icon: Icon(
+              //     Icons.settings,
+              //     size: screenHeight * 0.021,
+              //     color: Color.fromARGB(255, 179, 178, 178),
+              //   ),
+              //   onPressed: onPressed,
+              // ),
+              if (icon != null) icon!,
               Text(
                 sectionName,
                 style: TextStyle(

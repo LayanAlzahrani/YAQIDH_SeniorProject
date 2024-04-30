@@ -25,6 +25,15 @@ class _TeacherNameListWidgetState extends State<TeacherNameListWidget> {
     super.initState();
   }
 
+  void navigateToTeacherProfile(int index) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => TeacherProfile(
+                  teacherId: _teachers[index].id,
+                )));
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.sizeOf(context).height;
@@ -42,12 +51,7 @@ class _TeacherNameListWidgetState extends State<TeacherNameListWidget> {
           _teachers.length > 3 ? 3 : _teachers.length,
           (index) => InkWell(
             onTap: () {
-              //String teacherId = _teachers[index]['id'];
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => TeacherProfile(),
-                ),
-              );
+              navigateToTeacherProfile(index);
             },
             child: Container(
               padding: EdgeInsets.symmetric(

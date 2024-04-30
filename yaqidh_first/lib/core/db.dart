@@ -60,7 +60,6 @@ class YDB {
   static Future<List<DocumentSnapshot>> getRecentlyCreatedTeachers() async {
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
         .collection('users')
-        .where('userType', isEqualTo: 'teacher')
         .orderBy('createdAt', descending: true)
         .limit(10)
         .get();

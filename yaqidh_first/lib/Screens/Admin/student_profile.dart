@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -50,8 +49,6 @@ class _StudentProfileState extends State<StudentProfile> {
   final double coverHeight = 85;
   final double profileHeight = 98;
 
-  final currentUser = FirebaseAuth.instance.currentUser;
-
   final userCollection = FirebaseFirestore.instance.collection('students');
 
   List<Map<String, dynamic>> _students = [];
@@ -68,11 +65,14 @@ class _StudentProfileState extends State<StudentProfile> {
       setState(() {
         _students = students;
       });
-    } catch (error) {}
+      print('_students: $_students');
+    } catch (error) {
+      print('Error fetching students: $error');
+    }
   }
 
   //function to edit fields
-  Future<void> editField(String field) async {
+  Future<void> editField(String field, String studentId) async {
     String newValue = "";
     await showDialog(
       context: context,
@@ -100,7 +100,7 @@ class _StudentProfileState extends State<StudentProfile> {
     );
     // Update in firestore
     if (newValue.trim().isNotEmpty) {
-      await userCollection.doc(currentUser?.uid).update({field: newValue});
+      await userCollection.doc(studentId).update({field: newValue});
     }
   }
 
@@ -108,8 +108,13 @@ class _StudentProfileState extends State<StudentProfile> {
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.sizeOf(context).height;
 
-    var student =
-        _students.firstWhere((student) => student['id'] == widget.studentId);
+    var student = _students.isNotEmpty
+        ? _students.firstWhere((student) => student['id'] == widget.studentId)
+        : null;
+
+    if (student == null) {
+      return CircularProgressIndicator();
+    }
 
     final timestamp = student['age'] as Timestamp?;
     String formattedDate = '';
@@ -143,7 +148,7 @@ class _StudentProfileState extends State<StudentProfile> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   InkWell(
-                    onTap: () => editField('fullName'),
+                    onTap: () => editField('fullName', student['id']),
                     child: Text(
                       student['fullName'],
                       style: TextStyle(
@@ -156,27 +161,49 @@ class _StudentProfileState extends State<StudentProfile> {
                   ProfileInfo(
                     sectionName: 'رقم التعريف',
                     info: student['id'],
-                    onPressed: () {},
+                    Align: MainAxisAlignment.end,
                   ),
                   ProfileInfo(
                     sectionName: 'تاريخ الميلاد',
                     info: formattedDate,
-                    onPressed: () {},
+                    Align: MainAxisAlignment.end,
                   ),
                   ProfileInfo(
                     sectionName: 'رقم هاتف ولي الأمر',
                     info: student['phone'],
-                    onPressed: () => editField('phone'),
+                    icon: IconButton(
+                      icon: Icon(
+                        Icons.settings,
+                        size: screenHeight * 0.021,
+                        color: Color.fromARGB(255, 179, 178, 178),
+                      ),
+                      onPressed: () => editField(
+                        'phone',
+                        student['id'],
+                      ),
+                    ),
+                    Align: MainAxisAlignment.spaceBetween,
                   ),
                   ProfileInfo(
                     sectionName: 'البريد الإلكتروني لـ ولي الأمر',
                     info: student['email'],
-                    onPressed: () => editField('email'),
+                    icon: IconButton(
+                      icon: Icon(
+                        Icons.settings,
+                        size: screenHeight * 0.021,
+                        color: Color.fromARGB(255, 179, 178, 178),
+                      ),
+                      onPressed: () => editField(
+                        'email',
+                        student['id'],
+                      ),
+                    ),
+                    Align: MainAxisAlignment.spaceBetween,
                   ),
                   ProfileInfo(
                     sectionName: 'تاريخ التشخيص',
                     info: '0000-00-00',
-                    onPressed: () {},
+                    Align: MainAxisAlignment.end,
                   ),
                   FutureBuilder(
                     future: (student['teacher'] as DocumentReference).get(),
@@ -188,7 +215,7 @@ class _StudentProfileState extends State<StudentProfile> {
                       return ProfileInfo(
                         sectionName: 'المسؤول عن التشخيص',
                         info: teacher['name'],
-                        onPressed: () {},
+                        Align: MainAxisAlignment.end,
                       );
                     },
                   ),

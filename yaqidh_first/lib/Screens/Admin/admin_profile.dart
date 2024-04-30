@@ -127,18 +127,35 @@ class _AdminProfileState extends State<AdminProfile> {
                           ),
                           SizedBox(height: screenHeight * 0.01),
                           ProfileInfo(
-                              sectionName: 'رقم التعريف',
-                              info: userData['givenId'],
-                              onPressed: () {}),
+                            sectionName: 'رقم التعريف',
+                            info: userData['givenId'],
+                            Align: MainAxisAlignment.end,
+                          ),
                           ProfileInfo(
                             sectionName: 'البريد الإلكتروني',
                             info: userData['email'],
-                            onPressed: () => editField('email'),
+                            icon: IconButton(
+                              icon: Icon(
+                                Icons.settings,
+                                size: screenHeight * 0.021,
+                                color: Color.fromARGB(255, 179, 178, 178),
+                              ),
+                              onPressed: () => editField('email'),
+                            ),
+                            Align: MainAxisAlignment.spaceBetween,
                           ),
                           ProfileInfo(
                             sectionName: 'رقم الهاتف',
                             info: userData['phone'],
-                            onPressed: () => editField('phone'),
+                            icon: IconButton(
+                              icon: Icon(
+                                Icons.settings,
+                                size: screenHeight * 0.021,
+                                color: Color.fromARGB(255, 179, 178, 178),
+                              ),
+                              onPressed: () => editField('phone'),
+                            ),
+                            Align: MainAxisAlignment.spaceBetween,
                           ),
                         ],
                       ],

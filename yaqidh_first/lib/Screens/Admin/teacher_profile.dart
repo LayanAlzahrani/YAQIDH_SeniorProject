@@ -1,11 +1,13 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:yaqidh_first/Screens/Admin/homepage.dart';
 import 'package:yaqidh_first/Widgets/profile_info.dart';
 import 'package:yaqidh_first/Widgets/settingsWidget.dart';
+import 'package:yaqidh_first/core/db.dart';
 import 'package:yaqidh_first/firebase_options.dart';
 
 void main() async {
@@ -24,13 +26,17 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Tajawal', useMaterial3: true),
-      home: const TeacherProfile(),
+      home: const TeacherProfile(
+        teacherId: '',
+      ),
     );
   }
 }
 
 class TeacherProfile extends StatefulWidget {
-  const TeacherProfile({Key? key}) : super(key: key);
+  final String teacherId;
+
+  const TeacherProfile({Key? key, required this.teacherId}) : super(key: key);
 
   @override
   State<TeacherProfile> createState() => _TeacherProfileState();
@@ -40,12 +46,73 @@ class _TeacherProfileState extends State<TeacherProfile> {
   final double coverHeight = 85;
   final double profileHeight = 98;
 
-  Future<void> editField(String field) async {}
+  final userCollection = FirebaseFirestore.instance.collection('users');
+
+  List<Map<String, dynamic>> _teachers = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchTeachers();
+  }
+
+  Future<void> _fetchTeachers() async {
+    try {
+      final teachers = await YDB.getAllTeachers();
+      setState(() {
+        _teachers = teachers;
+      });
+      print('_teachers: $_teachers');
+    } catch (error) {
+      print('Error fetching teachers: $error');
+    }
+  }
+
+  Future<void> editField(String field, String teacherId) async {
+    String newValue = "";
+    await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          "Edit $field",
+        ),
+        content: TextField(
+          autofocus: true,
+          decoration: InputDecoration(
+              hintText: 'Enter new $field',
+              hintStyle: TextStyle(color: Colors.grey)),
+          onChanged: (value) {
+            newValue = value;
+          },
+        ),
+        actions: [
+          TextButton(
+              onPressed: () => Navigator.pop(context), child: Text('cancel')),
+          TextButton(
+              onPressed: () => Navigator.of(context).pop(newValue),
+              child: Text('save'))
+        ],
+      ),
+    );
+    // Update in firestore
+    if (newValue.trim().isNotEmpty) {
+      await userCollection.doc(teacherId).update({field: newValue});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.sizeOf(context).height;
     //double screenWidth = MediaQuery.sizeOf(context).width;
+
+    var teacher = _teachers.isNotEmpty
+        ? _teachers.firstWhere((teacher) => teacher['id'] == widget.teacherId)
+        : null;
+
+    if (teacher == null) {
+      return CircularProgressIndicator();
+    }
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -69,27 +136,46 @@ class _TeacherProfileState extends State<TeacherProfile> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
-                    "إسم المعلم",
-                    style: TextStyle(
-                        fontSize: screenHeight * 0.02,
-                        fontWeight: FontWeight.bold),
+                  InkWell(
+                    onTap: () => editField('name', teacher['id']),
+                    child: Text(
+                      teacher['name'],
+                      style: TextStyle(
+                          fontSize: screenHeight * 0.02,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
                   SizedBox(height: screenHeight * 0.01),
                   ProfileInfo(
                     sectionName: 'رقم التعريف',
-                    info: '100000',
-                    onPressed: () {},
+                    info: teacher['id'],
+                    Align: MainAxisAlignment.end,
                   ),
                   ProfileInfo(
                     sectionName: 'البريد الإلكتروني',
-                    info: 'Teacher@gmail.com',
-                    onPressed: () {},
+                    info: teacher['email'],
+                    icon: IconButton(
+                      icon: Icon(
+                        Icons.settings,
+                        size: screenHeight * 0.021,
+                        color: Color.fromARGB(255, 179, 178, 178),
+                      ),
+                      onPressed: () => editField('email', teacher['id']),
+                    ),
+                    Align: MainAxisAlignment.spaceBetween,
                   ),
                   ProfileInfo(
                     sectionName: 'رقم الهاتف',
-                    info: '0531327573',
-                    onPressed: () {},
+                    info: teacher['phone'],
+                    icon: IconButton(
+                      icon: Icon(
+                        Icons.settings,
+                        size: screenHeight * 0.021,
+                        color: Color.fromARGB(255, 179, 178, 178),
+                      ),
+                      onPressed: () => editField('phone', teacher['id']),
+                    ),
+                    Align: MainAxisAlignment.spaceBetween,
                   ),
                   SettingsWidget(
                     name: 'قائمة الطلاب المسؤول عنهم',

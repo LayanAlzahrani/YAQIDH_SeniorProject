@@ -298,6 +298,17 @@ class _LoginPageState extends State<LoginPage> {
       );
     } else {}
   }
+
+  redirectUser(String uid, [bool usePop = false]) async {
+    // var allData = await YDB.getAllData('users');
+
+    //teacherId = await YDB.getTeacherById(teacherId);
+    if (usePop) {
+      Navigator.pop(context);
+    }
+
+    //if (allData['userType'] == 'admin') {}
+  }
 }
 
 enum DeviceType { mobile, tablet, desktop }

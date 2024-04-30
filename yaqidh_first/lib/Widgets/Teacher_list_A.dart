@@ -120,10 +120,11 @@ class _TeacherNamesForAdminState extends State<TeacherNamesForAdmin> {
                 int counter = index + 1;
                 return InkWell(
                   onTap: () {
-                    //String teacherId = teacher['id'];
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => TeacherProfile(),
+                        builder: (context) => TeacherProfile(
+                          teacherId: teacher['id'],
+                        ),
                       ),
                     );
                   },
@@ -171,10 +172,11 @@ class _TeacherNamesForAdminState extends State<TeacherNamesForAdmin> {
                           },
                           onSelected: (value) {
                             if (value == '1') {
-                              //String teacherId = teacher['id'];
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  builder: (context) => TeacherProfile(),
+                                  builder: (context) => TeacherProfile(
+                                    teacherId: teacher['id'],
+                                  ),
                                 ),
                               );
                             } else if (value == '2') {

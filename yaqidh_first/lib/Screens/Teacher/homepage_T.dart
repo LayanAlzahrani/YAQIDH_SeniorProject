@@ -1,7 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:device_preview/device_preview.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:yaqidh_first/Screens/Teacher/game.dart';
 import 'package:yaqidh_first/Screens/Teacher/my_account_T.dart';
@@ -9,28 +7,6 @@ import 'package:yaqidh_first/Screens/Teacher/student_list_T.dart';
 import 'package:yaqidh_first/Widgets/list_widget_T.dart';
 import 'package:yaqidh_first/Widgets/student_name_list_T.dart';
 import 'package:yaqidh_first/Widgets/teacher_navigation_bar.dart';
-import 'package:yaqidh_first/firebase_options.dart';
-
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  runApp(DevicePreview(builder: (context) => const MyApp()));
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(fontFamily: 'Tajawal', useMaterial3: true),
-      home: HomePageTeacher(),
-    );
-  }
-}
 
 class HomePageTeacher extends StatefulWidget {
   const HomePageTeacher({Key? key}) : super(key: key);

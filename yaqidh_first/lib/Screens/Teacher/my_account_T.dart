@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:yaqidh_first/Screens/Admin/login.dart';
 import 'package:yaqidh_first/Screens/Admin/homepage.dart';
 import 'package:yaqidh_first/Screens/Teacher/game.dart';
-import 'package:yaqidh_first/Screens/Teacher/homepage_T.dart';
 import 'package:yaqidh_first/Screens/Teacher/teacher_profile_T.dart';
 import 'package:yaqidh_first/Widgets/settingsWidget.dart';
 import 'package:yaqidh_first/Widgets/teacher_navigation_bar.dart';
@@ -97,10 +96,10 @@ class _MyAccountState extends State<MyAccountTeacher> {
               (route) => false,
             );
           } else if (index == 0) {
-            Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (context) => const HomePageTeacher()),
-              (route) => false,
-            );
+            // Navigator.of(context).pushAndRemoveUntil(
+            //   MaterialPageRoute(builder: (context) => const HomePageTeacher()),
+            //   (route) => false,
+            // );
           }
         },
       ),
