@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:yaqidh_first/core/db.dart';
 
@@ -127,13 +126,12 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
               Text(
                 ' البريد الالكتروني للمعلم ',
                 style: TextStyle(
-                  fontSize: screenHeight * 0.015, 
+                  fontSize: screenHeight * 0.015,
                   color: const Color(0xFF888888),
-                  fontFamily: 'Tajawal', 
+                  fontFamily: 'Tajawal',
                 ),
-              ), 
-              _buildCurvedTextField(
-                  emailController), 
+              ),
+              _buildCurvedTextField(emailController),
             ],
           ),
         ),
