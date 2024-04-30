@@ -11,6 +11,9 @@ import 'package:yaqidh_first/Widgets/login_textfield.dart';
 import 'package:yaqidh_first/core/db.dart';
 import 'package:yaqidh_first/firebase_options.dart';
 import 'package:yaqidh_first/user_auth/firebase_auth_services.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:awesome_dialog/awesome_dialog.dart'; 
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -243,28 +246,59 @@ class _LoginPageState extends State<LoginPage> {
               textFieldName: 'كلمة المرور',
             ),
             SizedBox(height: screenHeight * 0.009),
-            GestureDetector(
-              onTap: () {
-                // ddd
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(right: screenWidth * 0.065),
-                    child: Text(
-                      'نسيت كلمة المرور؟',
-                      style: TextStyle(
-                        fontSize: screenHeight * 0.013,
-                        color: Color(0xFF365486),
-                        decoration: TextDecoration.underline,
-                      ),
-                      textAlign: TextAlign.right,
-                    ),
-                  ),
-                ],
-              ),
+GestureDetector(
+  child: InkWell(
+    onTap: () async {
+      if (_emailController.text == "") {
+        AwesomeDialog(
+          context: context,
+          dialogType: DialogType.error,
+          animType: AnimType.rightSlide,
+          title: 'Error',
+          desc: 'يجب إدخال البريد الإلكتروني',
+        ).show();
+        return;
+      }
+      try {
+        await FirebaseAuth.instance.sendPasswordResetEmail(email: _emailController.text);
+        AwesomeDialog(
+          context: context,
+          dialogType: DialogType.success,
+          animType: AnimType.rightSlide,
+          title: 'Success',
+          desc: 'لقد تم إرسال رابط إعادة تعيين كلمة المرور',
+        ).show();
+      } catch (e) {
+        print(e);
+        AwesomeDialog(
+          context: context,
+          dialogType: DialogType.error,
+          animType: AnimType.rightSlide,
+          title: 'Error',
+          desc: 'حدث خطأ أثناء إرسال رابط إعادة تعيين كلمة المرور',
+        ).show();
+      }
+    },
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Padding(
+          padding: EdgeInsets.only(right: screenWidth * 0.065),
+          child: Text(
+            'نسيت كلمة المرور؟',
+            style: TextStyle(
+              fontSize: screenHeight * 0.013,
+              color: Color(0xFF365486),
+              decoration: TextDecoration.underline,
             ),
+            textAlign: TextAlign.right,
+          ),
+        ),
+      ],
+    ),
+  ),
+),
+
             SizedBox(height: MediaQuery.of(context).size.height * 0.032),
             Center(
               child: MyButton(
