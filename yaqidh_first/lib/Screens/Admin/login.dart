@@ -9,6 +9,7 @@ import 'package:yaqidh_first/Screens/Teacher/homepage_T.dart';
 import 'package:yaqidh_first/Widgets/buttonWidget.dart';
 import 'package:yaqidh_first/Widgets/login_textfield.dart';
 import 'package:yaqidh_first/core/db.dart';
+import 'package:yaqidh_first/core/fire_auth.dart';
 import 'package:yaqidh_first/firebase_options.dart';
 import 'package:yaqidh_first/user_auth/firebase_auth_services.dart';
 
@@ -52,13 +53,13 @@ class _LoginPageState extends State<LoginPage> {
   bool _emailError = false;
   bool _passwordError = false;
 
-  @override
-  void initState() {
-    if (FirebaseAuth.instance.currentUser != null) {
-      _redirect_user(FirebaseAuth.instance.currentUser!.uid);
-    }
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   if (FirebaseAuth.instance.currentUser != null) {
+  //     _redirect_user(FirebaseAuth.instance.currentUser!.uid);
+  //   }
+  //   super.initState();
+  // }
 
   //For errors which i didn't use, not yet anyways
   @override
@@ -269,7 +270,20 @@ class _LoginPageState extends State<LoginPage> {
             Center(
               child: MyButton(
                 onTap: () {
-                  _signIn();
+                  // _signIn();
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return const Center(
+                          child: CircularProgressIndicator(
+                            color: Color(0xFF7FC7D9),
+                          ),
+                        );
+                      });
+                  FireAuth.signInUsingEmailPassword(
+                      email: _emailController.text,
+                      password: _passwordController.text,
+                      context: context);
                 },
                 buttonName: 'تسجيل',
               ),

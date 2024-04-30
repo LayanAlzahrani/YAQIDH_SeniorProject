@@ -274,6 +274,10 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
                   'email': emailController.text,
                   'phone': phoneController.text,
                   "isTested": false,
+                  "teacherId": FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(_selectedTeacher?['id'])
+                      .id,
                   'createdAt': FieldValue.serverTimestamp(),
                   "teacher": FirebaseFirestore.instance
                       .collection('users')

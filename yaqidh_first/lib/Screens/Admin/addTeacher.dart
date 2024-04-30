@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:yaqidh_first/core/db.dart';
 
+import '../../core/fire_auth.dart';
+
 void main() {
   runApp(const AddTeacherScreen());
 }
@@ -162,7 +164,8 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
           width: 290,
           height: 60,
           child: MyButton3(
-              onTap: () {
+              buttonName: 'تفعيل حساب المعلم',
+              onTap: () async {
                 var teacherID = "1${YDB.generateRandomNumber(7)}";
                 // Perform action to activate the account here
                 // For now, let's just print the entered data
@@ -172,31 +175,58 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
 
                 // TODO: teacher must be selected
                 // Add user to Firestore database
-                FirebaseFirestore.instance
-                    .collection('users')
-                    .doc(teacherID)
-                    .set({
-                  'userType': 'teacher',
-                  'name': nameController.text,
-                  'email': emailController.text,
-                  'phone': phoneController.text,
-                  'password': '123456',
-                  //YDB.generateRandomPassword(),
-                  'createdAt': FieldValue.serverTimestamp(),
-                }).then((_) async {
-                  await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                    email: emailController.text,
-                    password: '123456',
-                  );
-                  nameController.clear();
-                  emailController.clear();
-                  phoneController.clear();
-                  _showConfirmationDialog('تمت إضافة المعلم بنجاح.');
-                }).catchError((error) {
-                  print("Failed to add user: $error");
-                });
-              },
-              buttonName: 'تفعيل حساب المعلم'),
+
+                await FireAuth.register(emailController.text, "123456", context)
+                    .then(
+                  (value) {
+                    try {
+                      DocumentReference documentReference = FirebaseFirestore
+                          .instance
+                          .collection('users')
+                          .doc(value!.uid);
+                      documentReference.set({
+                        "id": teacherID,
+                        'userType': 'teacher',
+                        'name': nameController.text,
+                        'email': emailController.text,
+                        'phone': phoneController.text,
+                        'password': '123456',
+                        //YDB.generateRandomPassword(),
+                        'createdAt': FieldValue.serverTimestamp(),
+                      });
+                      _showConfirmationDialog('تمت إضافة المعلم بنجاح.');
+                    } catch (e) {
+                      debugPrint(e.toString());
+                    } finally {
+                      setState(() {});
+                    }
+
+                    // FirebaseFirestore.instance
+                    //     .collection('users')
+                    //     .doc(teacherID)
+                    //     .set({
+                    //   'userType': 'teacher',
+                    //   'name': nameController.text,
+                    //   'email': emailController.text,
+                    //   'phone': phoneController.text,
+                    //   'password': '123456',
+                    //   //YDB.generateRandomPassword(),
+                    //   'createdAt': FieldValue.serverTimestamp(),
+                    // }).then((_) async {
+                    //   await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                    //     email: emailController.text,
+                    //     password: '123456',
+                    //   );
+                    //   nameController.clear();
+                    //   emailController.clear();
+                    //   phoneController.clear();
+                    //   _showConfirmationDialog('تمت إضافة المعلم بنجاح.');
+                    // }).catchError((error) {
+                    //   print("Failed to add user: $error");
+                    // });
+                  },
+                );
+              }),
         ),
       ],
     );

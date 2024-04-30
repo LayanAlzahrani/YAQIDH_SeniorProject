@@ -103,7 +103,7 @@ class _TeacherProfileState extends State<TeacherProfile> {
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.sizeOf(context).height;
-    //double screenWidth = MediaQuery.sizeOf(context).width;
+    double screenWidth = MediaQuery.sizeOf(context).width;
 
     var teacher = _teachers.isNotEmpty
         ? _teachers.firstWhere((teacher) => teacher['id'] == widget.teacherId)
@@ -181,6 +181,142 @@ class _TeacherProfileState extends State<TeacherProfile> {
                     name: 'قائمة الطلاب المسؤول عنهم',
                     ontap: () {},
                   ),
+                  SizedBox(
+                    child: StreamBuilder<QuerySnapshot>(
+                      stream: FirebaseFirestore.instance
+                          .collection('students')
+                          .where(
+                            'teacherId',
+                            isEqualTo: widget.teacherId,
+                          )
+                          .snapshots(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (snapshot.hasError) {
+                          return Center(
+                              child: Text('Error: ${snapshot.error}'));
+                        }
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                          );
+                        }
+
+                        return ListView(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          children: snapshot.data!.docs
+                              .map((DocumentSnapshot document) {
+                            final data =
+                                document.data() as Map<String, dynamic>;
+                            final uid = document.id;
+                            return Container(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: screenHeight * 0.012,
+                                  horizontal: screenWidth * 0.015),
+                              margin:
+                                  EdgeInsets.only(top: screenHeight * 0.013),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(
+                                      FontAwesomeIcons.chevronLeft,
+                                      color: Colors.grey[500],
+                                      size: screenHeight * 0.02,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        SizedBox(height: screenHeight * 0.003),
+                                        Text(
+                                          uid,
+                                          style: TextStyle(
+                                            fontSize: screenHeight * 0.014,
+                                            color: Color(0xFF999999),
+                                          ),
+                                          textDirection: TextDirection.rtl,
+                                        ),
+                                        Text(
+                                          data['fullName'],
+                                          style: TextStyle(
+                                            fontSize: screenHeight * 0.015,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                          textDirection: TextDirection.rtl,
+                                        ),
+                                        FutureBuilder(
+                                          future: (data['teacher']
+                                                  as DocumentReference)
+                                              .get(),
+                                          builder: (context, snapshot) {
+                                            if (snapshot.data == null)
+                                              return Container();
+                                            var teacher = (snapshot.data
+                                                    as DocumentSnapshot)
+                                                .data() as Map<String, dynamic>;
+                                            return Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                Text(
+                                                  teacher['name'],
+                                                  style: TextStyle(
+                                                    fontSize:
+                                                        screenHeight * 0.013,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                  ),
+                                                  textDirection:
+                                                      TextDirection.rtl,
+                                                ),
+                                                Text(
+                                                  'المسؤول: ',
+                                                  style: TextStyle(
+                                                    fontSize:
+                                                        screenHeight * 0.013,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                  ),
+                                                  textDirection:
+                                                      TextDirection.rtl,
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(width: 20),
+                                  Icon(
+                                    FontAwesomeIcons.solidCircle,
+                                    color: Color(0xFF7FC7D9),
+                                    size: 10,
+                                  ),
+                                  SizedBox(
+                                    width: 15,
+                                  )
+                                ],
+                              ),
+                            );
+                          }).toList(),
+                        );
+                      },
+                    ),
+                  )
                 ],
               ),
             ),

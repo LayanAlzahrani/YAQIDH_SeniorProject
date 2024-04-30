@@ -46,6 +46,8 @@ dependencies:
   flutter_svg: ^2.0.5
   fluentui_system_icons: ^1.1.233
   intl: ^0.18.1
+  toastification: ^0.0.3
+  flutter_vector_icons:
 
   
 

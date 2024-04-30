@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:yaqidh_first/Screens/splash.dart';
 import 'package:yaqidh_first/firebase_options.dart';
 import 'Screens/Admin/login.dart';
 
@@ -42,7 +43,10 @@ class FirstPage extends StatelessWidget {
     Timer(const Duration(milliseconds: 4000), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const LoginPage()),
+        MaterialPageRoute(
+            builder: (context) => SplashScreen(
+                  model: SplashScreenModel(),
+                )),
       );
     });
 
