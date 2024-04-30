@@ -127,13 +127,13 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
               Text(
                 ' البريد الالكتروني للمعلم ',
                 style: TextStyle(
-                  fontSize: screenHeight * 0.015, // Custom font size
+                  fontSize: screenHeight * 0.015, 
                   color: const Color(0xFF888888),
-                  fontFamily: 'Tajawal', // Custom font family
+                  fontFamily: 'Tajawal', 
                 ),
-              ), // Information above email text field
+              ), 
               _buildCurvedTextField(
-                  emailController), // Building text field for email
+                  emailController), 
             ],
           ),
         ),
