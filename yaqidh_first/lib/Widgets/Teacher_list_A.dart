@@ -197,7 +197,7 @@ class _TeacherNamesForAdminState extends State<TeacherNamesForAdmin> {
                             children: [
                               SizedBox(height: screenHeight * 0.008),
                               Text(
-                                teacher['id'],
+                                teacher['TId'],
                                 style: TextStyle(
                                   fontSize: screenHeight * 0.014,
                                   color: Color(0xFF999999),

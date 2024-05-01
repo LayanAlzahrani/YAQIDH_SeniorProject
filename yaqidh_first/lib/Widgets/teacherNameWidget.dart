@@ -79,7 +79,7 @@ class _TeacherNameListWidgetState extends State<TeacherNameListWidget> {
                       children: [
                         SizedBox(height: screenHeight * 0.008),
                         Text(
-                          _teachers[index]['id'],
+                          _teachers[index]['TId'],
                           style: TextStyle(
                             fontSize: screenHeight * 0.014,
                             color: Color(0xFF999999),

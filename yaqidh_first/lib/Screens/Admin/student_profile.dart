@@ -1,39 +1,12 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:yaqidh_first/Screens/Admin/homepage.dart';
 import 'package:yaqidh_first/Widgets/pdf_widget.dart';
 import 'package:yaqidh_first/Widgets/profile_info.dart';
 import 'package:yaqidh_first/Widgets/settingsWidget.dart';
 import 'package:yaqidh_first/core/db.dart';
-import 'package:yaqidh_first/firebase_options.dart';
 import 'package:intl/intl.dart';
-
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(fontFamily: 'Tajawal', useMaterial3: true),
-      home: const StudentProfile(
-        studentId: '',
-      ),
-    );
-  }
-}
 
 class StudentProfile extends StatefulWidget {
   final String studentId;
@@ -113,7 +86,10 @@ class _StudentProfileState extends State<StudentProfile> {
         : null;
 
     if (student == null) {
-      return CircularProgressIndicator();
+      return Center(
+          child: CircularProgressIndicator(
+        color: Color(0xFF7FC7D9),
+      ));
     }
 
     final timestamp = student['age'] as Timestamp?;
@@ -126,12 +102,14 @@ class _StudentProfileState extends State<StudentProfile> {
 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: true,
         leading: IconButton(
-          icon: Icon(FontAwesomeIcons.chevronLeft, color: Colors.white),
+          icon: Icon(
+            Icons.arrow_back, // Change the icon here
+            color: Colors.white, // Change the color here
+          ),
           onPressed: () {
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => HomePage()),
-            );
+            Navigator.pop(context);
           },
         ),
         backgroundColor: Color(0xFF365486),
@@ -184,22 +162,26 @@ class _StudentProfileState extends State<StudentProfile> {
                     ),
                     Align: MainAxisAlignment.spaceBetween,
                   ),
-                  ProfileInfo(
-                    sectionName: 'البريد الإلكتروني لـ ولي الأمر',
-                    info: student['email'],
-                    icon: IconButton(
-                      icon: Icon(
-                        Icons.settings,
-                        size: screenHeight * 0.021,
-                        color: Color.fromARGB(255, 179, 178, 178),
-                      ),
-                      onPressed: () => editField(
-                        'email',
-                        student['id'],
-                      ),
-                    ),
-                    Align: MainAxisAlignment.spaceBetween,
-                  ),
+                  StreamBuilder<Object>(
+                      stream: null,
+                      builder: (context, snapshot) {
+                        return ProfileInfo(
+                          sectionName: 'البريد الإلكتروني لـ ولي الأمر',
+                          info: student['email'],
+                          icon: IconButton(
+                            icon: Icon(
+                              Icons.settings,
+                              size: screenHeight * 0.021,
+                              color: Color.fromARGB(255, 179, 178, 178),
+                            ),
+                            onPressed: () => editField(
+                              'email',
+                              student['id'],
+                            ),
+                          ),
+                          Align: MainAxisAlignment.spaceBetween,
+                        );
+                      }),
                   ProfileInfo(
                     sectionName: 'تاريخ التشخيص',
                     info: '0000-00-00',

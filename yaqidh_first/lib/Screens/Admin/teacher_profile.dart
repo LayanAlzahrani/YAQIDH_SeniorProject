@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:yaqidh_first/Screens/Admin/homepage.dart';
+import 'package:yaqidh_first/Screens/Admin/assigned_stud_A.dart';
 import 'package:yaqidh_first/Widgets/profile_info.dart';
 import 'package:yaqidh_first/Widgets/settingsWidget.dart';
 import 'package:yaqidh_first/core/db.dart';
@@ -103,24 +103,28 @@ class _TeacherProfileState extends State<TeacherProfile> {
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.sizeOf(context).height;
-    double screenWidth = MediaQuery.sizeOf(context).width;
 
     var teacher = _teachers.isNotEmpty
         ? _teachers.firstWhere((teacher) => teacher['id'] == widget.teacherId)
         : null;
 
     if (teacher == null) {
-      return CircularProgressIndicator();
+      return Center(
+          child: CircularProgressIndicator(
+        color: Color(0xFF7FC7D9),
+      ));
     }
 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: true,
         leading: IconButton(
-          icon: Icon(FontAwesomeIcons.chevronLeft, color: Colors.white),
+          icon: Icon(
+            Icons.arrow_back, // Change the icon here
+            color: Colors.white, // Change the color here
+          ),
           onPressed: () {
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => HomePage()),
-            );
+            Navigator.pop(context);
           },
         ),
         backgroundColor: Color(0xFF365486),
@@ -148,7 +152,7 @@ class _TeacherProfileState extends State<TeacherProfile> {
                   SizedBox(height: screenHeight * 0.01),
                   ProfileInfo(
                     sectionName: 'رقم التعريف',
-                    info: teacher['id'],
+                    info: teacher['TId'],
                     Align: MainAxisAlignment.end,
                   ),
                   ProfileInfo(
@@ -179,144 +183,12 @@ class _TeacherProfileState extends State<TeacherProfile> {
                   ),
                   SettingsWidget(
                     name: 'قائمة الطلاب المسؤول عنهم',
-                    ontap: () {},
-                  ),
-                  SizedBox(
-                    child: StreamBuilder<QuerySnapshot>(
-                      stream: FirebaseFirestore.instance
-                          .collection('students')
-                          .where(
-                            'teacherId',
-                            isEqualTo: widget.teacherId,
-                          )
-                          .snapshots(),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<QuerySnapshot> snapshot) {
-                        if (snapshot.hasError) {
-                          return Center(
-                              child: Text('Error: ${snapshot.error}'));
-                        }
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const Center(
-                            child: CircularProgressIndicator(
-                              color: Colors.white,
-                            ),
-                          );
-                        }
-
-                        return ListView(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          children: snapshot.data!.docs
-                              .map((DocumentSnapshot document) {
-                            final data =
-                                document.data() as Map<String, dynamic>;
-                            final uid = document.id;
-                            return Container(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: screenHeight * 0.012,
-                                  horizontal: screenWidth * 0.015),
-                              margin:
-                                  EdgeInsets.only(top: screenHeight * 0.013),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  IconButton(
-                                    onPressed: () {},
-                                    icon: Icon(
-                                      FontAwesomeIcons.chevronLeft,
-                                      color: Colors.grey[500],
-                                      size: screenHeight * 0.02,
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      children: [
-                                        SizedBox(height: screenHeight * 0.003),
-                                        Text(
-                                          uid,
-                                          style: TextStyle(
-                                            fontSize: screenHeight * 0.014,
-                                            color: Color(0xFF999999),
-                                          ),
-                                          textDirection: TextDirection.rtl,
-                                        ),
-                                        Text(
-                                          data['fullName'],
-                                          style: TextStyle(
-                                            fontSize: screenHeight * 0.015,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                          textDirection: TextDirection.rtl,
-                                        ),
-                                        FutureBuilder(
-                                          future: (data['teacher']
-                                                  as DocumentReference)
-                                              .get(),
-                                          builder: (context, snapshot) {
-                                            if (snapshot.data == null)
-                                              return Container();
-                                            var teacher = (snapshot.data
-                                                    as DocumentSnapshot)
-                                                .data() as Map<String, dynamic>;
-                                            return Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              children: [
-                                                Text(
-                                                  teacher['name'],
-                                                  style: TextStyle(
-                                                    fontSize:
-                                                        screenHeight * 0.013,
-                                                    fontWeight:
-                                                        FontWeight.normal,
-                                                  ),
-                                                  textDirection:
-                                                      TextDirection.rtl,
-                                                ),
-                                                Text(
-                                                  'المسؤول: ',
-                                                  style: TextStyle(
-                                                    fontSize:
-                                                        screenHeight * 0.013,
-                                                    fontWeight:
-                                                        FontWeight.normal,
-                                                  ),
-                                                  textDirection:
-                                                      TextDirection.rtl,
-                                                ),
-                                              ],
-                                            );
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(width: 20),
-                                  Icon(
-                                    FontAwesomeIcons.solidCircle,
-                                    color: Color(0xFF7FC7D9),
-                                    size: 10,
-                                  ),
-                                  SizedBox(
-                                    width: 15,
-                                  )
-                                ],
-                              ),
-                            );
-                          }).toList(),
-                        );
-                      },
+                    ontap: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              AssignedStudentsA(teacherId: teacher['id'])),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

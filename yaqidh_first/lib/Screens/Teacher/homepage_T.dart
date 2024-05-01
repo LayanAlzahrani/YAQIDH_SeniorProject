@@ -1,12 +1,11 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:yaqidh_first/Screens/Teacher/game.dart';
 import 'package:yaqidh_first/Screens/Teacher/my_account_T.dart';
 import 'package:yaqidh_first/Screens/Teacher/student_list_T.dart';
+import 'package:yaqidh_first/Widgets/customBottomNavigationBar.dart';
 import 'package:yaqidh_first/Widgets/list_widget_T.dart';
 import 'package:yaqidh_first/Widgets/student_name_list_T.dart';
-import 'package:yaqidh_first/Widgets/teacher_navigation_bar.dart';
 
 class HomePageTeacher extends StatefulWidget {
   const HomePageTeacher({Key? key}) : super(key: key);
@@ -69,17 +68,12 @@ class _HomePageState extends State<HomePageTeacher> {
           ]),
         ),
       ),
-      bottomNavigationBar: TeacherNavigationBar(
+      bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: 0,
         onTap: (index) {
-          if (index == 2) {
+          if (index != 0) {
             Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(builder: (context) => const MyAccountTeacher()),
-              (route) => false,
-            );
-          } else if (index == 1) {
-            Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (context) => const Game()),
               (route) => false,
             );
           }

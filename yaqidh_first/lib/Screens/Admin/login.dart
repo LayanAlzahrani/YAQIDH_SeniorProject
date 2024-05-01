@@ -117,15 +117,15 @@ class _LoginPageState extends State<LoginPage> {
 
   void _signIn() async {
     //Loading Circle
-    showDialog(
-        context: context,
-        builder: (context) {
-          return const Center(
-            child: CircularProgressIndicator(
-              color: Color(0xFF7FC7D9),
-            ),
-          );
-        });
+    // showDialog(
+    //     context: context,
+    //     builder: (context) {
+    //       return const Center(
+    //         child: CircularProgressIndicator(
+    //           color: Color(0xFF7FC7D9),
+    //         ),
+    //       );
+    //     });
 
     setState(() {
       _emailError = _emailController.text.isEmpty;
@@ -303,15 +303,15 @@ class _LoginPageState extends State<LoginPage> {
               child: MyButton(
                 onTap: () {
                   // _signIn();
-                  showDialog(
-                      context: context,
-                      builder: (context) {
-                        return const Center(
-                          child: CircularProgressIndicator(
-                            color: Color(0xFF7FC7D9),
-                          ),
-                        );
-                      });
+                  // showDialog(
+                  //     context: context,
+                  //     builder: (context) {
+                  //       return const Center(
+                  //         child: CircularProgressIndicator(
+                  //           color: Color(0xFF7FC7D9),
+                  //         ),
+                  //       );
+                  //     });
                   FireAuth.signInUsingEmailPassword(
                       email: _emailController.text,
                       password: _passwordController.text,
@@ -343,17 +343,6 @@ class _LoginPageState extends State<LoginPage> {
         MaterialPageRoute(builder: (context) => HomePageTeacher()),
       );
     } else {}
-  }
-
-  redirectUser(String uid, [bool usePop = false]) async {
-    // var allData = await YDB.getAllData('users');
-
-    //teacherId = await YDB.getTeacherById(teacherId);
-    if (usePop) {
-      Navigator.pop(context);
-    }
-
-    //if (allData['userType'] == 'admin') {}
   }
 }
 

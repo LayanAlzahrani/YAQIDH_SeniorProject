@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:yaqidh_first/Screens/Admin/Teacher_listt.dart';
 import 'package:yaqidh_first/core/db.dart';
 
 import '../../core/fire_auth.dart';
@@ -27,7 +28,9 @@ class AddTeacherScreen extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           leading: GestureDetector(
-            onTap: () => Navigator.pop(context),
+            onTap: () => Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => const TeacherListAdmin()),
+            ),
             child: const SizedBox(
               height: double.infinity, // Adjust the height as needed
               child: Center(
@@ -183,7 +186,7 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
                           .collection('users')
                           .doc(value!.uid);
                       documentReference.set({
-                        "id": teacherID,
+                        "TId": teacherID,
                         'userType': 'teacher',
                         'name': nameController.text,
                         'email': emailController.text,
@@ -191,8 +194,14 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
                         'password': '123456',
                         //YDB.generateRandomPassword(),
                         'createdAt': FieldValue.serverTimestamp(),
+                      }).then((_) async {
+                        nameController.clear();
+                        emailController.clear();
+                        phoneController.clear();
+                        _showConfirmationDialog('تمت إضافة المعلم بنجاح.');
+                      }).catchError((error) {
+                        print("Failed to add user: $error");
                       });
-                      _showConfirmationDialog('تمت إضافة المعلم بنجاح.');
                     } catch (e) {
                       debugPrint(e.toString());
                     } finally {

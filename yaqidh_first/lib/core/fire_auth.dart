@@ -94,15 +94,17 @@ class FireAuth {
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 50,
                   width: 50,
-                  child: CircularProgressIndicator(),
+                  child: CircularProgressIndicator(
+                    color: Color(0xFF7FC7D9),
+                  ),
                 ),
                 const SizedBox(height: 20),
-                Text(
+                const Text(
                   "Are you sure you want\nto reset password for",
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 20,
                     color: Colors.black,
                     fontWeight: FontWeight.w400,
@@ -142,7 +144,7 @@ class FireAuth {
                   );
                 },
               ),
-              Divider(
+              const Divider(
                 color: Colors.black,
                 thickness: 1.0,
                 indent: 0.5,
@@ -175,7 +177,7 @@ class FireAuth {
     } catch (e) {
       toastification.showError(
         icon: const Icon(Icons.error_outline),
-        description: "${e.toString()}",
+        description: e.toString(),
         context: context,
         title: 'something went wrong!',
         autoCloseDuration: const Duration(seconds: 5),

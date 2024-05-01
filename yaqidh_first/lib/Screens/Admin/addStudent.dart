@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:yaqidh_first/Screens/Admin/select_teacher.dart';
+import 'package:yaqidh_first/Screens/Admin/studentss_list.dart';
 import 'package:yaqidh_first/core/db.dart';
 import 'package:intl/intl.dart';
 
@@ -37,7 +38,9 @@ class AddStudentScreen extends StatelessWidget {
           centerTitle: true,
           backgroundColor: const Color(0xFF365486),
           leading: GestureDetector(
-            onTap: () => Navigator.pop(context),
+            onTap: () => Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => const StudentListAdmin()),
+            ),
             child: const SizedBox(
               height: double.infinity, // Adjust the height as needed
               child: Center(

@@ -20,17 +20,20 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: 4, milliseconds: 500))
+    Future.delayed(const Duration(seconds: 4, milliseconds: 500))
         .then((value) => checkRoleAndNavigate());
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
         backgroundColor: Color(0xffeaeaea),
         body: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Center(child: CircularProgressIndicator()),
+          padding: EdgeInsets.all(20.0),
+          child: Center(
+              child: CircularProgressIndicator(
+            color: Color(0xFF7FC7D9),
+          )),
         ));
   }
 
@@ -38,13 +41,13 @@ class _SplashScreenState extends State<SplashScreen> {
     final Role role = await widget.model.init();
     if (role == Role.noUser) {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (_) => LoginPage()));
+          context, MaterialPageRoute(builder: (_) => const LoginPage()));
     } else if (role == Role.teacher) {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (_) => HomePageTeacher()));
+          context, MaterialPageRoute(builder: (_) => const HomePageTeacher()));
     } else if (role == Role.admin) {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (_) => HomePage()));
+          context, MaterialPageRoute(builder: (_) => const HomePage()));
     }
   }
 }

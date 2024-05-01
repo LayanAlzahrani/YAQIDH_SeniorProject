@@ -3,6 +3,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:yaqidh_first/Screens/Teacher/homepage_T.dart';
 import 'package:yaqidh_first/Widgets/all_student_list_T.dart';
 import 'package:yaqidh_first/Widgets/search_widget.dart';
 import 'package:yaqidh_first/firebase_options.dart';
@@ -42,15 +43,12 @@ class _StudentListTeacherState extends State<StudentListTeacher> {
 
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
         leading: IconButton(
-          icon: Icon(FontAwesomeIcons.chevronLeft, color: Colors.white),
-          onPressed: () {
-            // Navigator.of(context).pushReplacement(
-            //   MaterialPageRoute(builder: (context) => HomePageTeacher()),
-            // );
-          },
-        ),
+            icon: Icon(FontAwesomeIcons.chevronLeft, color: Colors.white),
+            onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomePageTeacher()),
+                )),
         title: Text(
           'قائمة الطلاب',
           style: TextStyle(color: Colors.white),

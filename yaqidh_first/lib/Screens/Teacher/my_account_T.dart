@@ -5,10 +5,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:yaqidh_first/Screens/Admin/login.dart';
 import 'package:yaqidh_first/Screens/Admin/homepage.dart';
-import 'package:yaqidh_first/Screens/Teacher/game.dart';
+import 'package:yaqidh_first/Screens/Teacher/homepage_T.dart';
 import 'package:yaqidh_first/Screens/Teacher/teacher_profile_T.dart';
+import 'package:yaqidh_first/Widgets/customBottomNavigationBar.dart';
 import 'package:yaqidh_first/Widgets/settingsWidget.dart';
-import 'package:yaqidh_first/Widgets/teacher_navigation_bar.dart';
 import 'package:yaqidh_first/firebase_options.dart';
 
 Future<void> main() async {
@@ -87,19 +87,14 @@ class _MyAccountState extends State<MyAccountTeacher> {
           ),
         ),
       ),
-      bottomNavigationBar: TeacherNavigationBar(
-        currentIndex: 2,
+      bottomNavigationBar: CustomBottomNavigationBar(
+        currentIndex: 1,
         onTap: (index) {
-          if (index == 1) {
+          if (index != 1) {
             Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (context) => const Game()),
+              MaterialPageRoute(builder: (context) => const HomePageTeacher()),
               (route) => false,
             );
-          } else if (index == 0) {
-            // Navigator.of(context).pushAndRemoveUntil(
-            //   MaterialPageRoute(builder: (context) => const HomePageTeacher()),
-            //   (route) => false,
-            // );
           }
         },
       ),

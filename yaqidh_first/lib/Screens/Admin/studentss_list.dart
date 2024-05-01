@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:yaqidh_first/Screens//Admin/homepage.dart';
 import 'package:yaqidh_first/Screens/Admin/addStudent.dart';
 import 'package:yaqidh_first/Widgets/student_list_Admin.dart';
 import 'package:yaqidh_first/firebase_options.dart';
@@ -41,21 +40,22 @@ class _StudentListAdminState extends State<StudentListAdmin> {
 
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: true,
         leading: IconButton(
-          icon: const Icon(FontAwesomeIcons.chevronLeft, color: Colors.white),
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
           onPressed: () {
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => const HomePage()),
-            );
+            Navigator.pop(context);
           },
         ),
+        backgroundColor: const Color(0xFF365486),
         title: const Text(
           'قائمة الطلاب',
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
-        backgroundColor: const Color(0xFF365486),
       ),
       body: Container(
         height: double.infinity,

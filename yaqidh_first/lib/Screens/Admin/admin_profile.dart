@@ -4,8 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:yaqidh_first/Screens/Admin/myaccount.dart';
 import 'package:yaqidh_first/Widgets/profile_info.dart';
 import 'package:yaqidh_first/firebase_options.dart';
 
@@ -84,12 +82,14 @@ class _AdminProfileState extends State<AdminProfile> {
 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: true,
         leading: IconButton(
-          icon: Icon(FontAwesomeIcons.chevronLeft, color: Colors.white),
+          icon: const Icon(
+            Icons.arrow_back, // Change the icon here
+            color: Colors.white, // Change the color here
+          ),
           onPressed: () {
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => MyAccount()),
-            );
+            Navigator.pop(context);
           },
         ),
         backgroundColor: Color(0xFF365486),

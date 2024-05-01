@@ -30,7 +30,7 @@ class _SelectTeacherState extends State<SelectTeacher> {
         leading: GestureDetector(
           onTap: () => Navigator.pop(context),
           child: const SizedBox(
-            height: double.infinity, // Adjust the height as needed
+            height: double.infinity,
             child: Center(
               child: Padding(
                 padding: EdgeInsets.only(left: 18.0),
