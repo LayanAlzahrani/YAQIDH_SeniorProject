@@ -1,38 +1,19 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:yaqidh_first/Widgets/pdf_widget.dart';
 import 'package:yaqidh_first/Widgets/profile_info.dart';
 import 'package:yaqidh_first/Widgets/settingsWidget.dart';
-import 'package:yaqidh_first/firebase_options.dart';
-
-import 'student_list_T.dart';
-
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(fontFamily: 'Tajawal', useMaterial3: true),
-      home: const StudentProfileForTeacher(),
-    );
-  }
-}
+import 'package:yaqidh_first/core/db.dart';
 
 class StudentProfileForTeacher extends StatefulWidget {
-  const StudentProfileForTeacher({Key? key}) : super(key: key);
+  final String studentId;
+
+  const StudentProfileForTeacher({Key? key, required this.studentId})
+      : super(key: key);
 
   @override
   State<StudentProfileForTeacher> createState() =>
@@ -44,21 +25,64 @@ class _StudentProfileForTeacherState extends State<StudentProfileForTeacher> {
   final double coverHeight = 85;
   final double profileHeight = 98;
 
-  //function to edit fields
+  final userCollection = FirebaseFirestore.instance.collection('students');
+
+  List<Map<String, dynamic>> _students = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchStudents();
+  }
+
+  Future<void> _fetchStudents() async {
+    try {
+      final students = await YDB.getAllStudents();
+      setState(() {
+        _students = students;
+      });
+      print('_students: $_students');
+    } catch (error) {
+      print('Error fetching students: $error');
+    }
+  }
+
+  //Teachers can't edit, just view
   Future<void> editField(String field) async {}
 
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.sizeOf(context).height;
-    //double screenWidth = MediaQuery.sizeOf(context).width;
+
+    var student = _students.isNotEmpty
+        ? _students.firstWhere((student) => student['id'] == widget.studentId)
+        : null;
+
+    if (student == null) {
+      return Center(
+          child: CircularProgressIndicator(
+        color: Color(0xFF7FC7D9),
+      ));
+    }
+
+    final timestamp = student['age'] as Timestamp?;
+    String formattedDate = '';
+
+    if (timestamp != null) {
+      final dateTime = timestamp.toDate();
+      formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
+    }
+
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: true,
         leading: IconButton(
-          icon: Icon(FontAwesomeIcons.chevronLeft, color: Colors.white),
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
           onPressed: () {
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => StudentListTeacher()),
-            );
+            Navigator.pop(context);
           },
         ),
         backgroundColor: Color(0xFF365486),
@@ -75,7 +99,7 @@ class _StudentProfileForTeacherState extends State<StudentProfileForTeacher> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "إسم الطالب",
+                    student['fullName'],
                     style: TextStyle(
                         fontSize: screenHeight * 0.02,
                         fontWeight: FontWeight.bold),
@@ -83,30 +107,44 @@ class _StudentProfileForTeacherState extends State<StudentProfileForTeacher> {
                   SizedBox(height: screenHeight * 0.01),
                   ProfileInfo(
                       sectionName: 'رقم التعريف',
-                      info: '200000',
+                      info: student['id'],
                       Align: MainAxisAlignment.end),
                   ProfileInfo(
+                    sectionName: 'رمز دخول الاختبار',
+                    info: student['code'],
+                    Align: MainAxisAlignment.end,
+                  ),
+                  ProfileInfo(
                       sectionName: 'تاريخ الميلاد',
-                      info: '12-3-2018',
+                      info: formattedDate,
                       Align: MainAxisAlignment.end),
                   ProfileInfo(
                       sectionName: 'رقم هاتف ولي الأمر',
-                      info: '0543278484',
+                      info: student['phone'],
                       Align: MainAxisAlignment.end),
                   ProfileInfo(
                     sectionName: 'البريد الإلكتروني لـ ولي الأمر',
-                    info: 'Parent@gmail.com',
+                    info: student['email'],
                     Align: MainAxisAlignment.end,
                   ),
                   ProfileInfo(
                     sectionName: 'تاريخ التشخيص',
-                    info: '22-6-2023',
+                    info: '0000-00-00',
                     Align: MainAxisAlignment.end,
                   ),
-                  ProfileInfo(
-                    sectionName: 'المسؤول عن التشخيص',
-                    info: 'أ. ريم احمد',
-                    Align: MainAxisAlignment.end,
+                  FutureBuilder(
+                    future: (student['teacher'] as DocumentReference).get(),
+                    builder: (context, snapshot) {
+                      if (snapshot.data == null) return Container();
+
+                      var teacher = (snapshot.data as DocumentSnapshot).data()
+                          as Map<String, dynamic>;
+                      return ProfileInfo(
+                        sectionName: 'المسؤول عن التشخيص',
+                        info: teacher['name'],
+                        Align: MainAxisAlignment.end,
+                      );
+                    },
                   ),
                   SettingsWidget(
                       name: 'التقرير',

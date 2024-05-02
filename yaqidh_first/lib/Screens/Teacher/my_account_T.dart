@@ -1,13 +1,14 @@
 // ignore_for_file: prefer_const_constructors, use_build_context_synchronously
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:yaqidh_first/Screens/Admin/login.dart';
-import 'package:yaqidh_first/Screens/Admin/homepage.dart';
 import 'package:yaqidh_first/Screens/Teacher/homepage_T.dart';
 import 'package:yaqidh_first/Screens/Teacher/teacher_profile_T.dart';
 import 'package:yaqidh_first/Widgets/customBottomNavigationBar.dart';
+import 'package:yaqidh_first/Widgets/myaccWidget.dart';
 import 'package:yaqidh_first/Widgets/settingsWidget.dart';
 import 'package:yaqidh_first/firebase_options.dart';
 
@@ -40,6 +41,8 @@ class MyAccountTeacher extends StatefulWidget {
 }
 
 class _MyAccountState extends State<MyAccountTeacher> {
+  final currentUser = FirebaseAuth.instance.currentUser!;
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.sizeOf(context).height;
@@ -54,38 +57,52 @@ class _MyAccountState extends State<MyAccountTeacher> {
         centerTitle: true,
         backgroundColor: const Color(0xFF365486),
       ),
-      body: Container(
-        padding: EdgeInsets.symmetric(horizontal: screenHeight * 0.03),
-        color: const Color(0xFFF8F8F8),
-        child: Center(
-          child: Column(
-            children: [
-              //MyAccWidget(),
-              SettingsWidget(
-                name: 'الإعدادات',
-                ontap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => TeacherMyProfile()),
-                  );
-                },
+      body: StreamBuilder<DocumentSnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection('users')
+            .doc(currentUser.uid)
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final userData = snapshot.data!.data() as Map<String, dynamic>;
+            return Container(
+              padding: EdgeInsets.symmetric(horizontal: screenHeight * 0.03),
+              color: const Color(0xFFF8F8F8),
+              child: Center(
+                child: Column(
+                  children: [
+                    MyAccWidget(
+                      id: userData['TId'],
+                      name: userData['name'],
+                    ),
+                    SettingsWidget(
+                      name: 'الإعدادات',
+                      ontap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (context) => TeacherMyProfile()),
+                        );
+                      },
+                    ),
+                    SettingsWidget(
+                      name: 'تسجيل الخروج',
+                      ontap: () {
+                        signUserOut(context);
+                      },
+                    ),
+                  ],
+                ),
               ),
-              SettingsWidget(
-                name: 'تسجيل الخروج',
-                ontap: () {
-                  signUserOut(context);
-                },
-              ),
-              SettingsWidget(
-                name: 'زر مؤقت عشان اروح للإداري',
-                ontap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => HomePage()),
-                  );
-                },
-              ),
-            ],
-          ),
-        ),
+            );
+          } else if (snapshot.hasError) {
+            print('Error ${snapshot.error}');
+          }
+          return Center(
+            child: CircularProgressIndicator(
+              color: Color(0xFF7FC7D9),
+            ),
+          );
+        },
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: 1,

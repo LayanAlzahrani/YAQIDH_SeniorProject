@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:yaqidh_first/Screens/Admin/Teacher_listt.dart';
 import 'package:yaqidh_first/core/db.dart';
 
 import '../../core/fire_auth.dart';
@@ -27,22 +26,15 @@ class AddTeacherScreen extends StatelessWidget {
           useMaterial3: true),
       home: Scaffold(
         appBar: AppBar(
-          leading: GestureDetector(
-            onTap: () => Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => const TeacherListAdmin()),
+          automaticallyImplyLeading: true,
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.white,
             ),
-            child: const SizedBox(
-              height: double.infinity, // Adjust the height as needed
-              child: Center(
-                child: Padding(
-                  padding: EdgeInsets.only(left: 18.0),
-                  child: Text(
-                    'تراجع',
-                    style: TextStyle(color: Colors.white, fontSize: 14),
-                  ),
-                ),
-              ),
-            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
           ),
           title: const Text(
             'إنشاء حساب معلم ',

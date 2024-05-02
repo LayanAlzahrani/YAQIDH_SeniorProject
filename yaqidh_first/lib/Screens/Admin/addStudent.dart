@@ -37,22 +37,17 @@ class AddStudentScreen extends StatelessWidget {
           ),
           centerTitle: true,
           backgroundColor: const Color(0xFF365486),
-          leading: GestureDetector(
-            onTap: () => Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => const StudentListAdmin()),
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.white,
             ),
-            child: const SizedBox(
-              height: double.infinity, // Adjust the height as needed
-              child: Center(
-                child: Padding(
-                  padding: EdgeInsets.only(left: 18.0),
-                  child: Text(
-                    'تراجع',
-                    style: TextStyle(color: Colors.white, fontSize: 14),
-                  ),
-                ),
-              ),
-            ),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                    builder: (context) => const StudentListAdmin()),
+              );
+            },
           ),
         ),
         body: Container(
@@ -281,6 +276,7 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
                       .collection('users')
                       .doc(_selectedTeacher?['id'])
                       .id,
+                  'code': YDB.generateRandomNumber(6),
                   'createdAt': FieldValue.serverTimestamp(),
                   "teacher": FirebaseFirestore.instance
                       .collection('users')

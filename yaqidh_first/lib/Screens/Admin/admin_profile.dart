@@ -134,26 +134,26 @@ class _AdminProfileState extends State<AdminProfile> {
                           ProfileInfo(
                             sectionName: 'البريد الإلكتروني',
                             info: userData['email'],
-                            icon: IconButton(
-                              icon: Icon(
+                            icon: InkWell(
+                              onTap: () => editField('email'),
+                              child: Icon(
                                 Icons.settings,
                                 size: screenHeight * 0.021,
                                 color: Color.fromARGB(255, 179, 178, 178),
                               ),
-                              onPressed: () => editField('email'),
                             ),
                             Align: MainAxisAlignment.spaceBetween,
                           ),
                           ProfileInfo(
                             sectionName: 'رقم الهاتف',
                             info: userData['phone'],
-                            icon: IconButton(
-                              icon: Icon(
+                            icon: InkWell(
+                              onTap: () => editField('phone'),
+                              child: Icon(
                                 Icons.settings,
                                 size: screenHeight * 0.021,
                                 color: Color.fromARGB(255, 179, 178, 178),
                               ),
-                              onPressed: () => editField('phone'),
                             ),
                             Align: MainAxisAlignment.spaceBetween,
                           ),

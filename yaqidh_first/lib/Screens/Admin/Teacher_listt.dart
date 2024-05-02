@@ -50,7 +50,7 @@ class _TeacherListAdminState extends State<TeacherListAdmin> {
             Navigator.pop(context);
           },
         ),
-        backgroundColor: Color(0xFF365486),
+        backgroundColor: const Color(0xFF365486),
         title: const Text(
           'قائمة المعلمين',
           style: TextStyle(color: Colors.white),

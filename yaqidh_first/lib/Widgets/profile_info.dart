@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class ProfileInfo extends StatelessWidget {
   final String info;
   final String sectionName;
-  final IconButton? icon;
+  final InkWell? icon;
   final MainAxisAlignment Align;
   const ProfileInfo({
     super.key,

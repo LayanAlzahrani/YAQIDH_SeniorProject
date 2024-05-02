@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:yaqidh_first/Screens/Admin/student_profile.dart';
 import 'package:yaqidh_first/core/db.dart';
 
 class AssignedStudentsA extends StatefulWidget {
@@ -13,11 +15,13 @@ class AssignedStudentsA extends StatefulWidget {
 
 class _AssignedStudentsAState extends State<AssignedStudentsA> {
   List<Map<String, dynamic>> _teachers = [];
+  List<Map<String, dynamic>> _students = [];
 
   @override
   void initState() {
     super.initState();
     _fetchTeachers();
+    _fetchStudents();
   }
 
   Future<void> _fetchTeachers() async {
@@ -30,6 +34,27 @@ class _AssignedStudentsAState extends State<AssignedStudentsA> {
     } catch (error) {
       print('Error fetching teachers: $error');
     }
+  }
+
+  Future<void> _fetchStudents() async {
+    try {
+      final students = await YDB.getAllStudents();
+      setState(() {
+        _students = students;
+      });
+      print('_students: $_students');
+    } catch (error) {
+      print('Error fetching students: $error');
+    }
+  }
+
+  void navigateToStudentProfile(int index) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => StudentProfile(
+                  studentId: _students[index]['id'],
+                )));
   }
 
   @override
@@ -92,73 +117,96 @@ class _AssignedStudentsAState extends State<AssignedStudentsA> {
 
                   final studentNumber = index + 1;
 
-                  return Container(
-                    padding: EdgeInsets.symmetric(
-                      vertical: screenHeight * 0.02,
-                      horizontal: screenWidth * 0.015,
-                    ),
-                    margin: EdgeInsets.only(
-                      top: screenHeight * 0.013,
-                      right: screenWidth * 0.038,
-                      left: screenWidth * 0.038,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        // IconButton(
-                        //   onPressed: () => Navigator.of(context).push(
-                        //     MaterialPageRoute(
-                        //       builder: (context) => StudentProfile(
-                        //         studentId: data['id'],
-                        //       ),
-                        //     ),
-                        //   ),
-                        //   icon: Icon(
-                        //     FontAwesomeIcons.chevronLeft,
-                        //     color: Colors.grey[500],
-                        //     size: screenHeight * 0.02,
-                        //   ),
-                        // ),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              SizedBox(height: screenHeight * 0.003),
-                              Text(
-                                uid,
-                                style: TextStyle(
-                                  fontSize: screenHeight * 0.014,
-                                  color: const Color(0xFF999999),
-                                ),
-                                textDirection: TextDirection.rtl,
-                              ),
-                              Text(
-                                data['fullName'],
-                                style: TextStyle(
-                                  fontSize: screenHeight * 0.015,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                textDirection: TextDirection.rtl,
-                              ),
-                            ],
+                  return InkWell(
+                    onTap: () => navigateToStudentProfile(studentNumber),
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        vertical: screenHeight * 0.02,
+                        horizontal: screenWidth * 0.015,
+                      ),
+                      margin: EdgeInsets.only(
+                        top: screenHeight * 0.013,
+                        right: screenWidth * 0.038,
+                        left: screenWidth * 0.038,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SizedBox(width: screenWidth * 0.04),
+                          Icon(
+                            FontAwesomeIcons.chevronLeft,
+                            color: Colors.grey[500],
+                            size: screenHeight * 0.02,
                           ),
-                        ),
-                        const SizedBox(width: 20),
-                        Text(
-                          '$studentNumber', // Display the student number
-                          style: TextStyle(
-                            fontSize: screenHeight * 0.016,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
+                          SizedBox(width: screenWidth * 0.04),
+                          Container(
+                            width: screenHeight * 0.1,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: screenHeight * 0.012,
+                              vertical: screenHeight * 0.005,
+                            ),
+                            decoration: BoxDecoration(
+                              color: data['isTested']
+                                  ? Colors.green[100]
+                                  : Colors.red[100],
+                              borderRadius:
+                                  BorderRadius.circular(screenHeight * 0.016),
+                            ),
+                            child: Center(
+                              child: Text(
+                                data['isTested']
+                                    ? "تم الاختبار"
+                                    : "لم يتم الاختبار",
+                                style: TextStyle(
+                                    color: data['isTested']
+                                        ? Colors.green[600]
+                                        : Colors.red[600],
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: screenHeight * 0.0123),
+                              ),
+                            ),
                           ),
-                          textDirection: TextDirection.rtl,
-                        ),
-                        const SizedBox(width: 15),
-                      ],
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                SizedBox(height: screenHeight * 0.003),
+                                Text(
+                                  uid,
+                                  style: TextStyle(
+                                    fontSize: screenHeight * 0.014,
+                                    color: const Color(0xFF999999),
+                                  ),
+                                  textDirection: TextDirection.rtl,
+                                ),
+                                Text(
+                                  data['fullName'],
+                                  style: TextStyle(
+                                    fontSize: screenHeight * 0.015,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  textDirection: TextDirection.rtl,
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 20),
+                          Text(
+                            '$studentNumber', // Display the student number
+                            style: TextStyle(
+                              fontSize: screenHeight * 0.016,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textDirection: TextDirection.rtl,
+                          ),
+                          const SizedBox(width: 15),
+                        ],
+                      ),
                     ),
                   );
                 },

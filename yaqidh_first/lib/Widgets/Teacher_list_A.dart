@@ -129,9 +129,11 @@ class _TeacherNamesForAdminState extends State<TeacherNamesForAdmin> {
                     );
                   },
                   child: Container(
-                    padding: EdgeInsets.symmetric(
-                        vertical: screenHeight * 0.012,
-                        horizontal: screenWidth * 0.035),
+                    padding: EdgeInsets.only(
+                        top: screenHeight * 0.012,
+                        bottom: screenHeight * 0.012,
+                        right: screenWidth * 0.035,
+                        left: screenWidth * 0.01),
                     margin: EdgeInsets.only(top: screenHeight * 0.013),
                     decoration: BoxDecoration(
                       color: Colors.white,

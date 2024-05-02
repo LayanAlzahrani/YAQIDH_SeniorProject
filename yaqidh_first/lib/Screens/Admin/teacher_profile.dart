@@ -158,26 +158,26 @@ class _TeacherProfileState extends State<TeacherProfile> {
                   ProfileInfo(
                     sectionName: 'البريد الإلكتروني',
                     info: teacher['email'],
-                    icon: IconButton(
-                      icon: Icon(
+                    icon: InkWell(
+                      onTap: () => editField('email', teacher['id']),
+                      child: Icon(
                         Icons.settings,
                         size: screenHeight * 0.021,
                         color: Color.fromARGB(255, 179, 178, 178),
                       ),
-                      onPressed: () => editField('email', teacher['id']),
                     ),
                     Align: MainAxisAlignment.spaceBetween,
                   ),
                   ProfileInfo(
                     sectionName: 'رقم الهاتف',
                     info: teacher['phone'],
-                    icon: IconButton(
-                      icon: Icon(
+                    icon: InkWell(
+                      onTap: () => editField('phone', teacher['id']),
+                      child: Icon(
                         Icons.settings,
                         size: screenHeight * 0.021,
                         color: Color.fromARGB(255, 179, 178, 178),
                       ),
-                      onPressed: () => editField('phone', teacher['id']),
                     ),
                     Align: MainAxisAlignment.spaceBetween,
                   ),

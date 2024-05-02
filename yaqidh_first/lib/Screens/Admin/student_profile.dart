@@ -142,6 +142,11 @@ class _StudentProfileState extends State<StudentProfile> {
                     Align: MainAxisAlignment.end,
                   ),
                   ProfileInfo(
+                    sectionName: 'رمز دخول الاختبار',
+                    info: student['code'],
+                    Align: MainAxisAlignment.end,
+                  ),
+                  ProfileInfo(
                     sectionName: 'تاريخ الميلاد',
                     info: formattedDate,
                     Align: MainAxisAlignment.end,
@@ -149,15 +154,12 @@ class _StudentProfileState extends State<StudentProfile> {
                   ProfileInfo(
                     sectionName: 'رقم هاتف ولي الأمر',
                     info: student['phone'],
-                    icon: IconButton(
-                      icon: Icon(
+                    icon: InkWell(
+                      onTap: () => editField('phone', student['id']),
+                      child: Icon(
                         Icons.settings,
                         size: screenHeight * 0.021,
                         color: Color.fromARGB(255, 179, 178, 178),
-                      ),
-                      onPressed: () => editField(
-                        'phone',
-                        student['id'],
                       ),
                     ),
                     Align: MainAxisAlignment.spaceBetween,
@@ -168,15 +170,12 @@ class _StudentProfileState extends State<StudentProfile> {
                         return ProfileInfo(
                           sectionName: 'البريد الإلكتروني لـ ولي الأمر',
                           info: student['email'],
-                          icon: IconButton(
-                            icon: Icon(
+                          icon: InkWell(
+                            onTap: () => editField('email', student['id']),
+                            child: Icon(
                               Icons.settings,
                               size: screenHeight * 0.021,
                               color: Color.fromARGB(255, 179, 178, 178),
-                            ),
-                            onPressed: () => editField(
-                              'email',
-                              student['id'],
                             ),
                           ),
                           Align: MainAxisAlignment.spaceBetween,
