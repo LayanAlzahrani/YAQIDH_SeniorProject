@@ -253,7 +253,9 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
           height: 60,
           child: MyButton3(
               onTap: () {
-                var studentId = "2${YDB.generateRandomNumber(7)}";
+                FirestoreOperationsProxy proxy = FirestoreOperationsProxy();
+                DateTime dateOfTest = DateTime(2000, 1, 1);
+                var studentId = "2${proxy.generateRandomNumber(7)}";
                 // Perform action to activate the account here
                 // For now, let's just print the entered data
                 print('Student Name: ${nameController.text}');
@@ -276,8 +278,9 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
                       .collection('users')
                       .doc(_selectedTeacher?['id'])
                       .id,
-                  'code': YDB.generateRandomNumber(6),
+                  'code': proxy.generateRandomNumber(6),
                   'createdAt': FieldValue.serverTimestamp(),
+                  'dateOfTest': dateOfTest,
                   "teacher": FirebaseFirestore.instance
                       .collection('users')
                       .doc(_selectedTeacher?['id'])

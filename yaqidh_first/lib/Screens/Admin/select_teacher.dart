@@ -68,8 +68,10 @@ class _SelectTeacherState extends State<SelectTeacher> {
     );
   }
 
+  FirestoreOperationsProxy proxy = FirestoreOperationsProxy();
+
   void _getTeachers() {
-    YDB.getAllTeachers().then((result) {
+    proxy.getAllTeachers().then((result) {
       setState(() {
         _teachers = result;
       });

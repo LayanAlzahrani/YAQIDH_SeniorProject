@@ -159,7 +159,9 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
           child: MyButton3(
               buttonName: 'تفعيل حساب المعلم',
               onTap: () async {
-                var teacherID = "1${YDB.generateRandomNumber(7)}";
+                FirestoreOperationsProxy proxy = FirestoreOperationsProxy();
+
+                var teacherID = "1${proxy.generateRandomNumber(7)}";
                 // Perform action to activate the account here
                 // For now, let's just print the entered data
                 print('Teacher Name: ${nameController.text}');

@@ -23,9 +23,11 @@ class _StudentListForAdminState extends State<StudentListForAdmin> {
     _fetchStudents();
   }
 
+  FirestoreOperationsProxy proxy = FirestoreOperationsProxy();
+
   Future<void> _fetchStudents() async {
     try {
-      final students = await YDB.getAllStudents();
+      final students = await proxy.getAllStudents();
       setState(() {
         _students = students;
         _allStudents = students;
@@ -55,7 +57,7 @@ class _StudentListForAdminState extends State<StudentListForAdmin> {
     double screenWidth = MediaQuery.sizeOf(context).width;
 
     void _deleteStudent(String studentId) {
-      YDB.deleteStudent(studentId).then((_) {
+      proxy.deleteStudent(studentId).then((_) {
         setState(() {
           _students.removeWhere((student) => student['id'] == studentId);
         });

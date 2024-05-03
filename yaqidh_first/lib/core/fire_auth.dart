@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously, deprecated_member_use
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -61,29 +63,6 @@ class FireAuth {
     await app.delete();
     return Future.sync(() => user);
   }
-
-  // static Future<void> sendNotification(String id, String content) async {
-  //   try {
-  //     await Dio(BaseOptions(headers: {
-  //       'Accept': 'application/json',
-  //       'Content-Type': 'application/json',
-  //       'Authorization':
-  //           'Basic MzY5YWUxYzEtNDZmNC00MDYwLWI0MGEtNTljNmI1MDU0MmFj',
-  //     })).post(
-  //       'https://onesignal.com/api/v1/notifications',
-  //       data: {
-  //         'android_sound': "default",
-  //         'app_id': "bc1ec00d-aaf9-49df-9cfc-a5376393ed70",
-  //         "include_external_user_ids": [id], //for testing purposes
-  //         "data": {"en": "EN"},
-  //         "contents": {"en": "$content"},
-  //         "headings": {"en": "Notification"},
-  //       },
-  //     );
-  //   } on DioException catch (e) {
-  //     print(e.response);
-  //   }
-  // }
 
   static void restPassword(BuildContext context, String email) async {
     try {
@@ -219,25 +198,25 @@ class FireAuth {
       if (e.code == 'INVALID_LOGIN_CREDENTIALS') {
         toastification.showError(
           icon: const Icon(Icons.error_outline),
-          description: 'Please check your login credentials',
+          description: 'يرجى التحقق من البريد الإلكتروني أو كلمة المرور.',
           context: context,
-          title: 'Sorry!',
+          title: 'عذرًا!',
           autoCloseDuration: const Duration(seconds: 5),
         );
       } else if (e.code == 'wrong-password') {
         toastification.showError(
           icon: const Icon(Icons.error_outline),
-          description: 'Incorrect password',
+          description: 'يوجد خطأ في كلمة المرور',
           context: context,
-          title: 'Sorry!',
+          title: 'عذرًا!',
           autoCloseDuration: const Duration(seconds: 5),
         );
       } else {
         toastification.showError(
           icon: const Icon(Icons.error_outline),
-          description: e.message ?? "Opps",
+          description: e.message ?? "!يُرجى المحاولة مرة أخرى",
           context: context,
-          title: 'Something went wrong!',
+          title: 'حدث خطأ غير متوقع',
           autoCloseDuration: const Duration(seconds: 5),
         );
       }

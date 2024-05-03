@@ -24,9 +24,11 @@ class _AssignedStudentsAState extends State<AssignedStudentsA> {
     _fetchStudents();
   }
 
+  FirestoreOperationsProxy proxy = FirestoreOperationsProxy();
+
   Future<void> _fetchTeachers() async {
     try {
-      final teachers = await YDB.getAllTeachers();
+      final teachers = await proxy.getAllTeachers();
       setState(() {
         _teachers = teachers;
       });
@@ -38,7 +40,7 @@ class _AssignedStudentsAState extends State<AssignedStudentsA> {
 
   Future<void> _fetchStudents() async {
     try {
-      final students = await YDB.getAllStudents();
+      final students = await proxy.getAllStudents();
       setState(() {
         _students = students;
       });

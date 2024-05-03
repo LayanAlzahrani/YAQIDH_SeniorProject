@@ -49,12 +49,13 @@ class _MyAccountState extends State<MyAccount> {
   //     _selectedIndex = index;
   //   });
   // }
+  FirestoreOperationsProxy proxy = FirestoreOperationsProxy();
 
   Map<String, dynamic>? _admin;
   @override
   void initState() {
     super.initState();
-    YDB.getAdmin().then((result) {
+    proxy.getAdmin().then((result) {
       setState(() {
         _admin = result;
       });

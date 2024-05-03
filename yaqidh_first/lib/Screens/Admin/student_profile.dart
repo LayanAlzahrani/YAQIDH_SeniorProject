@@ -32,9 +32,11 @@ class _StudentProfileState extends State<StudentProfile> {
     _fetchStudents();
   }
 
+  FirestoreOperationsProxy proxy = FirestoreOperationsProxy();
+
   Future<void> _fetchStudents() async {
     try {
-      final students = await YDB.getAllStudents();
+      final students = await proxy.getAllStudents();
       setState(() {
         _students = students;
       });
@@ -98,6 +100,14 @@ class _StudentProfileState extends State<StudentProfile> {
     if (timestamp != null) {
       final dateTime = timestamp.toDate();
       formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
+    }
+
+    final timestamp2 = student['dateOfTest'] as Timestamp?;
+    String formattedTestDate = '';
+
+    if (timestamp2 != null) {
+      final dateTime2 = timestamp2.toDate();
+      formattedTestDate = DateFormat('yyyy-MM-dd').format(dateTime2);
     }
 
     return Scaffold(
@@ -183,7 +193,7 @@ class _StudentProfileState extends State<StudentProfile> {
                       }),
                   ProfileInfo(
                     sectionName: 'تاريخ التشخيص',
-                    info: '0000-00-00',
+                    info: formattedTestDate,
                     Align: MainAxisAlignment.end,
                   ),
                   FutureBuilder(

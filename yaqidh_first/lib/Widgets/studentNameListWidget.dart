@@ -14,10 +14,11 @@ class NameListWidget extends StatefulWidget {
 
 class _NameListWidgetState extends State<NameListWidget> {
   List<DocumentSnapshot<Object?>> _students = [];
+  FirestoreOperationsProxy proxy = FirestoreOperationsProxy();
 
   @override
   void initState() {
-    YDB.getRecentlyCreatedStudents().then((result) {
+    proxy.getRecentlyCreatedStudents().then((result) {
       setState(() {
         _students = result;
       });

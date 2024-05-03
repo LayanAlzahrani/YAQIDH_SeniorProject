@@ -51,9 +51,11 @@ class _StudentListTeacherState extends State<StudentListTeacher> {
     _fetchStudents();
   }
 
+  FirestoreOperationsProxy proxy = FirestoreOperationsProxy();
+
   Future<void> _fetchStudents() async {
     try {
-      final students = await YDB.getAllStudents();
+      final students = await proxy.getAllStudents();
       setState(() {
         _allStudents = students;
         _students = students;
@@ -82,7 +84,7 @@ class _StudentListTeacherState extends State<StudentListTeacher> {
 
   Future<void> _fetchTeachers() async {
     try {
-      final teachers = await YDB.getAllTeachers();
+      final teachers = await proxy.getAllTeachers();
       setState(() {
         _teachers = teachers;
       });
@@ -92,13 +94,13 @@ class _StudentListTeacherState extends State<StudentListTeacher> {
     }
   }
 
-  void navigateToStudentProfile(int index) {
+  void navigateToStudentProfile(String studentId) {
     Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => StudentProfileForTeacher(
-                  studentId: _students[index]['id'],
-                )));
+      context,
+      MaterialPageRoute(
+        builder: (context) => StudentProfileForTeacher(studentId: studentId),
+      ),
+    );
   }
 
   @override
@@ -167,7 +169,7 @@ class _StudentListTeacherState extends State<StudentListTeacher> {
 
                       return InkWell(
                         onTap: () {
-                          navigateToStudentProfile(index);
+                          navigateToStudentProfile(uid);
                         },
                         child: Container(
                           padding: EdgeInsets.only(
@@ -248,7 +250,7 @@ class _StudentListTeacherState extends State<StudentListTeacher> {
                               ),
                               const SizedBox(width: 20),
                               Text(
-                                '$studentNumber', // Display the student number
+                                '$studentNumber',
                                 style: TextStyle(
                                   fontSize: screenHeight * 0.016,
                                   color: Colors.black,

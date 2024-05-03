@@ -2,7 +2,6 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:yaqidh_first/Widgets/pdf_widget.dart';
 import 'package:yaqidh_first/Widgets/profile_info.dart';
@@ -35,9 +34,11 @@ class _StudentProfileForTeacherState extends State<StudentProfileForTeacher> {
     _fetchStudents();
   }
 
+  FirestoreOperationsProxy proxy = FirestoreOperationsProxy();
+
   Future<void> _fetchStudents() async {
     try {
-      final students = await YDB.getAllStudents();
+      final students = await proxy.getAllStudents();
       setState(() {
         _students = students;
       });
@@ -71,6 +72,14 @@ class _StudentProfileForTeacherState extends State<StudentProfileForTeacher> {
     if (timestamp != null) {
       final dateTime = timestamp.toDate();
       formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
+    }
+
+    final timestamp2 = student['dateOfTest'] as Timestamp?;
+    String formattedTestDate = '';
+
+    if (timestamp2 != null) {
+      final dateTime2 = timestamp2.toDate();
+      formattedTestDate = DateFormat('yyyy-MM-dd').format(dateTime2);
     }
 
     return Scaffold(
@@ -129,7 +138,7 @@ class _StudentProfileForTeacherState extends State<StudentProfileForTeacher> {
                   ),
                   ProfileInfo(
                     sectionName: 'تاريخ التشخيص',
-                    info: '0000-00-00',
+                    info: formattedTestDate,
                     Align: MainAxisAlignment.end,
                   ),
                   FutureBuilder(
@@ -158,19 +167,6 @@ class _StudentProfileForTeacherState extends State<StudentProfileForTeacher> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        shape: CircleBorder(),
-        onPressed: () {},
-        tooltip: 'edit',
-        backgroundColor: Color(0xFF7FC7D9),
-        foregroundColor: Colors.white,
-        elevation: screenHeight * 0.002,
-        child: Icon(
-          FontAwesomeIcons.pen,
-          size: screenHeight * 0.025,
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 

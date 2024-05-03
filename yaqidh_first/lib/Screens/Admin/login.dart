@@ -97,7 +97,8 @@ class _LoginPageState extends State<LoginPage> {
             LayoutBuilder(
               builder: (context, constraints) {
                 var deviceType = getDeviceType(mediaQueryData);
-                if (deviceType == DeviceType.tablet) {
+                if (deviceType == DeviceType.tablet ||
+                    deviceType == DeviceType.desktop) {
                   return loginContainer(context, 0.12);
                 } else {
                   return loginContainer(context, 0.05);
@@ -327,8 +328,10 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  FirestoreOperationsProxy proxy = FirestoreOperationsProxy();
+
   _redirect_user(String uid, [bool usePop = false]) async {
-    var userData = await YDB.getDocumentDataById(uid, "users");
+    var userData = await proxy.getDocumentDataById(uid, "users");
     if (usePop) {
       Navigator.pop(context);
     }

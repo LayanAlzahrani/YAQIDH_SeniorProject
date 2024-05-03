@@ -3,7 +3,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:yaqidh_first/Screens/Admin/assigned_stud_A.dart';
 import 'package:yaqidh_first/Widgets/profile_info.dart';
 import 'package:yaqidh_first/Widgets/settingsWidget.dart';
@@ -56,9 +55,11 @@ class _TeacherProfileState extends State<TeacherProfile> {
     _fetchTeachers();
   }
 
+  FirestoreOperationsProxy proxy = FirestoreOperationsProxy();
+
   Future<void> _fetchTeachers() async {
     try {
-      final teachers = await YDB.getAllTeachers();
+      final teachers = await proxy.getAllTeachers();
       setState(() {
         _teachers = teachers;
       });
@@ -195,19 +196,6 @@ class _TeacherProfileState extends State<TeacherProfile> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        shape: CircleBorder(),
-        onPressed: () {},
-        tooltip: 'تعديل',
-        backgroundColor: Color(0xFF7FC7D9),
-        foregroundColor: Colors.white,
-        elevation: screenHeight * 0.002,
-        child: Icon(
-          FontAwesomeIcons.pen,
-          size: screenHeight * 0.025,
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 
