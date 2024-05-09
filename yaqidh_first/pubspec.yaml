@@ -47,7 +47,9 @@ dependencies:
   fluentui_system_icons: ^1.1.233
   intl: ^0.18.1
   toastification: ^0.0.3
-  flutter_vector_icons:
+  test: ^1.24.9
+  flutter_vector_icons: ^2.0.0
+  mockito: ^5.4.4
 
   
 

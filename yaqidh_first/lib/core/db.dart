@@ -53,7 +53,7 @@ class RealFirestoreOperations implements FirestoreOperations {
     var snapshot =
         await FirebaseFirestore.instance.collection(collectionName).get();
     var data = snapshot.docs.map((e) {
-      var docData = e.data() as Map<String, dynamic>;
+      var docData = e.data();
       docData['id'] = e.id;
       return docData;
     }).toList();

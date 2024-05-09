@@ -4,14 +4,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:yaqidh_first/Screens//Admin/homepage.dart';
-import 'package:yaqidh_first/Screens/Teacher/homepage_T.dart';
 import 'package:yaqidh_first/Widgets/buttonWidget.dart';
 import 'package:yaqidh_first/Widgets/login_textfield.dart';
-import 'package:yaqidh_first/core/db.dart';
 import 'package:yaqidh_first/core/fire_auth.dart';
 import 'package:yaqidh_first/firebase_options.dart';
-import 'package:yaqidh_first/user_auth/firebase_auth_services.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 
 Future<void> main() async {
@@ -43,24 +39,11 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final AuthPage _auth = AuthPage();
-
   //To secure the password
   bool _obscureText = true;
   //Text editing Controlllers
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-
-  bool _emailError = false;
-  bool _passwordError = false;
-
-  // @override
-  // void initState() {
-  //   if (FirebaseAuth.instance.currentUser != null) {
-  //     _redirect_user(FirebaseAuth.instance.currentUser!.uid);
-  //   }
-  //   super.initState();
-  // }
 
   //For errors which i didn't use, not yet anyways
   @override
@@ -80,7 +63,6 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     var mediaQueryData = MediaQuery.of(context);
     double screenHeight = MediaQuery.sizeOf(context).height;
-    //double screenWidth = MediaQuery.sizeOf(context).width;
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -109,64 +91,6 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
-  }
-
-  _close() {
-    Navigator.pop(context);
-    Navigator.pop(context);
-  }
-
-  void _signIn() async {
-    //Loading Circle
-    // showDialog(
-    //     context: context,
-    //     builder: (context) {
-    //       return const Center(
-    //         child: CircularProgressIndicator(
-    //           color: Color(0xFF7FC7D9),
-    //         ),
-    //       );
-    //     });
-
-    setState(() {
-      _emailError = _emailController.text.isEmpty;
-      _passwordError = _passwordController.text.isEmpty;
-    });
-
-    if (!_emailError && !_passwordError) {
-      String email = _emailController.text;
-      String password = _passwordController.text;
-
-      User? user = await _auth.signInWithEmailAndPassword(email, password);
-
-      if (user != null) {
-        _redirect_user(user.uid, true);
-      } else {
-        Navigator.pop(context);
-      }
-    } else {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text(
-              'فشل تسجيل الدخول',
-              textAlign: TextAlign.right,
-            ),
-            content: Text(
-              'الرجاء تعبئة البيانات',
-              textAlign: TextAlign.right,
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => _close(),
-                child: const Text('حسنًا'),
-              ),
-            ],
-          );
-        },
-      );
-    }
   }
 
   DeviceType getDeviceType(MediaQueryData mediaQueryData) {
@@ -303,16 +227,6 @@ class _LoginPageState extends State<LoginPage> {
             Center(
               child: MyButton(
                 onTap: () {
-                  // _signIn();
-                  // showDialog(
-                  //     context: context,
-                  //     builder: (context) {
-                  //       return const Center(
-                  //         child: CircularProgressIndicator(
-                  //           color: Color(0xFF7FC7D9),
-                  //         ),
-                  //       );
-                  //     });
                   FireAuth.signInUsingEmailPassword(
                       email: _emailController.text,
                       password: _passwordController.text,
@@ -326,26 +240,6 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
-  }
-
-  FirestoreOperationsProxy proxy = FirestoreOperationsProxy();
-
-  _redirect_user(String uid, [bool usePop = false]) async {
-    var userData = await proxy.getDocumentDataById(uid, "users");
-    if (usePop) {
-      Navigator.pop(context);
-    }
-    if (userData['userType'] == 'admin') {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => HomePage()),
-      );
-    } else if (userData['userType'] == 'teacher') {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => HomePageTeacher()),
-      );
-    } else {}
   }
 }
 

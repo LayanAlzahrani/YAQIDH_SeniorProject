@@ -6,14 +6,21 @@ import 'package:flutter/material.dart';
 import 'package:yaqidh_first/Screens/splash.dart';
 import 'package:yaqidh_first/firebase_options.dart';
 
-Future<void> main() async {
+// Future<void> main() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   await Firebase.initializeApp(
+//     options: DefaultFirebaseOptions.currentPlatform,
+//   );
+
+//   // FirebaseFirestore.instance.collection("test").add({"test": "tets"});
+//   runApp(DevicePreview(builder: (context) => const MyApp()));
+// }
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
-  // FirebaseFirestore.instance.collection("test").add({"test": "tets"});
-  runApp(DevicePreview(builder: (context) => const MyApp()));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
