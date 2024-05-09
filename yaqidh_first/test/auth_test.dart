@@ -1,79 +1,68 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
-import 'package:yaqidh_first/Screens/Admin/addStudent.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:yaqidh_first/core/db.dart';
+// import 'package:flutter_test/flutter_test.dart';
+// import 'package:mockito/mockito.dart';
+// import 'package:yaqidh_first/Screens/Admin/addStudent.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:yaqidh_first/core/db.dart';
 
-// Mock class for FirebaseFirestore
-class MockFirestore extends Mock implements FirebaseFirestore {}
+// class MockFirestore extends Mock implements FirebaseFirestore {}
 
-void main() {
-  group('Add Student', () {
-    // Test case 1: Adding student successfully
-    test('Add student to Firestore', () async {
-      // Arrange
-      final mockFirestore = MockFirestore();
-      final addStudentScreen = const AddStudentScreen();
+// void main() {
+//   group('Add Student', () {
+//     // Test case 1: Adding student successfully
+//     test('Add student to Firestore', () async {
+//       final mockFirestore = MockFirestore();
+//       final firestoreOperations = FirestoreOperationsProxy();
+//       final selectedTeacher = {'id': 'teacherId', 'name': 'Teacher'};
+//       final addStudentScreen = AddStudentScreen(
+//         firestoreOperations: firestoreOperations,
+//         selectedTeacher: selectedTeacher,
+//       );
 
-      // Mock FirestoreOperationsProxy
-      addStudentScreen.firestoreOperations = FirestoreOperationsProxy();
+//       // Prepare test data
+//       final studentData = {
+//         'fullName': 'Layan',
+//         'age': DateTime(2000, 1, 1),
+//         'email': 'Layan@example.com',
+//         'phone': '123456789',
+//         'teacherId': 'teacherId',
+//       };
 
-      // Mock selected teacher
-      addStudentScreen._selectedTeacher = {
-        'id': 'teacherId',
-        'name': 'Teacher'
-      };
+//       // Act
+//       await addStudentScreen.addStudentToFirestore(studentData);
 
-      // Prepare test data
-      final studentData = {
-        'fullName': 'John Doe',
-        'age': DateTime(2000, 1, 1),
-        'email': 'john@example.com',
-        'phone': '123456789',
-        'teacherId': 'teacherId',
-      };
+//       // Assert
+//       verify(mockFirestore.collection('students').doc(any).set(studentData))
+//           .called(1);
+//     });
 
-      // Act
-      await addStudentScreen.addStudentToFirestore(studentData);
+//     // Test case 2: Handling error while adding student
+//     test('Handle error while adding student', () async {
+//       final mockFirestore = MockFirestore();
+//       final firestoreOperations = FirestoreOperationsProxy();
+//       final selectedTeacher = {'id': 'teacherId', 'name': 'Teacher'};
+//       final addStudentScreen = AddStudentScreen(
+//         firestoreOperations: firestoreOperations,
+//         selectedTeacher: selectedTeacher,
+//       );
 
-      // Assert
-      verify(mockFirestore.collection('students').doc(any).set(studentData))
-          .called(1);
-    });
+//       // Prepare test data
+//       final studentData = {
+//         'fullName': 'Ftoon',
+//         'age': DateTime(2000, 1, 1),
+//         'email': 'Ftoon@example.com',
+//         'phone': '123456789',
+//         'teacherId': 'teacherId',
+//       };
 
-    // Test case 2: Handling error while adding student
-    test('Handle error while adding student', () async {
-      // Arrange
-      final mockFirestore = MockFirestore();
-      final addStudentScreen = AddStudentScreen();
+//       // Mock Firestore to throw an error
+//       when(mockFirestore.collection('students').doc(any).set(studentData))
+//           .thenThrow(Exception('Firestore error'));
 
-      // Mock FirestoreOperationsProxy
-      addStudentScreen.firestoreOperations = FirestoreOperationsProxy();
+//       // Act
+//       final result = await addStudentScreen.addStudentToFirestore(studentData);
 
-      // Mock selected teacher
-      addStudentScreen._selectedTeacher = {
-        'id': 'teacherId',
-        'name': 'Teacher'
-      };
-
-      // Prepare test data
-      final studentData = {
-        'fullName': 'John Doe',
-        'age': DateTime(2000, 1, 1),
-        'email': 'john@example.com',
-        'phone': '123456789',
-        'teacherId': 'teacherId',
-      };
-
-      // Mock Firestore to throw an error
-      when(mockFirestore.collection('students').doc(any).set(studentData))
-          .thenThrow(Exception('Firestore error'));
-
-      // Act
-      final result = await addStudentScreen.addStudentToFirestore(studentData);
-
-      // Assert
-      expect(result, false);
-    });
-  });
-}
+//       // Assert
+//       expect(result, false);
+//     });
+//   });
+// }

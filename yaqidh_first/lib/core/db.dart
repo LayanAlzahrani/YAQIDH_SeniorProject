@@ -35,6 +35,8 @@ abstract class FirestoreOperations {
 
 // Real implementation of Firestore operations
 class RealFirestoreOperations implements FirestoreOperations {
+  // late FirebaseFirestore instance;
+
   @override
   Future<Map<String, dynamic>> getDocumentDataById(
     String docId,

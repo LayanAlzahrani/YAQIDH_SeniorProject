@@ -1,17 +1,9 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:yaqidh_first/Screens/Admin/select_teacher.dart';
 import 'package:yaqidh_first/Screens/Admin/studentss_list.dart';
 import 'package:yaqidh_first/core/db.dart';
 import 'package:intl/intl.dart';
-
-void main() async {
-  // Initialize Firebase before running the app
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(const AddStudentScreen());
-}
 
 class AddStudentScreen extends StatelessWidget {
   const AddStudentScreen({Key? key}) : super(key: key);
@@ -336,30 +328,6 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
       ),
     );
   }
-  // return SizedBox(
-  //   height: 40, // Set the height of the TextField
-  //   width: screenWidth * 1, // Set the width of the TextField
-  //   child: Container(
-  //     decoration: BoxDecoration(
-  //       color: Colors.white, // Set the container color to white
-  //       borderRadius: BorderRadius.circular(10), // Curved corners
-  //       border: Border.all(
-  //           color: Color.fromARGB(255, 201, 201, 201)), // Gray border
-  //     ),
-  //     child: Padding(
-  //       padding: EdgeInsets.symmetric(horizontal: screenHeight * 0.015),
-  //       child: TextField(
-  //         textAlignVertical: TextAlignVertical.top,
-  //         controller: controller,
-  //         textAlign: TextAlign.right, // Right-align text
-  //         textDirection:
-  //             TextDirection.rtl, // Set text direction to right-to-left
-  //         decoration: const InputDecoration(
-  //           border: InputBorder.none, // No border inside the container
-  //           fillColor: Colors.white, // White fill color
-  //           filled: true,
-  //         ),
-  //       ),
 
   void _showDatePicker() {
     showDatePicker(
