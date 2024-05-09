@@ -1,68 +1,61 @@
-// import 'package:flutter_test/flutter_test.dart';
-// import 'package:mockito/mockito.dart';
-// import 'package:yaqidh_first/Screens/Admin/addStudent.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:yaqidh_first/core/db.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:yaqidh_first/core/db.dart';
 
-// class MockFirestore extends Mock implements FirebaseFirestore {}
+void main() async {
+  final instance = FakeFirebaseFirestore();
+  var code = RealFirestoreOperations(instance);
 
-// void main() {
-//   group('Add Student', () {
-//     // Test case 1: Adding student successfully
-//     test('Add student to Firestore', () async {
-//       final mockFirestore = MockFirestore();
-//       final firestoreOperations = FirestoreOperationsProxy();
-//       final selectedTeacher = {'id': 'teacherId', 'name': 'Teacher'};
-//       final addStudentScreen = AddStudentScreen(
-//         firestoreOperations: firestoreOperations,
-//         selectedTeacher: selectedTeacher,
-//       );
+  test("addStudent", () async {
+    final studentData = {
+      'fullName': 'John Doe',
+      'age': DateTime(2000, 1, 1).toString(),
+      'email': 'john@example.com',
+      'phone': '123456789',
+      'isTested': false,
+      'teacherId': '123456',
+      'code': code.generateRandomNumber(6),
+      'createdAt': FieldValue.serverTimestamp(),
+      'dateOfTest': DateTime(2000, 1, 1).toString(),
+      'teacher': 'Michel',
+    };
 
-//       // Prepare test data
-//       final studentData = {
-//         'fullName': 'Layan',
-//         'age': DateTime(2000, 1, 1),
-//         'email': 'Layan@example.com',
-//         'phone': '123456789',
-//         'teacherId': 'teacherId',
-//       };
+    // Add a student document
+    await instance.collection('students').doc('123').set(studentData);
 
-//       // Act
-//       await addStudentScreen.addStudentToFirestore(studentData);
+    // Retrieve the added student document
+    var studentDoc = await instance.collection('students').doc('123').get();
 
-//       // Assert
-//       verify(mockFirestore.collection('students').doc(any).set(studentData))
-//           .called(1);
-//     });
+    // Validate that the document exists
+    expect(studentDoc.exists, true);
 
-//     // Test case 2: Handling error while adding student
-//     test('Handle error while adding student', () async {
-//       final mockFirestore = MockFirestore();
-//       final firestoreOperations = FirestoreOperationsProxy();
-//       final selectedTeacher = {'id': 'teacherId', 'name': 'Teacher'};
-//       final addStudentScreen = AddStudentScreen(
-//         firestoreOperations: firestoreOperations,
-//         selectedTeacher: selectedTeacher,
-//       );
+    // Check if the actual document contains all expected fields
+    expect(studentDoc.data()?.keys, containsAll(studentData.keys));
 
-//       // Prepare test data
-//       final studentData = {
-//         'fullName': 'Ftoon',
-//         'age': DateTime(2000, 1, 1),
-//         'email': 'Ftoon@example.com',
-//         'phone': '123456789',
-//         'teacherId': 'teacherId',
-//       };
+    // Check the values
+    expect(studentDoc.data()?['fullName'], equals(studentData['fullName']));
+    expect(studentDoc.data()?['age'], equals(studentData['age']));
+    expect(studentDoc.data()?['email'], equals(studentData['email']));
+    expect(studentDoc.data()?['phone'], equals(studentData['phone']));
+    expect(studentDoc.data()?['isTested'], equals(studentData['isTested']));
+    expect(studentDoc.data()?['teacherId'], equals(studentData['teacherId']));
+    expect(studentDoc.data()?['code'], equals(studentData['code']));
+    expect(studentDoc.data()?['dateOfTest'], equals(studentData['dateOfTest']));
+    expect(studentDoc.data()?['teacher'], equals(studentData['teacher']));
 
-//       // Mock Firestore to throw an error
-//       when(mockFirestore.collection('students').doc(any).set(studentData))
-//           .thenThrow(Exception('Firestore error'));
+    // Convert the 'createdAt' to a DateTime object
+    final expectedCreatedAtDateTime = DateTime.now();
 
-//       // Act
-//       final result = await addStudentScreen.addStudentToFirestore(studentData);
+    // Convert Timestamp to DateTime for comparison
+    final actualCreatedAtTimestamp =
+        (studentDoc.data()?['createdAt'] as Timestamp).toDate();
 
-//       // Assert
-//       expect(result, false);
-//     });
-//   });
-// }
+    // Calculate the difference in milliseconds
+    final differenceInMilliseconds = actualCreatedAtTimestamp
+        .difference(expectedCreatedAtDateTime)
+        .inMilliseconds;
+
+    expect(differenceInMilliseconds.abs(), lessThanOrEqualTo(100));
+  });
+}

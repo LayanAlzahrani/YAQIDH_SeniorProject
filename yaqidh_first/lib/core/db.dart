@@ -35,17 +35,16 @@ abstract class FirestoreOperations {
 
 // Real implementation of Firestore operations
 class RealFirestoreOperations implements FirestoreOperations {
-  // late FirebaseFirestore instance;
+  late FirebaseFirestore instance;
+
+  RealFirestoreOperations(this.instance);
 
   @override
   Future<Map<String, dynamic>> getDocumentDataById(
     String docId,
     String collectionName,
   ) async {
-    var data = await FirebaseFirestore.instance
-        .collection(collectionName)
-        .doc(docId)
-        .get();
+    var data = await instance.collection(collectionName).doc(docId).get();
     var map = data.data() as Map<String, dynamic>;
     return map;
   }
@@ -178,7 +177,7 @@ class RealFirestoreOperations implements FirestoreOperations {
 // Proxy class for Firestore operations
 class FirestoreOperationsProxy implements FirestoreOperations {
   final FirestoreOperations _realFirestoreOperations =
-      RealFirestoreOperations();
+      RealFirestoreOperations(FirebaseFirestore.instance);
 
   @override
   Future<Map<String, dynamic>> getDocumentDataById(
