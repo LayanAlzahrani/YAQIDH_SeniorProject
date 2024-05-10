@@ -42,13 +42,6 @@ class MyAccount extends StatefulWidget {
 }
 
 class _MyAccountState extends State<MyAccount> {
-  // int _selectedIndex = 1;
-
-  // void _onItemTapped(int index) {
-  //   setState(() {
-  //     _selectedIndex = index;
-  //   });
-  // }
   FirestoreOperationsProxy proxy = FirestoreOperationsProxy();
 
   Map<String, dynamic>? _admin;
@@ -101,15 +94,6 @@ class _MyAccountState extends State<MyAccount> {
                     signUserOut(context);
                   },
                 ),
-                // SettingsWidget(
-                //   name: 'زر مؤقت عشان اروح للمعلم',
-                //   ontap: () {
-                //     // Navigator.of(context).push(
-                //     //   MaterialPageRoute(
-                //     //       builder: (context) => HomePageTeacher()),
-                //     // );
-                //   },
-                // ),
               ],
             ],
           ),

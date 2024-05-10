@@ -47,7 +47,6 @@ class _TeacherMyProfileState extends State<TeacherMyProfile> {
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.sizeOf(context).height;
-    //double screenWidth = MediaQuery.sizeOf(context).width;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: true,

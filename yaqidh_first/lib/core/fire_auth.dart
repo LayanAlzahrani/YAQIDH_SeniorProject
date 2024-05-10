@@ -198,7 +198,8 @@ class FireAuth {
       if (e.code == 'INVALID_LOGIN_CREDENTIALS') {
         toastification.show(
           icon: const Icon(Icons.error_outline),
-          description: Text('يرجى التحقق من البريد الإلكتروني أو كلمة المرور.'),
+          description:
+              const Text('يرجى التحقق من البريد الإلكتروني أو كلمة المرور.'),
           context: context,
           title: const Text('عذرًا!'),
           autoCloseDuration: const Duration(seconds: 5),

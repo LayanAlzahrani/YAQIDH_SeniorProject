@@ -201,30 +201,6 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
                     } finally {
                       setState(() {});
                     }
-
-                    // FirebaseFirestore.instance
-                    //     .collection('users')
-                    //     .doc(teacherID)
-                    //     .set({
-                    //   'userType': 'teacher',
-                    //   'name': nameController.text,
-                    //   'email': emailController.text,
-                    //   'phone': phoneController.text,
-                    //   'password': '123456',
-                    //   //YDB.generateRandomPassword(),
-                    //   'createdAt': FieldValue.serverTimestamp(),
-                    // }).then((_) async {
-                    //   await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                    //     email: emailController.text,
-                    //     password: '123456',
-                    //   );
-                    //   nameController.clear();
-                    //   emailController.clear();
-                    //   phoneController.clear();
-                    //   _showConfirmationDialog('تمت إضافة المعلم بنجاح.');
-                    // }).catchError((error) {
-                    //   print("Failed to add user: $error");
-                    // });
                   },
                 );
               }),
@@ -266,40 +242,6 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
       ),
     );
   }
-  // return SizedBox(
-  //   height: 40, // Set the height of the TextField
-  //   width: screenWidth * 1, // Set the width of the TextField
-  //   child: Container(
-  //     decoration: BoxDecoration(
-  //       color: Colors.white, // Set the container color to white
-  //       borderRadius: BorderRadius.circular(10), // Curved corners
-  //       border: Border.all(
-  //           color: Color.fromARGB(255, 201, 201, 201)), // Gray border
-  //     ),
-  //     child: Padding(
-  //       padding: EdgeInsets.symmetric(horizontal: screenHeight * 0.015),
-  //       child: TextField(
-  //         textAlignVertical: TextAlignVertical.top,
-  //         controller: controller,
-  //         textAlign: TextAlign.right, // Right-align text
-  //         textDirection:
-  //             TextDirection.rtl, // Set text direction to right-to-left
-  //         decoration: const InputDecoration(
-  //           border: InputBorder.none, // No border inside the container
-  //           fillColor: Colors.white, // White fill color
-  //           filled: true,
-  //         ),
-  //       ),
-
-  // void _selectTeacher() async {
-  //   var teacher = await Navigator.push(
-  //     context,
-  //     MaterialPageRoute(builder: (context) => const SelectTeacher()),
-  //   );
-  //   setState(() {
-  //     _selectedTeacher = teacher;
-  //   });
-  // }
 
   void _showConfirmationDialog(String message) {
     showDialog(

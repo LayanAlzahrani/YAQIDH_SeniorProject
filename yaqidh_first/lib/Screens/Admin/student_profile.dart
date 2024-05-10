@@ -115,8 +115,8 @@ class _StudentProfileState extends State<StudentProfile> {
         automaticallyImplyLeading: true,
         leading: IconButton(
           icon: Icon(
-            Icons.arrow_back, // Change the icon here
-            color: Colors.white, // Change the color here
+            Icons.arrow_back,
+            color: Colors.white,
           ),
           onPressed: () {
             Navigator.pop(context);
@@ -225,89 +225,6 @@ class _StudentProfileState extends State<StudentProfile> {
       ),
     );
   }
-  //   body: StreamBuilder<DocumentSnapshot>(
-  //   stream: FirebaseFirestore.instance
-  //       .collection('students')
-  //       .doc(widget.studentId)
-  //       .snapshots(),
-  //   builder: (context, snapshot) {
-  //     if (snapshot.hasData) {
-  //       final userData = snapshot.data?.data() as Map<String, dynamic>?;
-
-  //       return Container(
-  //         color: Color(0xFFF8F8F8),
-  //         child: ListView(
-  //           padding: EdgeInsets.zero,
-  //           children: <Widget>[
-  //             buildTop(),
-  //             Container(
-  //               padding:
-  //                   EdgeInsets.symmetric(horizontal: screenHeight * 0.03),
-  //               child: Column(
-  //                 crossAxisAlignment: CrossAxisAlignment.center,
-  //                 children: [
-  //                   ...[
-  //                     InkWell(
-  //                       onTap: () => editField('fullName'),
-  //                       child: Text(
-  //                         userData?['fullName'],
-  //                         style: TextStyle(
-  //                             fontSize: screenHeight * 0.02,
-  //                             fontWeight: FontWeight.bold),
-  //                       ),
-  //                     ),
-  //                     SizedBox(height: screenHeight * 0.01),
-  //                     ProfileInfo(
-  //                       sectionName: 'رقم التعريف',
-  //                       info: userData?['id'],
-  //                       onPressed: () {},
-  //                     ),
-  //                     ProfileInfo(
-  //                       sectionName: 'تاريخ الميلاد',
-  //                       info: userData?['age'],
-  //                       onPressed: () {},
-  //                     ),
-  //                     ProfileInfo(
-  //                       sectionName: 'رقم هاتف ولي الأمر',
-  //                       info: userData?['phone'],
-  //                       onPressed: () => editField('phone'),
-  //                     ),
-  //                     ProfileInfo(
-  //                       sectionName: 'البريد الإلكتروني لـ ولي الأمر',
-  //                       info: userData?['email'],
-  //                       onPressed: () => editField('email'),
-  //                     ),
-  //                     ProfileInfo(
-  //                       sectionName: 'تاريخ التشخيص',
-  //                       info: 'null',
-  //                       onPressed: () {},
-  //                     ),
-  //                     ProfileInfo(
-  //                       sectionName: 'المسؤول عن التشخيص',
-  //                       info: 'null',
-  //                       onPressed: () {},
-  //                     ),
-  //                     SettingsWidget(
-  //                         name: 'التقرير',
-  //                         ontap: () async {
-  //                           final data = await pdfw.generatePDF();
-  //                           await pdfw.savePdfFile("ADHD_Report", data);
-  //                         })
-  //                   ],
-  //                 ],
-  //               ),
-  //             ),
-  //           ],
-  //         ),
-  //       );
-  //     } else if (snapshot.hasError) {
-  //       print('Error${snapshot.error}');
-  //     }
-  //     return const Center(
-  //       child: CircularProgressIndicator(),
-  //     );
-  //   },
-  // ),
 
   Widget buildTop() {
     final bottom = profileHeight / 2 + 18;
