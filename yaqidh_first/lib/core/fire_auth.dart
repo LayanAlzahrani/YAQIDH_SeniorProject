@@ -51,11 +51,11 @@ class FireAuth {
       );
       user = userCredential.user;
     } on FirebaseAuthException catch (e) {
-      toastification.showError(
+      toastification.show(
         icon: const Icon(Icons.error_outline),
-        description: e.message ?? "Opps",
+        description: Text(e.message ?? "Opps"),
         context: context,
-        title: 'Something went wrong!',
+        title: const Text('Something went wrong!'),
         autoCloseDuration: const Duration(seconds: 5),
       );
     }
@@ -154,11 +154,11 @@ class FireAuth {
         },
       );
     } catch (e) {
-      toastification.showError(
+      toastification.show(
         icon: const Icon(Icons.error_outline),
-        description: e.toString(),
+        description: Text(e.toString()),
         context: context,
-        title: 'something went wrong!',
+        title: const Text('something went wrong!'),
         autoCloseDuration: const Duration(seconds: 5),
       );
     }
@@ -196,27 +196,27 @@ class FireAuth {
               builder: (context) => SplashScreen(model: SplashScreenModel())));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'INVALID_LOGIN_CREDENTIALS') {
-        toastification.showError(
+        toastification.show(
           icon: const Icon(Icons.error_outline),
-          description: 'يرجى التحقق من البريد الإلكتروني أو كلمة المرور.',
+          description: Text('يرجى التحقق من البريد الإلكتروني أو كلمة المرور.'),
           context: context,
-          title: 'عذرًا!',
+          title: const Text('عذرًا!'),
           autoCloseDuration: const Duration(seconds: 5),
         );
       } else if (e.code == 'wrong-password') {
-        toastification.showError(
+        toastification.show(
           icon: const Icon(Icons.error_outline),
-          description: 'يوجد خطأ في كلمة المرور',
+          description: const Text('يوجد خطأ في كلمة المرور'),
           context: context,
-          title: 'عذرًا!',
+          title: const Text('عذرًا!'),
           autoCloseDuration: const Duration(seconds: 5),
         );
       } else {
-        toastification.showError(
+        toastification.show(
           icon: const Icon(Icons.error_outline),
-          description: e.message ?? "!يُرجى المحاولة مرة أخرى",
+          description: Text(e.message ?? "!يُرجى المحاولة مرة أخرى"),
           context: context,
-          title: 'حدث خطأ غير متوقع',
+          title: const Text('حدث خطأ غير متوقع'),
           autoCloseDuration: const Duration(seconds: 5),
         );
       }

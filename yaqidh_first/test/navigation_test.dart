@@ -1,4 +1,4 @@
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:yaqidh_first/Screens/splash.dart';
 import 'package:yaqidh_first/main.dart';
 

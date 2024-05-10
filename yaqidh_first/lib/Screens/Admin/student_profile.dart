@@ -11,7 +11,7 @@ import 'package:intl/intl.dart';
 class StudentProfile extends StatefulWidget {
   final String studentId;
 
-  const StudentProfile({Key? key, required this.studentId}) : super(key: key);
+  const StudentProfile({super.key, required this.studentId});
 
   @override
   State<StudentProfile> createState() => _StudentProfileState();

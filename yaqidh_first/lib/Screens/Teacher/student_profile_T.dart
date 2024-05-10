@@ -11,8 +11,7 @@ import 'package:yaqidh_first/core/db.dart';
 class StudentProfileForTeacher extends StatefulWidget {
   final String studentId;
 
-  const StudentProfileForTeacher({Key? key, required this.studentId})
-      : super(key: key);
+  const StudentProfileForTeacher({super.key, required this.studentId});
 
   @override
   State<StudentProfileForTeacher> createState() =>

@@ -30,7 +30,7 @@ abstract class FirestoreOperations {
 
   String generateRandomNumber(int length);
 
-  String generateRandomPassword();
+  // String generateRandomPassword();
 }
 
 // Real implementation of Firestore operations
@@ -51,8 +51,7 @@ class RealFirestoreOperations implements FirestoreOperations {
 
   @override
   Future<List<Map<String, dynamic>>> getAllData(String collectionName) async {
-    var snapshot =
-        await FirebaseFirestore.instance.collection(collectionName).get();
+    var snapshot = await instance.collection(collectionName).get();
     var data = snapshot.docs.map((e) {
       var docData = e.data();
       docData['id'] = e.id;
@@ -85,7 +84,7 @@ class RealFirestoreOperations implements FirestoreOperations {
 
   @override
   Future<List<DocumentSnapshot>> getRecentlyCreatedStudents() async {
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+    QuerySnapshot querySnapshot = await instance
         .collection('students')
         .orderBy('createdAt', descending: true)
         .limit(10)
@@ -94,13 +93,21 @@ class RealFirestoreOperations implements FirestoreOperations {
   }
 
   @override
-  Future<List<DocumentSnapshot>> getRecentlyCreatedTeachers() async {
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+  Future<List<DocumentSnapshot>> getRecentlyCreatedTeachers(
+      {bool filterUserType = false}) async {
+    QuerySnapshot querySnapshot = await instance
         .collection('users')
         .orderBy('createdAt', descending: true)
         .limit(10)
         .get();
-    return querySnapshot.docs;
+
+    if (filterUserType) {
+      return querySnapshot.docs
+          .where((doc) => doc['userType'] == 'Teacher')
+          .toList();
+    } else {
+      return querySnapshot.docs;
+    }
   }
 
   @override
@@ -114,10 +121,7 @@ class RealFirestoreOperations implements FirestoreOperations {
   @override
   Future<void> deleteStudent(String studentId) async {
     try {
-      await FirebaseFirestore.instance
-          .collection('students')
-          .doc(studentId)
-          .delete();
+      await instance.collection('students').doc(studentId).delete();
     } catch (error) {
       print('Error deleting student: $error');
     }
@@ -126,10 +130,7 @@ class RealFirestoreOperations implements FirestoreOperations {
   @override
   Future<void> deleteTeacher(String teacherId) async {
     try {
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(teacherId)
-          .delete();
+      await instance.collection('users').doc(teacherId).delete();
     } catch (error) {
       print('Error deleting student: $error');
     }
@@ -138,10 +139,7 @@ class RealFirestoreOperations implements FirestoreOperations {
   @override
   Future<Map<String, dynamic>> getTeacherById(String teacherId) async {
     final DocumentSnapshot<Map<String, dynamic>> snapshot =
-        await FirebaseFirestore.instance
-            .collection('teachers')
-            .doc(teacherId)
-            .get();
+        await instance.collection('users').doc(teacherId).get();
 
     if (snapshot.exists) {
       return snapshot.data()!;
@@ -162,16 +160,16 @@ class RealFirestoreOperations implements FirestoreOperations {
     return number;
   }
 
-  @override
-  String generateRandomPassword() {
-    Random random = Random();
-    String uppercaseLetter = String.fromCharCode(random.nextInt(26) + 65);
-    String numbersAndLetters = '0123456789abcdefghijklmnopqrstuvwxyz';
-    String randomLetters = List.generate(7,
-            (_) => numbersAndLetters[random.nextInt(numbersAndLetters.length)])
-        .join('');
-    return uppercaseLetter + randomLetters;
-  }
+  // @override
+  // String generateRandomPassword() {
+  //   Random random = Random();
+  //   String uppercaseLetter = String.fromCharCode(random.nextInt(26) + 65);
+  //   String numbersAndLetters = '0123456789abcdefghijklmnopqrstuvwxyz';
+  //   String randomLetters = List.generate(7,
+  //           (_) => numbersAndLetters[random.nextInt(numbersAndLetters.length)])
+  //       .join('');
+  //   return uppercaseLetter + randomLetters;
+  // }
 }
 
 // Proxy class for Firestore operations
@@ -222,11 +220,11 @@ class FirestoreOperationsProxy implements FirestoreOperations {
     return _realFirestoreOperations.generateRandomNumber(length);
   }
 
-  @override
-  String generateRandomPassword() {
-    // TODO: implement generateRandomPassword
-    return _realFirestoreOperations.generateRandomPassword();
-  }
+  // @override
+  // String generateRandomPassword() {
+  //   // TODO: implement generateRandomPassword
+  //   return _realFirestoreOperations.generateRandomPassword();
+  // }
 
   @override
   Future<List<Map<String, dynamic>>> getAllStudents() {

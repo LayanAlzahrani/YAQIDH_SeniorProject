@@ -19,7 +19,7 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
 }
 
 class StudentListTeacher extends StatefulWidget {
-  const StudentListTeacher({Key? key}) : super(key: key);
+  const StudentListTeacher({super.key});
 
   @override
   State<StudentListTeacher> createState() => _StudentListTeacherState();
@@ -278,7 +278,7 @@ class _StudentListTeacherState extends State<StudentListTeacher> {
 class SearchWidget extends StatelessWidget {
   final Function(String) onSearch;
 
-  const SearchWidget({Key? key, required this.onSearch}) : super(key: key);
+  const SearchWidget({super.key, required this.onSearch});
 
   @override
   Widget build(BuildContext context) {

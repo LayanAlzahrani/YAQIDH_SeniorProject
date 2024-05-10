@@ -5,7 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:yaqidh_first/core/db.dart';
 
 class TeacherNamesForAdmin extends StatefulWidget {
-  const TeacherNamesForAdmin({Key? key}) : super(key: key);
+  const TeacherNamesForAdmin({super.key});
 
   @override
   State<TeacherNamesForAdmin> createState() => _TeacherNamesForAdminState();
@@ -247,7 +247,7 @@ class _TeacherNamesForAdminState extends State<TeacherNamesForAdmin> {
 class SearchWidget extends StatelessWidget {
   final Function(String) onSearch;
 
-  const SearchWidget({Key? key, required this.onSearch}) : super(key: key);
+  const SearchWidget({super.key, required this.onSearch});
 
   @override
   Widget build(BuildContext context) {

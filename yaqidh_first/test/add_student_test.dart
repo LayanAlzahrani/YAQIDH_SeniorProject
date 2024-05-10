@@ -21,13 +21,10 @@ void main() async {
       'teacher': 'Michel',
     };
 
-    // Add a student document
     await instance.collection('students').doc('123').set(studentData);
 
-    // Retrieve the added student document
     var studentDoc = await instance.collection('students').doc('123').get();
 
-    // Validate that the document exists
     expect(studentDoc.exists, true);
 
     // Check if the actual document contains all expected fields

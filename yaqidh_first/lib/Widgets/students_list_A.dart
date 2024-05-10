@@ -4,7 +4,7 @@ import 'package:yaqidh_first/Screens/Admin/student_profile.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AllStudentNamesForAdmin extends StatefulWidget {
-  const AllStudentNamesForAdmin({Key? key}) : super(key: key);
+  const AllStudentNamesForAdmin({super.key});
 
   @override
   State<AllStudentNamesForAdmin> createState() =>

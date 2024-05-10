@@ -6,7 +6,7 @@ import 'package:yaqidh_first/core/db.dart';
 import 'package:intl/intl.dart';
 
 class AddStudentScreen extends StatelessWidget {
-  const AddStudentScreen({Key? key}) : super(key: key);
+  const AddStudentScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +72,7 @@ class AddStudentScreen extends StatelessWidget {
 }
 
 class AccountActivationForm extends StatefulWidget {
-  const AccountActivationForm({Key? key}) : super(key: key);
+  const AccountActivationForm({super.key});
 
   @override
   _AccountActivationFormState createState() => _AccountActivationFormState();

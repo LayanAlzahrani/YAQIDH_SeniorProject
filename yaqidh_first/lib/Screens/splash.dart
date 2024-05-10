@@ -8,9 +8,9 @@ import 'package:yaqidh_first/Screens/Teacher/homepage_T.dart';
 class SplashScreen extends StatefulWidget {
   final SplashScreenModel model;
   const SplashScreen({
-    Key? key,
+    super.key,
     required this.model,
-  }) : super(key: key);
+  });
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();

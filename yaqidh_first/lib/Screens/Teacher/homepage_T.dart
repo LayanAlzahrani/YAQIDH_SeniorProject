@@ -8,7 +8,7 @@ import 'package:yaqidh_first/Widgets/list_widget_T.dart';
 import 'package:yaqidh_first/Widgets/student_name_list_T.dart';
 
 class HomePageTeacher extends StatefulWidget {
-  const HomePageTeacher({Key? key}) : super(key: key);
+  const HomePageTeacher({super.key});
 
   @override
   State<HomePageTeacher> createState() => _HomePageState();

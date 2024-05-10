@@ -4,8 +4,7 @@ class MyAccWidget extends StatelessWidget {
   final String name;
   final String id;
 
-  const MyAccWidget({Key? key, required this.name, required this.id})
-      : super(key: key);
+  const MyAccWidget({super.key, required this.name, required this.id});
 
   @override
   Widget build(BuildContext context) {

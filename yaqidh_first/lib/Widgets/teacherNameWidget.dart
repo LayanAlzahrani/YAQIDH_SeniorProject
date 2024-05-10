@@ -7,7 +7,7 @@ import 'package:yaqidh_first/Screens/Admin/teacher_profile.dart';
 import 'package:yaqidh_first/core/db.dart';
 
 class TeacherNameListWidget extends StatefulWidget {
-  const TeacherNameListWidget({Key? key}) : super(key: key);
+  const TeacherNameListWidget({super.key});
   @override
   State<TeacherNameListWidget> createState() => _TeacherNameListWidgetState();
 }

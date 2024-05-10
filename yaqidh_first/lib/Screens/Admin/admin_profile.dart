@@ -16,7 +16,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
 }
 
 class AdminProfile extends StatefulWidget {
-  const AdminProfile({Key? key}) : super(key: key);
+  const AdminProfile({super.key});
 
   @override
   State<AdminProfile> createState() => _AdminProfileState();

@@ -9,7 +9,7 @@ void main() {
 }
 
 class AddTeacherScreen extends StatelessWidget {
-  const AddTeacherScreen({Key? key}) : super(key: key);
+  const AddTeacherScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +73,7 @@ class AddTeacherScreen extends StatelessWidget {
 }
 
 class AccountActivationForm extends StatefulWidget {
-  const AccountActivationForm({Key? key}) : super(key: key);
+  const AccountActivationForm({super.key});
 
   @override
   _AccountActivationFormState createState() => _AccountActivationFormState();

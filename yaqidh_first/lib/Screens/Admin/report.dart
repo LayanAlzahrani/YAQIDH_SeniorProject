@@ -15,7 +15,7 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
 }
 
 class Report extends StatefulWidget {
-  const Report({Key? key}) : super(key: key);
+  const Report({super.key});
 
   @override
   State<Report> createState() => _ReportState();
