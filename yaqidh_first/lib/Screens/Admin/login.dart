@@ -151,6 +151,7 @@ class _LoginPageState extends State<LoginPage> {
                 color: Colors.grey,
                 size: screenHeight * 0.014,
               ),
+              key: Key('emailTextField'),
               textFieldName: 'البريد الالكتروني',
             ),
             SizedBox(height: screenHeight * 0.01),
@@ -167,6 +168,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 onPressed: _togglePasswordVisibility,
               ),
+              key: Key('passwordTextField'),
               textFieldName: 'كلمة المرور',
             ),
             SizedBox(height: screenHeight * 0.009),
@@ -241,6 +243,8 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
+
 }
 
 enum DeviceType { mobile, tablet, desktop }
