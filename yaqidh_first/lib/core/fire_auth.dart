@@ -1,7 +1,5 @@
 // ignore_for_file: use_build_context_synchronously, deprecated_member_use
 
-import 'dart:js';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -198,22 +196,21 @@ class FireAuth {
               builder: (context) => SplashScreen(model: SplashScreenModel())));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-          toastification.show(
-            icon: const Icon(Icons.error_outline),
-            description: const Text('يرجى التحقق من البريد الإلكتروني'),
-            context: context,
-            title: const Text('عذرًا!'),
-            autoCloseDuration: const Duration(seconds: 5),
-          );
-        
+        toastification.show(
+          icon: const Icon(Icons.error_outline),
+          description: const Text('يرجى التحقق من البريد الإلكتروني'),
+          context: context,
+          title: const Text('عذرًا!'),
+          autoCloseDuration: const Duration(seconds: 5),
+        );
       } else if (e.code == 'wrong-password') {
         toastification.show(
           icon: const Icon(Icons.error_outline),
-            description: const Text('يوجد خطأ في كلمة المرور'),
-            context: context,
-            title: const Text('عذرًا!'),
-            autoCloseDuration: const Duration(seconds: 5),
-          );
+          description: const Text('يوجد خطأ في كلمة المرور'),
+          context: context,
+          title: const Text('عذرًا!'),
+          autoCloseDuration: const Duration(seconds: 5),
+        );
       } else {
         toastification.show(
           icon: const Icon(Icons.error_outline),
@@ -224,7 +221,6 @@ class FireAuth {
         );
       }
     }
-
     return user;
   }
 }

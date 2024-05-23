@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 
 void main() {
-  group('AdminProfile', () {
+  group('Edit field', () {
     late FakeFirebaseFirestore fakeFirestore;
 
     setUp(() {
@@ -14,7 +14,7 @@ void main() {
       });
     });
 
-    test('editField updates Firestore document', () async {
+    test('Updating Firestore document', () async {
       await fakeFirestore
           .collection('users')
           .doc('1')

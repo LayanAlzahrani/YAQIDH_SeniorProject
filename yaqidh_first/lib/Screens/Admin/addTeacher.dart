@@ -168,9 +168,7 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
                 print('Email: ${emailController.text}');
                 print('Phone Number: ${phoneController.text}');
 
-                // TODO: teacher must be selected
                 // Add user to Firestore database
-
                 await FireAuth.register(emailController.text, "123456", context)
                     .then(
                   (value) {

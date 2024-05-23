@@ -255,7 +255,6 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
                 print('Email: ${emailController.text}');
                 print('Phone Number: ${phoneController.text}');
 
-                // TODO: teacher must be selected
                 // Add user to Firestore database
                 FirebaseFirestore.instance
                     .collection('students')
@@ -283,7 +282,6 @@ class _AccountActivationFormState extends State<AccountActivationForm> {
                   phoneController.clear();
                   _selectedTeacher = null;
                   _showConfirmationDialog('تمت إضافة الطالب بنجاح.');
-                  // TODO: Add A message
                 }).catchError((error) {
                   // Handle error if adding user fails
                   print("Failed to add user: $error");

@@ -8,20 +8,18 @@ void main() {
       final fakeFirestore = FakeFirebaseFirestore();
       final foo = RealFirestoreOperations(fakeFirestore);
 
-      const collectionName = 'testCollection';
+      const collectionName = 'students';
 
-      final docRef1 = await fakeFirestore
-          .collection(collectionName)
-          .add({'name': 'Layan', 'age': 25});
-      final docRef2 = await fakeFirestore
-          .collection(collectionName)
-          .add({'name': 'John', 'age': 30});
+      final docRef1 =
+          await fakeFirestore.collection(collectionName).add({'name': 'Layan'});
+      final docRef2 =
+          await fakeFirestore.collection(collectionName).add({'name': 'John'});
 
       final result = await foo.getAllData(collectionName);
 
       expect(result, [
-        {'name': 'Layan', 'age': 25, 'id': docRef1.id},
-        {'name': 'John', 'age': 30, 'id': docRef2.id},
+        {'name': 'Layan', 'id': docRef1.id},
+        {'name': 'John', 'id': docRef2.id},
       ]);
     });
   });

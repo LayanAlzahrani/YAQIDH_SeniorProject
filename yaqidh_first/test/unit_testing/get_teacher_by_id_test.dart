@@ -4,7 +4,7 @@ import 'package:yaqidh_first/core/db.dart';
 
 void main() {
   group('getTeacherById', () {
-    test("Get teacher by ID 'teacher1'", () async {
+    test("Get teacher by ID '123456'", () async {
       final fakeFirestore = FakeFirebaseFirestore();
       final foo = RealFirestoreOperations(fakeFirestore);
 
@@ -14,11 +14,11 @@ void main() {
       await fakeFirestore
           .collection(collectionName)
           .doc(teacherId)
-          .set({'name': 'Teacher1', 'userType': 'teacher'});
+          .set({'name': 'John', 'userType': 'teacher'});
 
       final result = await foo.getTeacherById(teacherId);
 
-      expect(result['name'], 'Teacher1');
+      expect(result['name'], 'John');
     });
 
     test("Get teacher by non-existing ID", () async {

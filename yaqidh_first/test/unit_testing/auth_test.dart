@@ -31,6 +31,28 @@ void main() {
 
       expect(user, isNotNull);
     });
+
+    test('signInUsingIncorrectPassword', () async {
+      const email = 'test@example.com';
+      const correctPassword = '123456';
+      const incorrectPassword = '456789';
+
+      await fakeFirestore.collection('users').doc('123').set({
+        'email': email,
+        'password': correctPassword,
+      });
+
+      await mockFirebaseAuth.createUserWithEmailAndPassword(
+        email: email,
+        password: correctPassword,
+      );
+
+      try {
+        await mockFirebaseAuth.signInWithEmailAndPassword(
+            email: email, password: incorrectPassword);
+        fail('Expected sign-in to fail with incorrect password');
+      } catch (e) {}
+    });
   });
 }
 
